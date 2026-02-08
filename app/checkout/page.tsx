@@ -3,11 +3,11 @@
 import { IconLogo } from '@/components/Logo';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function CheckoutPage() {
+function CheckoutContent() {
   const [theme, setTheme] = useState('light');
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -28,7 +28,6 @@ export default function CheckoutPage() {
       document.documentElement.classList.add('dark');
     }
 
-    // Redirect if not logged in
     if (!user) {
       router.push('/login');
     }
@@ -77,10 +76,8 @@ export default function CheckoutPage() {
     e.preventDefault();
     setLoading(true);
 
-    // Simulate payment processing
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // Show success message
     alert('🎉 Payment successful! (Demo mode)\n\nThis is a demo. Real payment will be integrated with iyzico soon!');
     
     setLoading(false);
@@ -116,7 +113,6 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
-      {/* Header */}
       <header className="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center max-w-6xl">
           <Link href="/">
@@ -159,7 +155,6 @@ export default function CheckoutPage() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {/* Order Summary */}
           <motion.div
             initial={{ x: -20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -218,7 +213,6 @@ export default function CheckoutPage() {
             </div>
           </motion.div>
 
-          {/* Payment Form */}
           <motion.div
             initial={{ x: 20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -319,5 +313,17 @@ export default function CheckoutPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    }>
+      <CheckoutContent />
+    </Suspense>
   );
 }
