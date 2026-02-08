@@ -8,6 +8,7 @@ import { IconLogo } from '@/components/Logo';
 import { AnalysisResults } from '@/components/AnalysisResults';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
 
 interface AnalysisResult {
   analysis: string;
@@ -84,13 +85,15 @@ export default function Dashboard() {
     if (!image) return;
 
     if (analysisCount >= MONTHLY_LIMIT) {
-      alert('You have reached your monthly limit! Upgrade to Pro for more analyses.');
+      toast.error('Monthly limit reached! Upgrade to continue. 🚀');
       router.push('/pricing');
       return;
     }
 
     setLoading(true);
     setError(null);
+
+    const toastId = toast.loading('Analyzing your chart... 🔍');
 
     try {
       const response = await fetch(image);
@@ -114,7 +117,10 @@ export default function Dashboard() {
       const newCount = analysisCount + 1;
       setAnalysisCount(newCount);
       localStorage.setItem('analysisCount', newCount.toString());
+      
+      toast.success('Analysis complete! 🎯', { id: toastId });
     } catch (err) {
+      toast.error('Analysis failed. Please try again. ❌', { id: toastId });
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setLoading(false);
@@ -396,7 +402,7 @@ export default function Dashboard() {
           </motion.div>
         )}
 
-        {/* Results - YENİ COMPONENT */}
+        {/* Results */}
         {result && (
           <AnalysisResults 
             analysis={result.analysis}
