@@ -99,7 +99,7 @@ export default function Dashboard() {
       const formData = new FormData();
       formData.append('file', blob, 'chart.png');
 
-      const apiResponse = await fetch('https://tradeflow-ai-backend-production.up.railway.app/analyze-image', {
+      const apiResponse = await fetch('https://lucky-mercy-production-45c7.up.railway.app/analyze-image', {
         method: 'POST',
         body: formData,
       });
