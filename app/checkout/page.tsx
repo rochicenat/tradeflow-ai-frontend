@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { useState, useEffect, Suspense } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 function CheckoutContent() {
   const [theme, setTheme] = useState('light');
@@ -76,12 +77,51 @@ function CheckoutContent() {
     e.preventDefault();
     setLoading(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    const toastId = toast.loading('Processing payment...');
 
-    alert('🎉 Payment successful! (Demo mode)\n\nThis is a demo. Real payment will be integrated with iyzico soon!');
-    
-    setLoading(false);
-    router.push('/dashboard');
+    try {
+      // Kart numarasını temizle (boşlukları kaldır)
+      const cleanCardNumber = cardNumber.replace(/\s/g, '');
+      
+      // Expiry date'i ayır (MM/YY -> MM ve YY)
+      const [expireMonth, expireYear] = expiryDate.split('/');
+
+      const token = localStorage.getItem('token');
+      
+      const response = await fetch('https://lucky-mercy-production-45c7.up.railway.app/create-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          plan: plan,
+          card_holder_name: cardName,
+          card_number: cleanCardNumber,
+          expire_month: expireMonth,
+          expire_year: `20${expireYear}`,
+          cvc: cvv
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        toast.success('Payment successful! 🎉', { id: toastId });
+        // Plan bilgisini localStorage'a kaydet
+        localStorage.setItem('userPlan', plan);
+        setTimeout(() => {
+          router.push('/dashboard');
+        }, 1500);
+      } else {
+        toast.error(data.message || 'Payment failed. Please try again.', { id: toastId });
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      toast.error('Payment failed. Please try again.', { id: toastId });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const formatCardNumber = (value: string) => {
@@ -206,9 +246,9 @@ function CheckoutContent() {
               </div>
             </div>
 
-            <div className="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-              <p className="text-sm text-yellow-800 dark:text-yellow-400">
-                💡 <strong>Demo Mode:</strong> This is a demo checkout. Real payments will be integrated with iyzico soon!
+            <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+              <p className="text-sm text-blue-800 dark:text-blue-400">
+                💳 <strong>Test Mode:</strong> Use test card: 5528790000000008 (any future date, any CVV)
               </p>
             </div>
           </motion.div>
@@ -232,7 +272,7 @@ function CheckoutContent() {
                   type="text"
                   value={cardNumber}
                   onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
-                  placeholder="1234 5678 9012 3456"
+                  placeholder="5528 7900 0000 0008"
                   maxLength={19}
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   required
@@ -248,7 +288,7 @@ function CheckoutContent() {
                     type="text"
                     value={expiryDate}
                     onChange={(e) => setExpiryDate(formatExpiryDate(e.target.value))}
-                    placeholder="MM/YY"
+                    placeholder="12/30"
                     maxLength={5}
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     required
