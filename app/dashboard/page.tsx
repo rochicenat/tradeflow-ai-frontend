@@ -102,28 +102,20 @@ export default function Dashboard() {
       const formData = new FormData();
       formData.append('file', blob, 'chart.png');
 
-      const blob = await response.blob();
-      
-      const formData = new FormData();
-      formData.append('file', blob, 'chart.png');
-      
-      // Token'ı al
-      const token = localStorage.getItem('token');
-      
       const apiResponse = await fetch('https://lucky-mercy-production-45c7.up.railway.app/analyze-image', {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
         body: formData,
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
       });
-      
+
       if (!apiResponse.ok) {
         throw new Error('Failed to analyze image');
       }
+
       const data: AnalysisResult = await apiResponse.json();
       setResult(data);
-
       
       const newCount = analysisCount + 1;
       setAnalysisCount(newCount);
