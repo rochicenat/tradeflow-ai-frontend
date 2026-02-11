@@ -124,12 +124,6 @@ export default function Dashboard() {
       const data: AnalysisResult = await apiResponse.json();
       setResult(data);
 
-      if (!apiResponse.ok) {
-        throw new Error('Failed to analyze image');
-      }
-
-      const data: AnalysisResult = await apiResponse.json();
-      setResult(data);
       
       const newCount = analysisCount + 1;
       setAnalysisCount(newCount);
