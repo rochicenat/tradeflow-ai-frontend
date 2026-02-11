@@ -1,5 +1,4 @@
 'use client';
-
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
@@ -40,15 +39,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           'Authorization': `Bearer ${token}`
         }
       });
+      
       if (response.ok) {
         const userData = await response.json();
         setUser(userData);
+        
+        // ✅ FIX: user_email ve user_id'yi localStorage'a kaydet
+        localStorage.setItem('user_email', userData.email);
+        localStorage.setItem('user_id', userData.email); // Backend'de user_id yok, email kullanıyoruz
       } else {
         localStorage.removeItem('token');
+        localStorage.removeItem('user_email');
+        localStorage.removeItem('user_id');
       }
     } catch (error) {
       console.error('Error fetching user:', error);
       localStorage.removeItem('token');
+      localStorage.removeItem('user_email');
+      localStorage.removeItem('user_id');
     }
     setLoading(false);
   };
@@ -68,7 +76,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       const data = await response.json();
       localStorage.setItem('token', data.access_token);
+      
       await fetchUser(data.access_token);
+      
       toast.success('Welcome back! 🎉');
       router.push('/dashboard');
     } catch (error) {
@@ -92,7 +102,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       const data = await response.json();
       localStorage.setItem('token', data.access_token);
+      
       await fetchUser(data.access_token);
+      
       toast.success('Account created successfully! 🎉');
       router.push('/dashboard');
     } catch (error) {
@@ -102,6 +114,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user_email');
+    localStorage.removeItem('user_id');
     setUser(null);
     toast.success('Logged out successfully');
     router.push('/');
