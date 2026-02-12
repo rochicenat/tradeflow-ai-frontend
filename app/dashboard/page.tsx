@@ -59,8 +59,11 @@ export default function Dashboard() {
 
       if (response.ok) {
         const data = await response.json();
+        console.log('🔍 DEBUG: Fetched data:', data);
+        console.log('🔍 DEBUG: Plan value:', data.plan);
         setUserData(data);
         localStorage.setItem('user', JSON.stringify(data));
+        console.log('✅ DEBUG: Saved to localStorage');
       } else {
         router.push('/login');
       }
