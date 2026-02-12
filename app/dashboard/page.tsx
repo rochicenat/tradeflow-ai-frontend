@@ -35,15 +35,22 @@ export default function Dashboard() {
   const router = useRouter();
 
   useEffect(() => {
-    setMounted(true);
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    setTheme(savedTheme);
-    if (savedTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    }
-    
-    fetchUserData();
-  }, []);
+  setMounted(true);
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  setTheme(savedTheme);
+  if (savedTheme === 'dark') {
+    document.documentElement.classList.add('dark');
+  }
+  
+  // ÖNCE localStorage'dan yükle
+  const cachedUser = localStorage.getItem('user');
+  if (cachedUser) {
+    setUserData(JSON.parse(cachedUser));
+  }
+  
+  // Sonra API'den fresh data çek
+  fetchUserData();
+}, []);
 
   const fetchUserData = async () => {
     const token = localStorage.getItem('token');
