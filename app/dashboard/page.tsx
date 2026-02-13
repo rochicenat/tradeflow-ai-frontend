@@ -334,7 +334,7 @@ export default function Dashboard() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
           >
-            {result && <AnalysisResults result={result} />}
+            {result && <AnalysisResults analysis={result.analysis} trend={result.trend} confidence={result.confidence} />}
             {!result && !error && (
               <div className="bg-white dark:bg-gray-800 rounded-xl p-8 text-center h-full flex items-center justify-center transition-colors duration-300">
                 <p className="text-gray-500 dark:text-gray-400">
