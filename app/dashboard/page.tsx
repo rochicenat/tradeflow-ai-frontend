@@ -241,7 +241,7 @@ export default function TradingDashboard() {
 
           <div className="flex items-center gap-4">
             <div className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30">
-              <span className="text-blue-300 font-semibold text-sm uppercase">{userData?.plan || 'Free'}</span>
+             <span className="text-blue-300 font-semibold text-sm uppercase">{userData?.plan || 'Free'}</span>
             </div>
            </div>
 
