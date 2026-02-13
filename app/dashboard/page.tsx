@@ -237,7 +237,7 @@ export default function TradingDashboard() {
             <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
               TradeFlow AI
             </span>
-            </Link>
+          </Link>
 
           <div className="flex items-center gap-4">
             <div className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30">
@@ -248,7 +248,7 @@ export default function TradingDashboard() {
             <div className="flex items-center gap-3 px-4 py-2 rounded-lg bg-slate-800/50 border border-slate-700/50">
               <User className="w-5 h-5 text-slate-400" />
               <span className="text-slate-300 text-sm font-medium">{userData?.name || 'User'}</span>
-            </Link>
+          </Link>
             </div>
 
             <button
@@ -273,11 +273,11 @@ export default function TradingDashboard() {
                 <div>
                   <div className="flex justify-between text-sm mb-1">
                     <span className="text-slate-400">Analyses</span>
-            </Link>
+          </Link>
                     <span className="text-white font-semibold">
                       {userData?.analyses_used || 0} / {userData?.analyses_limit || 3}
                     </span>
-            </Link>
+          </Link>
                   </div>
                   <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
                     <div 
@@ -308,21 +308,21 @@ export default function TradingDashboard() {
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
                   <span className="text-slate-400 text-sm">BTC</span>
-            </Link>
+          </Link>
                   <span className="text-green-400 font-semibold text-sm">+2.4%</span>
-            </Link>
+          </Link>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-slate-400 text-sm">ETH</span>
-            </Link>
+          </Link>
                   <span className="text-green-400 font-semibold text-sm">+1.8%</span>
-            </Link>
+          </Link>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-slate-400 text-sm">SOL</span>
-            </Link>
+          </Link>
                   <span className="text-red-400 font-semibold text-sm">-0.5%</span>
-            </Link>
+          </Link>
                 </div>
               </div>
             </div>
