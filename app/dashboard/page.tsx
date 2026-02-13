@@ -4,13 +4,9 @@ import { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Upload, 
-  TrendingUp, 
-  TrendingDown, 
-  Minus,
   Activity,
   BarChart3,
   Target,
@@ -234,25 +230,20 @@ export default function TradingDashboard() {
       <header className="border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition">
-          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition">
             <Activity className="w-8 h-8 text-cyan-400" />
             <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
               TradeFlow AI
             </span>
           </Link>
-            </Link>
-          </div>
 
           <div className="flex items-center gap-4">
             <div className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30">
               <span className="text-blue-300 font-semibold text-sm uppercase">{userData?.plan || 'Free'}</span>
-            </Link>
             </div>
 
             <div className="flex items-center gap-3 px-4 py-2 rounded-lg bg-slate-800/50 border border-slate-700/50">
               <User className="w-5 h-5 text-slate-400" />
               <span className="text-slate-300 text-sm font-medium">{userData?.name || 'User'}</span>
-            </Link>
             </div>
 
             <button
@@ -277,11 +268,9 @@ export default function TradingDashboard() {
                 <div>
                   <div className="flex justify-between text-sm mb-1">
                     <span className="text-slate-400">Analyses</span>
-            </Link>
                     <span className="text-white font-semibold">
                       {userData?.analyses_used || 0} / {userData?.analyses_limit || 3}
                     </span>
-            </Link>
                   </div>
                   <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
                     <div 
@@ -312,21 +301,15 @@ export default function TradingDashboard() {
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
                   <span className="text-slate-400 text-sm">BTC</span>
-            </Link>
                   <span className="text-green-400 font-semibold text-sm">+2.4%</span>
-            </Link>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-slate-400 text-sm">ETH</span>
-            </Link>
                   <span className="text-green-400 font-semibold text-sm">+1.8%</span>
-            </Link>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-slate-400 text-sm">SOL</span>
-            </Link>
                   <span className="text-red-400 font-semibold text-sm">-0.5%</span>
-            </Link>
                 </div>
               </div>
             </div>
