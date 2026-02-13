@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuthStore } from '@/lib/store/authStore';
 
-const API_URL = 'https://trading-chart-analyzer-production.up.railway.app';
+const API_URL = 'https://tradeflow-ai-backend-production.up.railway.app';
 
 interface User {
   email: string;
