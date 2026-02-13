@@ -12,7 +12,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <IconLogo className="w-8 h-8 text-blue-500" />
-            <span className="text-2xl font-bold text-white">TradeFlow AI</span>
+            
           </div>
           <nav className="hidden md:flex items-center gap-8">
             <Link href="#features" className="text-slate-300 hover:text-white transition">Features</Link>
