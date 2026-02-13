@@ -17,7 +17,11 @@ import {
   Zap,
   LogOut,
   User,
-  CreditCard
+  CreditCard,
+  DollarSign,
+  ArrowUpCircle,
+  ArrowDownCircle,
+  PauseCircle
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -34,6 +38,17 @@ interface UserData {
   analyses_used: number;
   analyses_limit: number;
   subscription_status: string;
+}
+
+interface ParsedAnalysis {
+  signal: string;
+  confidence: string;
+  entry: string;
+  stopLoss: string;
+  takeProfit: string;
+  keyLevels: string[];
+  signalReason: string[];
+  riskAssessment: string[];
 }
 
 export default function TradingDashboard() {
@@ -126,28 +141,76 @@ export default function TradingDashboard() {
     router.push('/');
   };
 
-  const getTrendIcon = (trend: string) => {
-    switch (trend.toLowerCase()) {
-      case 'bullish': return <TrendingUp className="w-8 h-8" />;
-      case 'bearish': return <TrendingDown className="w-8 h-8" />;
-      default: return <Minus className="w-8 h-8" />;
+  const parseNewFormat = (analysis: string, trend: string, confidence: string): ParsedAnalysis => {
+    const lines = analysis.split('\n').map(l => l.trim()).filter(l => l);
+    
+    let signal = trend.toUpperCase();
+    if (signal === 'BULLISH') signal = 'BUY';
+    if (signal === 'BEARISH') signal = 'SELL';
+    if (signal === 'SIDEWAYS') signal = 'HOLD';
+    
+    let entry = '';
+    let stopLoss = '';
+    let takeProfit = '';
+    let keyLevels: string[] = [];
+    let signalReason: string[] = [];
+    let riskAssessment: string[] = [];
+
+    let currentSection = '';
+
+    for (const line of lines) {
+      if (line.match(/^(BUY|SELL|HOLD)$/i)) {
+        signal = line.toUpperCase();
+      } else if (line.startsWith('Entry:')) {
+        entry = line.replace('Entry:', '').trim();
+      } else if (line.startsWith('SL:')) {
+        stopLoss = line.replace('SL:', '').trim();
+      } else if (line.startsWith('TP:')) {
+        takeProfit = line.replace('TP:', '').trim();
+      } else if (line.includes('**Key Levels:**')) {
+        currentSection = 'levels';
+      } else if (line.includes('**Signal Reason:**')) {
+        currentSection = 'reason';
+      } else if (line.includes('**Risk')) {
+        currentSection = 'risk';
+      } else if (line.startsWith('*') || line.startsWith('•')) {
+        const clean = line.replace(/^[*•]\s*/, '').replace(/\*\*/g, '').trim();
+        if (clean) {
+          if (currentSection === 'levels') keyLevels.push(clean);
+          else if (currentSection === 'reason') signalReason.push(clean);
+          else if (currentSection === 'risk') riskAssessment.push(clean);
+        }
+      }
     }
+
+    return {
+      signal,
+      confidence,
+      entry,
+      stopLoss,
+      takeProfit,
+      keyLevels,
+      signalReason,
+      riskAssessment
+    };
   };
 
-  const getTrendColor = (trend: string) => {
-    switch (trend.toLowerCase()) {
-      case 'bullish': return 'from-green-500 to-emerald-600';
-      case 'bearish': return 'from-red-500 to-rose-600';
-      default: return 'from-yellow-500 to-orange-500';
-    }
+  const getSignalIcon = (signal: string) => {
+    if (signal === 'BUY') return <ArrowUpCircle className="w-12 h-12" />;
+    if (signal === 'SELL') return <ArrowDownCircle className="w-12 h-12" />;
+    return <PauseCircle className="w-12 h-12" />;
   };
 
-  const getTrendBg = (trend: string) => {
-    switch (trend.toLowerCase()) {
-      case 'bullish': return 'bg-green-500/10 border-green-500/30';
-      case 'bearish': return 'bg-red-500/10 border-red-500/30';
-      default: return 'bg-yellow-500/10 border-yellow-500/30';
-    }
+  const getSignalColor = (signal: string) => {
+    if (signal === 'BUY') return 'from-green-500 to-emerald-600';
+    if (signal === 'SELL') return 'from-red-500 to-rose-600';
+    return 'from-yellow-500 to-orange-500';
+  };
+
+  const getSignalBg = (signal: string) => {
+    if (signal === 'BUY') return 'bg-green-500/10 border-green-500/30';
+    if (signal === 'SELL') return 'bg-red-500/10 border-red-500/30';
+    return 'bg-yellow-500/10 border-yellow-500/30';
   };
 
   const getConfidenceValue = (confidence: string) => {
@@ -164,39 +227,15 @@ export default function TradingDashboard() {
     return 'bg-gradient-to-r from-red-500 to-rose-600';
   };
 
-  const parseAnalysis = (text: string) => {
-    const sections = {
-      support: '',
-      breakout: '',
-      indicators: '',
-      strategy: ''
-    };
-
-    const supportMatch = text.match(/\*\*Support\/Resistance.*?:\*\*([\s\S]*?)(?=\*\*|$)/);
-    const breakoutMatch = text.match(/\*\*Possible Breakout.*?:\*\*([\s\S]*?)(?=\*\*|$)/);
-    const indicatorsMatch = text.match(/\*\*RSI or Indicator.*?:\*\*([\s\S]*?)(?=\*\*|$)/);
-    const strategyMatch = text.match(/\*\*Trading Idea.*?:\*\*([\s\S]*?)(?=\*\*|$)/);
-
-    if (supportMatch) sections.support = supportMatch[1].trim();
-    if (breakoutMatch) sections.breakout = breakoutMatch[1].trim();
-    if (indicatorsMatch) sections.indicators = indicatorsMatch[1].trim();
-    if (strategyMatch) sections.strategy = strategyMatch[1].trim();
-
-    return sections;
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-      {/* Header */}
       <header className="border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <Activity className="w-8 h-8 text-cyan-400" />
-              <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                TradeFlow AI
-              </span>
-            </div>
+          <div className="flex items-center gap-2">
+            <Activity className="w-8 h-8 text-cyan-400" />
+            <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              TradeFlow AI
+            </span>
           </div>
 
           <div className="flex items-center gap-4">
@@ -221,7 +260,6 @@ export default function TradingDashboard() {
 
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="grid grid-cols-12 gap-6">
-          {/* Left Sidebar */}
           <div className="col-span-12 lg:col-span-3 space-y-4">
             <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 rounded-2xl p-6">
               <div className="flex items-center gap-2 mb-4">
@@ -248,15 +286,13 @@ export default function TradingDashboard() {
 
             <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 rounded-2xl p-6">
               <h3 className="text-slate-300 font-semibold mb-4">Quick Actions</h3>
-              <div className="space-y-2">
-                <button
-                  onClick={() => router.push('/pricing')}
-                  className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg text-white font-semibold hover:from-blue-700 hover:to-cyan-700 transition flex items-center justify-center gap-2"
-                >
-                  <CreditCard className="w-4 h-4" />
-                  Upgrade Plan
-                </button>
-              </div>
+              <button
+                onClick={() => router.push('/pricing')}
+                className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg text-white font-semibold hover:from-blue-700 hover:to-cyan-700 transition flex items-center justify-center gap-2"
+              >
+                <CreditCard className="w-4 h-4" />
+                Upgrade Plan
+              </button>
             </div>
 
             <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 rounded-2xl p-6">
@@ -281,7 +317,6 @@ export default function TradingDashboard() {
             </div>
           </div>
 
-          {/* Main Content */}
           <div className="col-span-12 lg:col-span-9">
             <div className="mb-6">
               <div
@@ -294,10 +329,7 @@ export default function TradingDashboard() {
               >
                 <input {...getInputProps()} />
                 <div className="p-12 text-center">
-                  <motion.div
-                    animate={{ y: isDragActive ? -10 : 0 }}
-                    className="mb-4"
-                  >
+                  <motion.div animate={{ y: isDragActive ? -10 : 0 }} className="mb-4">
                     <Upload className="w-16 h-16 mx-auto text-cyan-400" />
                   </motion.div>
                   <h3 className="text-2xl font-bold text-white mb-2">
@@ -324,135 +356,146 @@ export default function TradingDashboard() {
             </div>
 
             <AnimatePresence>
-              {result && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="space-y-6"
-                >
-                  <div className={`relative overflow-hidden rounded-2xl border ${getTrendBg(result.trend)} backdrop-blur-xl p-8`}>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-6">
-                        <div className={`p-4 rounded-2xl bg-gradient-to-br ${getTrendColor(result.trend)} text-white`}>
-                          {getTrendIcon(result.trend)}
+              {result && (() => {
+                const parsed = parseNewFormat(result.analysis, result.trend, result.confidence);
+                
+                return (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    className="space-y-6"
+                  >
+                    <div className={`relative overflow-hidden rounded-2xl border ${getSignalBg(parsed.signal)} backdrop-blur-xl p-8`}>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-6">
+                          <div className={`p-6 rounded-2xl bg-gradient-to-br ${getSignalColor(parsed.signal)} text-white shadow-2xl`}>
+                            {getSignalIcon(parsed.signal)}
+                          </div>
+                          <div>
+                            <h2 className="text-5xl font-black text-white uppercase mb-2 tracking-tight">
+                              {parsed.signal}
+                            </h2>
+                            <p className="text-slate-300 text-lg">
+                              {parsed.signal === 'BUY' ? 'Long position recommended' : 
+                               parsed.signal === 'SELL' ? 'Short position recommended' : 
+                               'Wait for better setup'}
+                            </p>
+                          </div>
                         </div>
+
+                        <div className="text-right">
+                          <div className="text-sm text-slate-400 mb-2">Confidence</div>
+                          <div className="text-4xl font-bold text-white mb-3">
+                            {getConfidenceValue(parsed.confidence)}%
+                          </div>
+                          <div className="w-48 h-3 bg-slate-800 rounded-full overflow-hidden">
+                            <div 
+                              className={`h-full ${getConfidenceColor(getConfidenceValue(parsed.confidence))} transition-all`}
+                              style={{ width: `${getConfidenceValue(parsed.confidence)}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {parsed.entry && (
+                        <div className="bg-slate-900/50 backdrop-blur-xl border border-blue-500/30 rounded-xl p-6">
+                          <div className="flex items-center gap-2 mb-2">
+                            <DollarSign className="w-5 h-5 text-blue-400" />
+                            <h4 className="text-blue-400 font-semibold text-sm uppercase">Entry</h4>
+                          </div>
+                          <div className="text-2xl font-bold text-white">{parsed.entry}</div>
+                        </div>
+                      )}
+
+                      {parsed.stopLoss && (
+                        <div className="bg-slate-900/50 backdrop-blur-xl border border-red-500/30 rounded-xl p-6">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Shield className="w-5 h-5 text-red-400" />
+                            <h4 className="text-red-400 font-semibold text-sm uppercase">Stop Loss</h4>
+                          </div>
+                          <div className="text-2xl font-bold text-white">{parsed.stopLoss}</div>
+                        </div>
+                      )}
+
+                      {parsed.takeProfit && (
+                        <div className="bg-slate-900/50 backdrop-blur-xl border border-green-500/30 rounded-xl p-6">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Target className="w-5 h-5 text-green-400" />
+                            <h4 className="text-green-400 font-semibold text-sm uppercase">Take Profit</h4>
+                          </div>
+                          <div className="text-2xl font-bold text-white">{parsed.takeProfit}</div>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {parsed.keyLevels.length > 0 && (
+                        <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 rounded-2xl p-6">
+                          <div className="flex items-center gap-2 mb-4">
+                            <Target className="w-5 h-5 text-purple-400" />
+                            <h3 className="text-white font-semibold">Key Levels</h3>
+                          </div>
+                          <div className="space-y-2">
+                            {parsed.keyLevels.map((level, i) => (
+                              <div key={i} className="text-slate-300 text-sm">• {level}</div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {parsed.signalReason.length > 0 && (
+                        <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 rounded-2xl p-6">
+                          <div className="flex items-center gap-2 mb-4">
+                            <Activity className="w-5 h-5 text-cyan-400" />
+                            <h3 className="text-white font-semibold">Signal Reason</h3>
+                          </div>
+                          <div className="space-y-2">
+                            {parsed.signalReason.map((reason, i) => (
+                              <div key={i} className="text-slate-300 text-sm">• {reason}</div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {parsed.riskAssessment.length > 0 && (
+                        <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 rounded-2xl p-6">
+                          <div className="flex items-center gap-2 mb-4">
+                            <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                            <h3 className="text-white font-semibold">Risk</h3>
+                          </div>
+                          <div className="space-y-2">
+                            {parsed.riskAssessment.map((risk, i) => (
+                              <div key={i} className="text-slate-300 text-sm">• {risk}</div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/30 rounded-2xl p-6">
+                      <div className="flex items-start gap-3">
+                        <AlertTriangle className="w-6 h-6 text-yellow-400 flex-shrink-0 mt-1" />
                         <div>
-                          <h2 className="text-4xl font-bold text-white uppercase mb-2">
-                            {result.trend}
-                          </h2>
-                          <p className="text-slate-300">
-                            {result.trend === 'bullish' ? 'Strong upward momentum detected' : 
-                             result.trend === 'bearish' ? 'Downward pressure identified' : 
-                             'Sideways consolidation pattern'}
+                          <h4 className="text-yellow-400 font-semibold mb-1">Risk Disclaimer</h4>
+                          <p className="text-slate-300 text-sm">
+                            This is AI-generated analysis for educational purposes. Always use proper risk management and never risk more than you can afford to lose.
                           </p>
                         </div>
                       </div>
-
-                      <div className="text-right">
-                        <div className="text-sm text-slate-400 mb-2">Confidence Score</div>
-                        <div className="text-3xl font-bold text-white mb-2">
-                          {getConfidenceValue(result.confidence)}%
-                        </div>
-                        <div className="w-48 h-2 bg-slate-800 rounded-full overflow-hidden">
-                          <div 
-                            className={`h-full ${getConfidenceColor(getConfidenceValue(result.confidence))} transition-all`}
-                            style={{ width: `${getConfidenceValue(result.confidence)}%` }}
-                          />
-                        </div>
-                      </div>
                     </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {(() => {
-                      const sections = parseAnalysis(result.analysis);
-                      return (
-                        <>
-                          {sections.support && (
-                            <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 rounded-2xl p-6">
-                              <div className="flex items-center gap-2 mb-4">
-                                <Target className="w-5 h-5 text-blue-400" />
-                                <h3 className="text-white font-semibold">Support & Resistance</h3>
-                              </div>
-                              <div className="text-slate-300 text-sm space-y-2">
-                                {sections.support.split('\n').slice(0, 3).map((line, i) => {
-                                  const clean = line.replace(/\*\*/g, '').replace(/^\*\s*/, '').trim();
-                                  return clean ? <p key={i}>• {clean}</p> : null;
-                                })}
-                              </div>
-                            </div>
-                          )}
-
-                          {sections.breakout && (
-                            <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 rounded-2xl p-6">
-                              <div className="flex items-center gap-2 mb-4">
-                                <TrendingUp className="w-5 h-5 text-green-400" />
-                                <h3 className="text-white font-semibold">Breakout Zones</h3>
-                              </div>
-                              <div className="text-slate-300 text-sm space-y-2">
-                                {sections.breakout.split('\n').slice(0, 3).map((line, i) => {
-                                  const clean = line.replace(/\*\*/g, '').replace(/^\*\s*/, '').trim();
-                                  return clean ? <p key={i}>• {clean}</p> : null;
-                                })}
-                              </div>
-                            </div>
-                          )}
-
-                          {sections.indicators && (
-                            <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 rounded-2xl p-6">
-                              <div className="flex items-center gap-2 mb-4">
-                                <Activity className="w-5 h-5 text-purple-400" />
-                                <h3 className="text-white font-semibold">Technical Indicators</h3>
-                              </div>
-                              <div className="text-slate-300 text-sm space-y-2">
-                                {sections.indicators.split('\n').slice(0, 3).map((line, i) => {
-                                  const clean = line.replace(/\*\*/g, '').replace(/^\*\s*/, '').trim();
-                                  return clean ? <p key={i}>• {clean}</p> : null;
-                                })}
-                              </div>
-                            </div>
-                          )}
-
-                          {sections.strategy && (
-                            <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 rounded-2xl p-6">
-                              <div className="flex items-center gap-2 mb-4">
-                                <Shield className="w-5 h-5 text-cyan-400" />
-                                <h3 className="text-white font-semibold">Trading Strategy</h3>
-                              </div>
-                              <div className="text-slate-300 text-sm space-y-2">
-                                {sections.strategy.split('\n').slice(0, 3).map((line, i) => {
-                                  const clean = line.replace(/\*\*/g, '').replace(/^\*\s*/, '').trim();
-                                  return clean ? <p key={i}>• {clean}</p> : null;
-                                })}
-                              </div>
-                            </div>
-                          )}
-                        </>
-                      );
-                    })()}
-                  </div>
-
-                  <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/30 rounded-2xl p-6">
-                    <div className="flex items-start gap-3">
-                      <AlertTriangle className="w-6 h-6 text-yellow-400 flex-shrink-0 mt-1" />
-                      <div>
-                        <h4 className="text-yellow-400 font-semibold mb-1">Risk Disclaimer</h4>
-                        <p className="text-slate-300 text-sm">
-                          This analysis is for informational purposes only. Always use stop-loss orders and never risk more than you can afford to lose.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
+                  </motion.div>
+                );
+              })()}
             </AnimatePresence>
 
             {!result && !loading && (
               <div className="bg-slate-900/30 border border-slate-800/50 rounded-2xl p-12 text-center">
                 <BarChart3 className="w-16 h-16 text-slate-600 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-slate-400 mb-2">No Analysis Yet</h3>
-                <p className="text-slate-500">Upload a trading chart to get started</p>
+                <p className="text-slate-500">Upload a trading chart to get AI signals</p>
               </div>
             )}
           </div>
