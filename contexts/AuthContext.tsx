@@ -34,7 +34,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const fetchUser = async (token: string) => {
     try {
-      const response = await fetch('https://lucky-mercy-production-45c7.up.railway.app/me', {
+      const response = await fetch('https://trading-chart-analyzer-production.up.railway.app/me', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -63,7 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await fetch('https://lucky-mercy-production-45c7.up.railway.app/login', {
+      const response = await fetch('https://trading-chart-analyzer-production.up.railway.app/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -88,7 +88,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const register = async (email: string, password: string, name: string) => {
     try {
-      const response = await fetch('https://lucky-mercy-production-45c7.up.railway.app/register', {
+      const response = await fetch('https://trading-chart-analyzer-production.up.railway.app/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, name })

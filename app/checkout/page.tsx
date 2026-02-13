@@ -75,7 +75,7 @@ function CheckoutContent() {
       const userInfo = getUserInfo();
       if (!userInfo) return;
       
-      const response = await fetch('https://lucky-mercy-production-45c7.up.railway.app/api/payment/create-checkout', {
+      const response = await fetch('https://trading-chart-analyzer-production.up.railway.app/api/payment/create-checkout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
