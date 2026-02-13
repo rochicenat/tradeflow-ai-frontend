@@ -200,8 +200,8 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {[
               { name: 'Free', price: '$0', analyses: '3', features: ['Basic analysis', 'Support/Resistance', 'Trend detection'] },
-              { name: 'Pro', price: '$19', analyses: '50', features: ['Everything in Free', 'Breakout detection', 'Trading strategies', 'Priority support'], highlight: true },
-              { name: 'Premium', price: '$49', analyses: 'Unlimited', features: ['Everything in Pro', 'Unlimited analyses', 'API access', 'Custom indicators'] }
+              { name: 'Pro', price: '$9.99', analyses: '50', features: ['Everything in Free', 'Breakout detection', 'Trading strategies', 'Priority support'], highlight: true },
+              { name: 'Premium', price: '$19.99', analyses: 'Unlimited', features: ['Everything in Pro', 'Unlimited analyses', 'API access', 'Custom indicators'] }
             ].map((plan, i) => (
               <div
                 key={i}
