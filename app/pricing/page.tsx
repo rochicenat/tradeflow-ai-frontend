@@ -16,8 +16,8 @@ export default function PricingPage() {
       analyses: 3,
       features: [
         'Basic AI analysis',
-        'Trend detection',
-        'Confidence scoring',
+        'Pattern recognition',
+        'Historical data insights',
         'Email support'
       ]
     },
@@ -29,10 +29,10 @@ export default function PricingPage() {
       features: [
         'Everything in Free',
         '50 analyses per month',
-        'Advanced AI insights',
-        'Support & resistance zones',
-        'Breakout detection',
-        'Trading strategies',
+        'Advanced probability models',
+        'Statistical analysis',
+        'Quantitative insights',
+        'Data visualization',
         'Priority support'
       ],
       popular: true
@@ -46,9 +46,9 @@ export default function PricingPage() {
         'Everything in Pro',
         'Unlimited analyses',
         'API access',
-        'Custom indicators',
-        'Real-time alerts',
-        'Portfolio tracking',
+        'Custom models',
+        'Real-time data processing',
+        'Research dashboard',
         '24/7 priority support',
         'Early access to features'
       ]
@@ -75,7 +75,7 @@ export default function PricingPage() {
           <Link href="/" className="flex items-center gap-2">
             <Activity className="w-8 h-8 text-cyan-400" />
             <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-              TradeFlow AI
+              DataFlow Analytics
             </span>
           </Link>
           <div className="flex items-center gap-4">
@@ -100,7 +100,7 @@ export default function PricingPage() {
               Simple, Transparent Pricing
             </h1>
             <p className="text-xl text-slate-400 mb-8">
-              Choose the plan that's right for you
+              Choose the plan that fits your research needs
             </p>
 
             {/* Toggle */}
@@ -195,12 +195,28 @@ export default function PricingPage() {
           ))}
         </div>
 
-        {/* Footer Note */}
+        {/* Disclaimer */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="text-center mt-12 text-slate-400 text-sm"
+          className="mt-16 bg-yellow-500/10 border border-yellow-500/30 rounded-2xl p-8 text-center"
+        >
+          <div className="inline-flex items-center gap-3 mb-3">
+            <span className="text-2xl">⚠️</span>
+            <h3 className="text-xl font-bold text-yellow-400">Educational Tool Disclaimer</h3>
+          </div>
+          <p className="text-slate-300 text-lg max-w-3xl mx-auto">
+            DataFlow Analytics is a research and educational AI data analytics platform. None of the information provided is financial or investment advice. All analyses are for educational and research purposes only.
+          </p>
+        </motion.div>
+
+        {/* Footer Note */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="text-center mt-8 text-slate-400 text-sm"
         >
           <p>All plans include SSL security, GDPR compliance, and 7-day money-back guarantee.</p>
           <p className="mt-2">
