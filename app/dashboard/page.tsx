@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import SettingsPage from '../components/SettingsPage';
+import HistoryPage from '../components/HistoryPage';
 
 interface AnalysisResult {
   analysis: string;
@@ -596,11 +597,7 @@ export default function AnalyticsDashboard() {
           )}
 
           {currentPage === 'history' && (
-            <div className="text-center py-20">
-              <History className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold text-slate-400 mb-2">Analysis History</h3>
-              <p className="text-slate-500">Coming soon - View all your past analyses</p>
-            </div>
+            <HistoryPage />
           )}
 
           {currentPage === 'settings' && (
