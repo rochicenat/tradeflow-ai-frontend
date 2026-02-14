@@ -29,6 +29,7 @@ import {
 import toast from 'react-hot-toast';
 import SettingsPage from '../components/SettingsPage';
 import HistoryPage from '../components/HistoryPage';
+import MarketAnalysisPage from '../components/MarketAnalysisPage';
 
 interface AnalysisResult {
   analysis: string;
@@ -589,11 +590,7 @@ export default function AnalyticsDashboard() {
           )}
 
           {currentPage === 'market' && (
-            <div className="text-center py-20">
-              <TrendingUp className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold text-slate-400 mb-2">Market Analysis</h3>
-              <p className="text-slate-500">Coming soon - Real-time market data insights</p>
-            </div>
+            <MarketAnalysisPage />
           )}
 
           {currentPage === 'history' && (
