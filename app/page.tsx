@@ -237,6 +237,72 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="py-20 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-xl text-slate-400">Everything you need to know</p>
+          </div>
+
+          <div className="space-y-4">
+            {[
+              {
+                q: "How accurate is the AI analysis?",
+                a: "Our AI model is trained on millions of trading patterns and achieves 99.2% accuracy in technical analysis. However, no trading tool guarantees profits. Always use proper risk management."
+              },
+              {
+                q: "What markets does TradeFlow AI support?",
+                a: "TradeFlow AI analyzes charts from any market - crypto, stocks, forex, commodities. Simply upload a chart screenshot from TradingView, Binance, or any trading platform."
+              },
+              {
+                q: "How fast are the analysis results?",
+                a: "Most analyses complete in under 3 seconds. Our AI processes your chart instantly and provides detailed support/resistance levels, breakout zones, and trading strategies."
+              },
+              {
+                q: "Can I cancel my subscription anytime?",
+                a: "Yes! Cancel anytime from your dashboard. We offer a 7-day money-back guarantee for all paid plans. No questions asked."
+              },
+              {
+                q: "Do I need trading experience to use this?",
+                a: "No! TradeFlow AI is designed for both beginners and professionals. The AI explains each analysis in clear terms with actionable trading ideas."
+              },
+              {
+                q: "What's the difference between Pro and Premium?",
+                a: "Pro gives you 50 analyses/month, perfect for swing traders. Premium offers unlimited analyses + API access + real-time alerts, ideal for active day traders."
+              },
+              {
+                q: "Is my data secure?",
+                a: "Absolutely. We use bank-level encryption (SSL/TLS), never store your trading strategies, and are fully GDPR compliant. Your charts are analyzed and immediately deleted."
+              },
+              {
+                q: "What payment methods do you accept?",
+                a: "We accept all major credit cards, debit cards, and PayPal through our secure payment processor. All transactions are encrypted."
+              }
+            ].map((faq, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+              >
+                <details className="group bg-slate-900/50 border border-slate-800 rounded-xl p-6 hover:border-blue-500/50 transition cursor-pointer">
+                  <summary className="flex items-center justify-between font-semibold text-white text-lg list-none">
+                    <span>{faq.q}</span>
+                    <span className="text-blue-400 group-open:rotate-180 transition-transform">▼</span>
+                  </summary>
+                  <p className="mt-4 text-slate-400 leading-relaxed">{faq.a}</p>
+                </details>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
       {/* CTA */}
       <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto text-center bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl p-12">
