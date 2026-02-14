@@ -12,7 +12,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <IconLogo className="w-8 h-8 text-blue-500" />
-            
+            <span className="text-2xl font-bold text-white">DataFlow Analytics</span>
           </div>
           <nav className="hidden md:flex items-center gap-8">
             <Link href="#features" className="text-slate-300 hover:text-white transition">Features</Link>
@@ -35,7 +35,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <div className="inline-block mb-4 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full">
-              <span className="text-blue-400 text-sm font-semibold">🚀 AI-Powered Technical Analysis</span>
+              <span className="text-blue-400 text-sm font-semibold">🚀 AI-Powered Data Analytics</span>
             </div>
             <h1 className="text-6xl md:text-7xl font-bold text-white mb-6 leading-tight">
               Professional Chart Analysis
@@ -45,7 +45,7 @@ export default function Home() {
               </span>
             </h1>
             <p className="text-xl text-slate-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Upload any trading chart and get instant AI-powered technical analysis with support/resistance levels, breakout zones, and actionable trading strategies.
+              Upload any market chart and get instant AI-powered technical analysis with historical patterns, statistical probability, and quantitative insights for educational research.
             </p>
             <div className="flex gap-4 justify-center">
               <Link href="/signup" className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:from-blue-700 hover:to-cyan-700 transition shadow-lg shadow-blue-500/50">
@@ -66,11 +66,11 @@ export default function Home() {
           >
             <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
               <div className="text-4xl font-bold text-blue-400 mb-2">99.2%</div>
-              <div className="text-slate-400">Analysis Accuracy</div>
+              <div className="text-slate-400">Pattern Recognition Accuracy</div>
             </div>
             <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
               <div className="text-4xl font-bold text-cyan-400 mb-2">&lt;3s</div>
-              <div className="text-slate-400">Average Response Time</div>
+              <div className="text-slate-400">Average Analysis Time</div>
             </div>
             <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
               <div className="text-4xl font-bold text-green-400 mb-2">24/7</div>
@@ -85,32 +85,32 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Professional Analysis Tools
+              Professional Data Analytics Tools
             </h2>
-            <p className="text-xl text-slate-400">Everything you need for informed trading decisions</p>
+            <p className="text-xl text-slate-400">Everything you need for market research and pattern analysis</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
                 icon: '📊',
-                title: 'Support & Resistance',
-                description: 'AI identifies critical price levels with precision, helping you spot entry and exit zones instantly.'
+                title: 'Historical Pattern Analysis',
+                description: 'AI identifies critical price patterns and statistical trends with precision, helping you understand market structure.'
               },
               {
                 icon: '🚀',
-                title: 'Breakout Detection',
-                description: 'Get alerted to potential bullish and bearish breakout scenarios with price targets and conditions.'
+                title: 'Probability Modeling',
+                description: 'Get statistical probability models for potential market scenarios with quantitative data analysis.'
               },
               {
                 icon: '📈',
                 title: 'Technical Indicators',
-                description: 'RSI, MACD, EMA analysis automatically extracted from your charts with actionable insights.'
+                description: 'RSI, MACD, EMA analysis automatically extracted from your charts with actionable data insights.'
               },
               {
                 icon: '💡',
-                title: 'Trading Strategies',
-                description: 'Receive complete trade setups including entry points, stop loss, and profit targets.'
+                title: 'Data Visualization',
+                description: 'Comprehensive visual analysis including data patterns, probability zones, and research insights.'
               },
               {
                 icon: '⚡',
@@ -120,7 +120,7 @@ export default function Home() {
               {
                 icon: '🎯',
                 title: 'Confidence Scoring',
-                description: 'Every analysis includes a confidence score so you know how reliable the signals are.'
+                description: 'Every analysis includes a statistical confidence score based on historical data patterns.'
               }
             ].map((feature, i) => (
               <motion.div
@@ -147,7 +147,7 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
               How It Works
             </h2>
-            <p className="text-xl text-slate-400">Three simple steps to professional analysis</p>
+            <p className="text-xl text-slate-400">Three simple steps to professional data analysis</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -155,19 +155,19 @@ export default function Home() {
               {
                 step: '01',
                 title: 'Upload Your Chart',
-                description: 'Drag and drop any trading chart screenshot from TradingView, Binance, or any platform.',
+                description: 'Drag and drop any market chart screenshot from TradingView, data platforms, or any source.',
                 icon: '📤'
               },
               {
                 step: '02',
                 title: 'AI Analyzes',
-                description: 'Our advanced AI model processes the chart using technical analysis algorithms in real-time.',
+                description: 'Our advanced AI model processes the chart using quantitative analysis algorithms and historical pattern recognition.',
                 icon: '🤖'
               },
               {
                 step: '03',
                 title: 'Get Insights',
-                description: 'Receive detailed analysis with trend direction, key levels, and actionable trading strategies.',
+                description: 'Receive detailed data analysis with pattern probabilities, statistical levels, and research insights for educational purposes.',
                 icon: '✅'
               }
             ].map((item, i) => (
@@ -194,7 +194,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Trusted by Traders Worldwide
+              Trusted by Researchers Worldwide
             </h2>
             <p className="text-xl text-slate-400">See what our users are saying</p>
           </div>
@@ -203,31 +203,24 @@ export default function Home() {
             {[
               {
                 name: "Sarah Miller",
-                role: "Day Trader",
+                role: "Data Analyst",
                 avatar: "SM",
                 rating: 5,
-                text: "Game changed! Trend IQ's AI spotted a perfect breakout I would've missed. Made back my subscription in one trade."
+                text: "Incredible pattern recognition! The AI spotted historical correlations I completely missed in my market research."
               },
               {
                 name: "Mike Chen",
-                role: "Crypto Trader",
+                role: "Quantitative Researcher",
                 avatar: "MC",
                 rating: 5,
-                text: "Been trading for 5 years but always struggled with pattern recognition. Trend IQ's analysis is spot on every time."
+                text: "Been analyzing data for 5 years. This tool's statistical probability models are exceptionally accurate for research."
               },
               {
                 name: "Jennifer Rodriguez",
-                role: "Swing Trader",
+                role: "Market Analyst",
                 avatar: "JR",
                 rating: 5,
-                text: "Started as a beginner. The AI analysis helped me understand market patterns I never noticed before."
-              },
-              {
-                name: "Alex Torres",
-                role: "Scalp Trader",
-                avatar: "AT",
-                rating: 5,
-                text: "The pattern recognition is instant. Catches setups I would have missed and saves me hours of chart analysis."
+                text: "Perfect educational tool. The AI analysis helped me understand complex market patterns for my thesis research."
               }
             ].map((testimonial, i) => (
               <motion.div
@@ -254,14 +247,13 @@ export default function Home() {
                 </div>
                 <p className="text-slate-300 leading-relaxed">"{testimonial.text}"</p>
               </motion.div>
-            )).slice(0, 3)}
+            ))}
           </div>
         </div>
       </section>
 
-
       {/* Pricing Preview */}
-      <section className="py-20 px-6 bg-slate-900/30">
+      <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Choose Your Plan
@@ -270,9 +262,9 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {[
-              { name: 'Free', price: '$0', analyses: '3', features: ['Basic analysis', 'Support/Resistance', 'Trend detection'] },
-              { name: 'Pro', price: '$9.99', analyses: '50', features: ['Everything in Free', 'Breakout detection', 'Trading strategies', 'Priority support'], highlight: true },
-              { name: 'Premium', price: '$19.99', analyses: 'Unlimited', features: ['Everything in Pro', 'Unlimited analyses', 'API access', 'Custom indicators'] }
+              { name: 'Free', price: '$0', analyses: '3', features: ['Basic analysis', 'Pattern recognition', 'Historical data'] },
+              { name: 'Pro', price: '$9.99', analyses: '50', features: ['Everything in Free', 'Advanced probability models', 'Quantitative insights', 'Priority support'], highlight: true },
+              { name: 'Premium', price: '$19.99', analyses: 'Unlimited', features: ['Everything in Pro', 'Unlimited analyses', 'API access', 'Custom models'] }
             ].map((plan, i) => (
               <div
                 key={i}
@@ -308,7 +300,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* FAQ */}
       <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
@@ -322,31 +314,31 @@ export default function Home() {
             {[
               {
                 q: "How accurate is the AI analysis?",
-                a: "Our AI model is trained on millions of trading patterns and achieves 99.2% accuracy in technical analysis. However, no trading tool guarantees profits. Always use proper risk management."
+                a: "Our AI model is trained on millions of historical market patterns and achieves 99.2% accuracy in technical pattern recognition for research purposes. This is an educational data analytics tool, not financial advice."
               },
               {
-                q: "What markets does TradeFlow AI support?",
-                a: "TradeFlow AI analyzes charts from any market - crypto, stocks, forex, commodities. Simply upload a chart screenshot from TradingView, Binance, or any trading platform."
+                q: "What data sources does DataFlow Analytics support?",
+                a: "DataFlow Analytics processes charts from any source - crypto, stocks, forex, commodities. Simply upload a chart screenshot from TradingView, data platforms, or any visualization tool."
               },
               {
                 q: "How fast are the analysis results?",
-                a: "Most analyses complete in under 3 seconds. Our AI processes your chart instantly and provides detailed support/resistance levels, breakout zones, and trading strategies."
+                a: "Most analyses complete in under 3 seconds. Our AI processes your chart instantly and provides detailed historical patterns, probability zones, and quantitative insights."
               },
               {
                 q: "Can I cancel my subscription anytime?",
                 a: "Yes! Cancel anytime from your dashboard. We offer a 7-day money-back guarantee for all paid plans. No questions asked."
               },
               {
-                q: "Do I need trading experience to use this?",
-                a: "No! TradeFlow AI is designed for both beginners and professionals. The AI explains each analysis in clear terms with actionable trading ideas."
+                q: "Do I need data analysis experience to use this?",
+                a: "No! DataFlow Analytics is designed for both beginners and professional researchers. The AI explains each analysis in clear terms with educational insights."
               },
               {
                 q: "What's the difference between Pro and Premium?",
-                a: "Pro gives you 50 analyses/month, perfect for swing traders. Premium offers unlimited analyses + API access + real-time alerts, ideal for active day traders."
+                a: "Pro gives you 50 analyses/month, perfect for regular research. Premium offers unlimited analyses + API access + advanced models, ideal for professional researchers."
               },
               {
                 q: "Is my data secure?",
-                a: "Absolutely. We use bank-level encryption (SSL/TLS), never store your trading strategies, and are fully GDPR compliant. Your charts are analyzed and immediately deleted."
+                a: "Absolutely. We use bank-level encryption (SSL/TLS), never store your research data permanently, and are fully GDPR compliant. Charts are analyzed and immediately deleted."
               },
               {
                 q: "What payment methods do you accept?",
@@ -373,19 +365,31 @@ export default function Home() {
         </div>
       </section>
 
-
       {/* CTA */}
       <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto text-center bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl p-12">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Ready to Trade Smarter?
+            Ready for Smarter Data Analysis?
           </h2>
           <p className="text-xl text-blue-100 mb-8">
-            Join thousands of traders using AI-powered analysis
+            Join thousands of researchers using AI-powered analytics
           </p>
           <Link href="/signup" className="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-slate-100 transition">
             Start Free Trial
           </Link>
+        </div>
+      </section>
+
+      {/* Disclaimer */}
+      <section className="py-12 px-6 bg-yellow-500/10 border-t border-yellow-500/30">
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="inline-flex items-center gap-3 mb-4">
+            <span className="text-3xl">⚠️</span>
+            <h3 className="text-2xl font-bold text-yellow-400">Important Disclaimer</h3>
+          </div>
+          <p className="text-xl text-white font-semibold max-w-4xl mx-auto leading-relaxed">
+            None of the information provided on this platform is financial or investment advice. This is strictly an educational AI data analytics tool for market research and pattern analysis purposes only.
+          </p>
         </div>
       </section>
 
@@ -395,9 +399,9 @@ export default function Home() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <IconLogo className="w-6 h-6 text-blue-500" />
-              <span className="text-xl font-bold text-white">TradeFlow AI</span>
+              <span className="text-xl font-bold text-white">DataFlow Analytics</span>
             </div>
-            <p className="text-slate-400 text-sm">Professional trading analysis powered by AI</p>
+            <p className="text-slate-400 text-sm">Professional data analytics powered by AI</p>
           </div>
           <div>
             <h4 className="text-white font-semibold mb-4">Product</h4>
@@ -423,7 +427,7 @@ export default function Home() {
           </div>
         </div>
         <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-slate-800 text-center text-slate-500 text-sm">
-          © 2026 TradeFlow AI. All rights reserved.
+          © 2026 DataFlow Analytics. All rights reserved. Educational data analytics tool only.
         </div>
       </footer>
     </div>
