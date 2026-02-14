@@ -1,7 +1,7 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, Header
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-from database import User, SessionLocal, engine, Base
+from database import User, Analysis, SessionLocal, engine, Base
 from passlib.context import CryptContext
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
@@ -28,15 +28,10 @@ genai.configure(api_key=GOOGLE_API_KEY)
 
 app = FastAPI()
 
-# CORS
+# CORS - Allow all origins for now
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "https://tradeflow-ai-frontend.vercel.app",
-        "https://tradeflowai.cloud",
-        "https://www.tradeflowai.cloud"
-    ],
+    allow_origins=["*"],  # Allow all origins temporarily
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -191,6 +186,15 @@ Keep it SHORT, EDUCATIONAL, and DATA-FOCUSED. This is for research purposes only
         }
         trend = trend_map.get(trend_line.upper(), "sideways")
         
+        # Save to history
+        analysis_record = Analysis(
+            user_email=current_user.email,
+            trend=trend,
+            confidence=confidence_line,
+            analysis_text=analysis_text
+        )
+        db.add(analysis_record)
+        
         # Increment usage
         current_user.analyses_used += 1
         db.commit()
@@ -203,6 +207,26 @@ Keep it SHORT, EDUCATIONAL, and DATA-FOCUSED. This is for research purposes only
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/analysis-history")
+def get_analysis_history(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    analyses = db.query(Analysis).filter(
+        Analysis.user_email == current_user.email
+    ).order_by(Analysis.created_at.desc()).limit(50).all()
+    
+    return [
+        {
+            "id": analysis.id,
+            "trend": analysis.trend,
+            "confidence": analysis.confidence,
+            "analysis_text": analysis.analysis_text[:200] if len(analysis.analysis_text) > 200 else analysis.analysis_text,
+            "created_at": analysis.created_at.isoformat()
+        }
+        for analysis in analyses
+    ]
 
 @app.post("/debug/upgrade-plan")
 def debug_upgrade_plan(
