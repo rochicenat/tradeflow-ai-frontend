@@ -189,6 +189,77 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Testimonials */}
+      <section className="py-20 px-6 bg-slate-900/30">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Trusted by Traders Worldwide
+            </h2>
+            <p className="text-xl text-slate-400">See what our users are saying</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Sarah Miller",
+                role: "Day Trader",
+                avatar: "SM",
+                rating: 5,
+                text: "Game changed! Trend IQ's AI spotted a perfect breakout I would've missed. Made back my subscription in one trade."
+              },
+              {
+                name: "Mike Chen",
+                role: "Crypto Trader",
+                avatar: "MC",
+                rating: 5,
+                text: "Been trading for 5 years but always struggled with pattern recognition. Trend IQ's analysis is spot on every time."
+              },
+              {
+                name: "Jennifer Rodriguez",
+                role: "Swing Trader",
+                avatar: "JR",
+                rating: 5,
+                text: "Started as a beginner. The AI analysis helped me understand market patterns I never noticed before."
+              },
+              {
+                name: "Alex Torres",
+                role: "Scalp Trader",
+                avatar: "AT",
+                rating: 5,
+                text: "The pattern recognition is instant. Catches setups I would have missed and saves me hours of chart analysis."
+              }
+            ].map((testimonial, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-slate-900/50 border border-slate-800 rounded-2xl p-8 hover:border-blue-500/50 transition"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold">
+                    {testimonial.avatar}
+                  </div>
+                  <div>
+                    <div className="font-semibold text-white">{testimonial.name}</div>
+                    <div className="text-sm text-slate-400">{testimonial.role}</div>
+                  </div>
+                </div>
+                <div className="flex gap-1 mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <span key={i} className="text-yellow-400">★</span>
+                  ))}
+                </div>
+                <p className="text-slate-300 leading-relaxed">"{testimonial.text}"</p>
+              </motion.div>
+            )).slice(0, 3)}
+          </div>
+        </div>
+      </section>
+
+
       {/* Pricing Preview */}
       <section className="py-20 px-6 bg-slate-900/30">
         <div className="max-w-7xl mx-auto text-center">
