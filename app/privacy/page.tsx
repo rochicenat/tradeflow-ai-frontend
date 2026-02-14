@@ -1,197 +1,227 @@
 'use client';
-import { IconLogo } from '@/components/Logo';
+
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { Activity } from 'lucide-react';
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
-      {/* Header */}
-      <header className="border-b border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center max-w-6xl">
-          <IconLogo />
-          <Link 
-            href="/"
-            className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-          >
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+      <header className="border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <Activity className="w-8 h-8 text-cyan-400" />
+            <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              DataFlow Analytics
+            </span>
+          </Link>
+          <Link href="/" className="text-sm text-slate-300 hover:text-white transition">
             Back to Home
           </Link>
         </div>
       </header>
 
-      {/* Content */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="container mx-auto px-4 py-16 max-w-4xl"
+        className="max-w-4xl mx-auto px-6 py-16"
       >
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-8">
-          Privacy Policy
-        </h1>
-        
-        <div className="prose prose-gray dark:prose-invert max-w-none">
-          <p className="text-gray-600 dark:text-gray-300 mb-6">
-            Last updated: February 13, 2026
-          </p>
+        <h1 className="text-5xl font-bold text-white mb-4">Privacy Policy</h1>
+        <p className="text-slate-400 mb-8">Last updated: February 14, 2026</p>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              1. Information We Collect
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              We collect the following types of information:
+        <div className="prose prose-invert max-w-none space-y-8">
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">1. Introduction</h2>
+            <p className="text-slate-300 leading-relaxed">
+              DataFlow Analytics ("we," "our," or "us") is committed to protecting your privacy. 
+              This Privacy Policy explains how we collect, use, and safeguard your information when you 
+              use our educational AI data analytics platform.
             </p>
-            <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-2">
-              <li><strong>Account Information:</strong> Email address, name, and password</li>
-              <li><strong>Usage Data:</strong> Chart uploads, analysis requests, and feature usage</li>
-              <li><strong>Payment Information:</strong> Processed securely through our payment provider</li>
-              <li><strong>Technical Data:</strong> IP address, browser type, device information</li>
+            <p className="text-slate-300 leading-relaxed mt-4">
+              We are GDPR and KVKK compliant and follow industry best practices for data protection.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">2. Information We Collect</h2>
+            
+            <h3 className="text-2xl font-semibold text-white mb-3 mt-6">2.1 Account Information</h3>
+            <p className="text-slate-300 leading-relaxed">When you register, we collect:</p>
+            <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4 mt-2">
+              <li>Email address</li>
+              <li>Full name</li>
+              <li>Encrypted password (bcrypt hashed)</li>
+              <li>Subscription plan type</li>
+            </ul>
+
+            <h3 className="text-2xl font-semibold text-white mb-3 mt-6">2.2 Usage Data</h3>
+            <p className="text-slate-300 leading-relaxed">We automatically collect:</p>
+            <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4 mt-2">
+              <li>Number of analyses performed</li>
+              <li>Timestamp of platform usage</li>
+              <li>Browser type and version</li>
+              <li>Device information (non-identifying)</li>
+            </ul>
+
+            <h3 className="text-2xl font-semibold text-white mb-3 mt-6">2.3 Payment Information</h3>
+            <p className="text-slate-300 leading-relaxed">
+              Payment processing is handled by third-party processors (Paddle/Stripe). We do NOT store 
+              your credit card details. We only receive:
+            </p>
+            <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4 mt-2">
+              <li>Payment confirmation status</li>
+              <li>Transaction ID (for refund purposes)</li>
+              <li>Subscription status</li>
+            </ul>
+
+            <h3 className="text-2xl font-semibold text-white mb-3 mt-6">2.4 Uploaded Chart Data</h3>
+            <p className="text-slate-300 leading-relaxed font-semibold text-lg">
+              IMPORTANT: Uploaded charts are processed instantly by our AI and <strong>immediately deleted</strong>. 
+              We do NOT store your research data or chart images permanently.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">3. How We Use Your Information</h2>
+            <p className="text-slate-300 leading-relaxed">We use collected data to:</p>
+            <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4 mt-2">
+              <li>Provide and improve our AI analytics service</li>
+              <li>Manage your account and subscription</li>
+              <li>Process payments and send receipts</li>
+              <li>Send service updates and important notices</li>
+              <li>Monitor platform usage and prevent abuse</li>
+              <li>Comply with legal obligations</li>
+            </ul>
+            <p className="text-slate-300 leading-relaxed mt-4">
+              We do NOT use your data for advertising or sell it to third parties.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">4. Data Security</h2>
+            <p className="text-slate-300 leading-relaxed">We protect your data using:</p>
+            <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4 mt-2">
+              <li><strong>HTTPS/TLS encryption</strong> for all data transmission</li>
+              <li><strong>Bcrypt password hashing</strong> (passwords never stored in plain text)</li>
+              <li><strong>Secure hosting</strong> on Vercel (frontend) and Railway (backend)</li>
+              <li><strong>Database encryption</strong> for stored user data</li>
+              <li><strong>Regular security audits</strong> and updates</li>
+              <li><strong>Limited employee access</strong> to personal data</li>
             </ul>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              2. How We Use Your Information
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              We use collected information to:
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">5. Third-Party Sharing</h2>
+            <p className="text-slate-300 leading-relaxed">We share data only with:</p>
+
+            <h3 className="text-2xl font-semibold text-white mb-3 mt-6">5.1 Payment Processors</h3>
+            <p className="text-slate-300 leading-relaxed">
+              Paddle/Stripe process payments securely. They have their own privacy policies.
             </p>
-            <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-2">
-              <li>Provide and improve our AI analysis services</li>
-              <li>Process payments and manage subscriptions</li>
-              <li>Send service-related notifications and updates</li>
-              <li>Analyze usage patterns to enhance user experience</li>
-              <li>Prevent fraud and ensure platform security</li>
+
+            <h3 className="text-2xl font-semibold text-white mb-3 mt-6">5.2 AI Service Provider</h3>
+            <p className="text-slate-300 leading-relaxed">
+              Google Gemini API processes uploaded charts. Charts are sent <strong>anonymously</strong> 
+              (no user identification) and Google does not store them per their API terms.
+            </p>
+
+            <h3 className="text-2xl font-semibold text-white mb-3 mt-6">5.3 Analytics</h3>
+            <p className="text-slate-300 leading-relaxed">
+              We may use privacy-friendly analytics (e.g., Plausible) to understand platform usage. 
+              No personal data is shared.
+            </p>
+
+            <h3 className="text-2xl font-semibold text-white mb-3 mt-6">5.4 Legal Requirements</h3>
+            <p className="text-slate-300 leading-relaxed">
+              We may disclose data if required by law, court order, or to protect our rights.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">6. Your Rights (GDPR/KVKK)</h2>
+            <p className="text-slate-300 leading-relaxed">You have the right to:</p>
+            <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4 mt-2">
+              <li><strong>Access:</strong> Request a copy of your data</li>
+              <li><strong>Correction:</strong> Update inaccurate information</li>
+              <li><strong>Deletion:</strong> Request account and data deletion</li>
+              <li><strong>Portability:</strong> Export your data in machine-readable format</li>
+              <li><strong>Withdraw consent:</strong> Opt-out of marketing emails</li>
+              <li><strong>Object:</strong> Object to certain data processing activities</li>
+            </ul>
+            <p className="text-slate-300 leading-relaxed mt-4">
+              To exercise these rights, contact{' '}
+              <a href="mailto:privacy@tradeflowai.cloud" className="text-cyan-400 hover:underline">
+                privacy@tradeflowai.cloud
+              </a>
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">7. Data Retention</h2>
+            <p className="text-slate-300 leading-relaxed">We retain data as follows:</p>
+            <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4 mt-2">
+              <li><strong>Account data:</strong> Until you request deletion (+ 30 days grace period)</li>
+              <li><strong>Payment records:</strong> 7 years (legal requirement for tax purposes)</li>
+              <li><strong>Uploaded charts:</strong> Immediately deleted after analysis (NOT stored)</li>
+              <li><strong>Usage logs:</strong> 90 days for security monitoring</li>
             </ul>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              3. Data Storage and Security
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Your data security is our priority:
-            </p>
-            <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-2">
-              <li>All data is encrypted in transit using HTTPS/TLS</li>
-              <li>Passwords are hashed using industry-standard bcrypt</li>
-              <li>Database hosted on secure cloud infrastructure (Railway)</li>
-              <li>Regular security audits and updates</li>
-              <li>Access controls and authentication mechanisms</li>
-            </ul>
-          </section>
-
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              4. Data Sharing and Third Parties
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              We do NOT sell your personal data. We may share data with:
-            </p>
-            <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-2">
-              <li><strong>Payment Processors:</strong> To process transactions securely</li>
-              <li><strong>AI Services:</strong> Google Gemini API for chart analysis (anonymized data)</li>
-              <li><strong>Analytics Tools:</strong> For usage statistics (anonymized)</li>
-              <li><strong>Legal Requirements:</strong> When required by law or court order</li>
-            </ul>
-          </section>
-
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              5. Cookies and Tracking
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              We use essential cookies for authentication and session management. We do not use 
-              third-party advertising cookies. You can disable cookies in your browser settings, 
-              but this may affect service functionality.
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">8. Cookies</h2>
+            <p className="text-slate-300 leading-relaxed">
+              We use essential cookies for authentication and session management only. 
+              No third-party tracking cookies are used.
             </p>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              6. Your Rights (GDPR & KVKK Compliance)
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              You have the right to:
-            </p>
-            <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-2">
-              <li>Access your personal data</li>
-              <li>Request data correction or deletion</li>
-              <li>Export your data in portable format</li>
-              <li>Withdraw consent for data processing</li>
-              <li>Object to automated decision-making</li>
-            </ul>
-            <p className="text-gray-600 dark:text-gray-300 mt-4">
-              To exercise these rights, contact us at: privacy@tradeflowai.cloud
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">9. International Transfers</h2>
+            <p className="text-slate-300 leading-relaxed">
+              Data is stored on servers in the EU/US (Railway/Vercel). We ensure GDPR-compliant 
+              data transfer mechanisms are in place.
             </p>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              7. Data Retention
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              We retain your data as long as your account is active. After account deletion:
-            </p>
-            <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-2 mt-4">
-              <li>Personal data is deleted within 30 days</li>
-              <li>Anonymized usage statistics may be retained for analytics</li>
-              <li>Financial records retained as required by law (typically 7 years)</li>
-            </ul>
-          </section>
-
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              8. Children's Privacy
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              TradeFlow AI is not intended for users under 18 years of age. We do not knowingly 
-              collect data from children. If we discover such data, it will be deleted immediately.
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">10. Children's Privacy</h2>
+            <p className="text-slate-300 leading-relaxed">
+              DataFlow Analytics is not intended for users under 18. We do not knowingly collect 
+              data from minors. If you believe a minor has provided data, contact us immediately.
             </p>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              9. International Data Transfers
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              Your data may be processed in servers located outside your country. We ensure 
-              adequate data protection measures are in place for all transfers.
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">11. Changes to This Policy</h2>
+            <p className="text-slate-300 leading-relaxed">
+              We may update this Privacy Policy periodically. Changes will be posted with a new 
+              "Last updated" date. Continued use constitutes acceptance.
             </p>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              10. Changes to This Policy
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              We may update this Privacy Policy periodically. Significant changes will be notified 
-              via email. Continued use of the service constitutes acceptance of updates.
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">12. Contact Us</h2>
+            <p className="text-slate-300 leading-relaxed">
+              For privacy questions or to exercise your rights:
             </p>
-          </section>
-
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              11. Contact Us
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              For privacy-related questions or requests:
-              <br />
-              Email: privacy@tradeflowai.cloud
-              <br />
-              Support: support@tradeflowai.cloud
+            <p className="text-slate-300 leading-relaxed mt-2">
+              Email: <a href="mailto:privacy@tradeflowai.cloud" className="text-cyan-400 hover:underline">
+                privacy@tradeflowai.cloud
+              </a>
+            </p>
+            <p className="text-slate-300 leading-relaxed mt-2">
+              Website: <a href="https://tradeflowai.cloud" className="text-cyan-400 hover:underline">
+                tradeflowai.cloud
+              </a>
             </p>
           </section>
         </div>
       </motion.div>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-200 dark:border-gray-700 py-8">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            © 2026 TradeFlow AI. All rights reserved.
-          </p>
+      <footer className="border-t border-slate-800 py-8">
+        <div className="max-w-7xl mx-auto px-6 text-center text-slate-500 text-sm">
+          © 2026 DataFlow Analytics. Educational research tool only.
         </div>
       </footer>
     </div>
