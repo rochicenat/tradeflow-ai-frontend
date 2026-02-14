@@ -6,7 +6,7 @@ import { IconLogo } from '@/components/Logo';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black">
       {/* Header */}
       <header className="fixed top-0 w-full bg-slate-950/80 backdrop-blur-md border-b border-slate-800 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -19,7 +19,7 @@ export default function Home() {
             <Link href="#how-it-works" className="text-slate-300 hover:text-white transition">How It Works</Link>
             <Link href="/pricing" className="text-slate-300 hover:text-white transition">Pricing</Link>
             <Link href="/login" className="text-slate-300 hover:text-white transition">Login</Link>
-            <Link href="/signup" className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-cyan-700 transition">
+            <Link href="/signup" className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-cyan-700 transition">
               Start Free
             </Link>
           </nav>
@@ -34,8 +34,8 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-block mb-4 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full">
-              <span className="text-blue-400 text-sm font-semibold">🚀 AI-Powered Data Analytics</span>
+            <div className="inline-block mb-4 px-4 py-2 bg-blue-500/10 border border-orange-500/20 rounded-full">
+              <span className="text-orange-500 text-sm font-semibold">🚀 AI-Powered Data Analytics</span>
             </div>
             <h1 className="text-6xl md:text-7xl font-bold text-white mb-6 leading-tight">
               Professional Chart Analysis
@@ -48,7 +48,7 @@ export default function Home() {
               Upload any market chart and get instant AI-powered technical analysis with historical patterns, statistical probability, and quantitative insights for educational research.
             </p>
             <div className="flex gap-4 justify-center">
-              <Link href="/signup" className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:from-blue-700 hover:to-cyan-700 transition shadow-lg shadow-blue-500/50">
+              <Link href="/signup" className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:from-blue-700 hover:to-cyan-700 transition shadow-lg shadow-blue-500/50">
                 Get Started Free
               </Link>
               <Link href="#how-it-works" className="bg-slate-800 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-slate-700 transition border border-slate-700">
@@ -65,11 +65,11 @@ export default function Home() {
             className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto"
           >
             <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
-              <div className="text-4xl font-bold text-blue-400 mb-2">99.2%</div>
+              <div className="text-4xl font-bold text-orange-500 mb-2">99.2%</div>
               <div className="text-slate-400">Pattern Recognition Accuracy</div>
             </div>
             <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
-              <div className="text-4xl font-bold text-cyan-400 mb-2">&lt;3s</div>
+              <div className="text-4xl font-bold text-orange-500 mb-2">&lt;3s</div>
               <div className="text-slate-400">Average Analysis Time</div>
             </div>
             <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
@@ -129,7 +129,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-slate-900/50 border border-slate-800 rounded-xl p-8 hover:border-blue-500/50 transition"
+                className="bg-slate-900/50 border border-slate-800 rounded-xl p-8 hover:border-orange-500/50 transition"
               >
                 <div className="text-5xl mb-4">{feature.icon}</div>
                 <h3 className="text-2xl font-bold text-white mb-3">{feature.title}</h3>
@@ -229,7 +229,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-slate-900/50 border border-slate-800 rounded-2xl p-8 hover:border-blue-500/50 transition"
+                className="bg-slate-900/50 border border-slate-800 rounded-2xl p-8 hover:border-orange-500/50 transition"
               >
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold">
@@ -270,7 +270,7 @@ export default function Home() {
                 key={i}
                 className={`rounded-xl p-8 ${
                   plan.highlight
-                    ? 'bg-gradient-to-b from-blue-600 to-cyan-600 scale-105'
+                    ? 'bg-gradient-to-b from-orange-500 to-orange-600 scale-105'
                     : 'bg-slate-900 border border-slate-800'
                 }`}
               >
@@ -289,7 +289,7 @@ export default function Home() {
                   className={`block w-full py-3 rounded-lg font-semibold transition ${
                     plan.highlight
                       ? 'bg-white text-blue-600 hover:bg-slate-100'
-                      : 'bg-blue-600 text-white hover:bg-blue-700'
+                      : 'bg-orange-500 text-white hover:bg-orange-600'
                   }`}
                 >
                   Get Started
@@ -352,10 +352,10 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
               >
-                <details className="group bg-slate-900/50 border border-slate-800 rounded-xl p-6 hover:border-blue-500/50 transition cursor-pointer">
+                <details className="group bg-slate-900/50 border border-slate-800 rounded-xl p-6 hover:border-orange-500/50 transition cursor-pointer">
                   <summary className="flex items-center justify-between font-semibold text-white text-lg list-none">
                     <span>{faq.q}</span>
-                    <span className="text-blue-400 group-open:rotate-180 transition-transform">▼</span>
+                    <span className="text-orange-500 group-open:rotate-180 transition-transform">▼</span>
                   </summary>
                   <p className="mt-4 text-slate-400 leading-relaxed">{faq.a}</p>
                 </details>
@@ -367,7 +367,7 @@ export default function Home() {
 
       {/* CTA */}
       <section className="py-20 px-6">
-        <div className="max-w-4xl mx-auto text-center bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl p-12">
+        <div className="max-w-4xl mx-auto text-center bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl p-12">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Ready for Smarter Data Analysis?
           </h2>
