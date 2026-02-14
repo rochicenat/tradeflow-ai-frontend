@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Activity, Mail, Lock, User as UserIcon, ArrowRight } from 'lucide-react';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function SignupPage() {
   const router = useRouter();
@@ -25,17 +25,17 @@ export default function SignupPage() {
         body: new URLSearchParams({ email, password, name })
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.detail || 'Registration failed');
+        throw new Error(data.detail || 'Registration failed');
       }
 
-      const data = await response.json();
       localStorage.setItem('token', data.access_token);
       toast.success('Account created successfully!');
-      router.push('/dashboard');
+      setTimeout(() => router.push('/dashboard'), 500);
     } catch (error: any) {
-      toast.error(error.message || 'Signup failed');
+      toast.error(error.message || 'Signup failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -43,6 +43,8 @@ export default function SignupPage() {
 
   return (
     <div className="min-h-screen bg-black flex">
+      <Toaster position="top-right" />
+      
       {/* Left Side - Visual */}
       <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-orange-500 to-orange-600 items-center justify-center p-12">
         <motion.div
@@ -150,10 +152,10 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Creating account...' : 'Create Account'}
-              <ArrowRight className="w-5 h-5" />
+              {!loading && <ArrowRight className="w-5 h-5" />}
             </button>
           </form>
 
