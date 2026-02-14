@@ -68,12 +68,12 @@ export default function PricingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black">
       {/* Header */}
       <header className="border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <Activity className="w-8 h-8 text-cyan-400" />
+            <Activity className="w-8 h-8 text-orange-500" />
             <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
               DataFlow Analytics
             </span>
@@ -82,7 +82,7 @@ export default function PricingPage() {
             <Link href="/login" className="text-slate-300 hover:text-white transition">
               Login
             </Link>
-            <Link href="/signup" className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-cyan-700 transition">
+            <Link href="/signup" className="bg-gradient-to-r bg-orange-500 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-cyan-700 transition">
               Start Free
             </Link>
           </div>
@@ -109,7 +109,7 @@ export default function PricingPage() {
                 onClick={() => setIsAnnual(false)}
                 className={`px-6 py-2 rounded-full font-semibold transition ${
                   !isAnnual 
-                    ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white' 
+                    ? 'bg-gradient-to-r bg-orange-500 text-white' 
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -119,7 +119,7 @@ export default function PricingPage() {
                 onClick={() => setIsAnnual(true)}
                 className={`px-6 py-2 rounded-full font-semibold transition relative ${
                   isAnnual 
-                    ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white' 
+                    ? 'bg-gradient-to-r bg-orange-500 text-white' 
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -142,12 +142,12 @@ export default function PricingPage() {
               transition={{ delay: index * 0.1 }}
               className={`rounded-2xl p-8 relative ${
                 plan.popular
-                  ? 'bg-gradient-to-b from-blue-600/20 to-cyan-600/20 border-2 border-blue-500/50 scale-105'
+                  ? 'bg-gradient-to-b bg-orange-500/20 border-2 border-orange-500/50 scale-105'
                   : 'bg-slate-900/50 border border-slate-800'
               }`}
             >
               {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r bg-orange-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
                   Most Popular
                 </div>
               )}
@@ -185,7 +185,7 @@ export default function PricingPage() {
                 href="/signup"
                 className={`block w-full py-3 rounded-lg font-semibold text-center transition ${
                   plan.popular
-                    ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white hover:from-blue-700 hover:to-cyan-700'
+                    ? 'bg-gradient-to-r bg-orange-500 text-white hover:from-blue-700 hover:to-cyan-700'
                     : 'bg-slate-800 text-white hover:bg-slate-700'
                 }`}
               >
@@ -220,7 +220,7 @@ export default function PricingPage() {
         >
           <p>All plans include SSL security, GDPR compliance, and 7-day money-back guarantee.</p>
           <p className="mt-2">
-            Need help choosing? <Link href="/about" className="text-cyan-400 hover:underline">Contact us</Link>
+            Need help choosing? <Link href="/about" className="text-orange-500 hover:underline">Contact us</Link>
           </p>
         </motion.div>
       </div>
