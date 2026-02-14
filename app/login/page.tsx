@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Activity, Mail, Lock, ArrowRight } from 'lucide-react';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -24,16 +24,17 @@ export default function LoginPage() {
         body: new URLSearchParams({ email, password })
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Invalid credentials');
+        throw new Error(data.detail || 'Invalid credentials');
       }
 
-      const data = await response.json();
       localStorage.setItem('token', data.access_token);
       toast.success('Welcome back!');
-      router.push('/dashboard');
+      setTimeout(() => router.push('/dashboard'), 500);
     } catch (error: any) {
-      toast.error(error.message || 'Login failed');
+      toast.error(error.message || 'Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
     }
@@ -41,6 +42,8 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-black flex">
+      <Toaster position="top-right" />
+      
       {/* Left Side - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
         <motion.div
@@ -96,10 +99,10 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Signing in...' : 'Sign In'}
-              <ArrowRight className="w-5 h-5" />
+              {!loading && <ArrowRight className="w-5 h-5" />}
             </button>
           </form>
 
