@@ -63,7 +63,7 @@ export default function AnalyticsDashboard() {
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(typeof window !== 'undefined' && window.innerWidth > 1024);
   const [currentPage, setCurrentPage] = useState('dashboard');
 
   useEffect(() => {
