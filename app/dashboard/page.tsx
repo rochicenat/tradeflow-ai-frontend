@@ -27,6 +27,7 @@ import {
   X
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import SettingsPage from '../components/SettingsPage';
 
 interface AnalysisResult {
   analysis: string;
@@ -603,11 +604,7 @@ export default function AnalyticsDashboard() {
           )}
 
           {currentPage === 'settings' && (
-            <div className="text-center py-20">
-              <SettingsIcon className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold text-slate-400 mb-2">Settings</h3>
-              <p className="text-slate-500">Coming soon - Manage your preferences</p>
-            </div>
+            <SettingsPage userData={userData} />
           )}
         </div>
       </div>
