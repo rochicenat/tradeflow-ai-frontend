@@ -233,15 +233,15 @@ export default function TradingDashboard() {
       <header className="border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition">
-            <Activity className="w-8 h-8 text-cyan-400" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            <Activity className="w-8 h-8 text-orange-500" />
+            <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-blue-500 bg-clip-text text-transparent">
               TradeFlow AI
             </span>
             </Link>
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30">
+            <div className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500/20 to-orange-600/20 border border-orange-500/30">
               <span className="text-blue-300 font-semibold text-sm uppercase">{userData?.plan || 'Free'}</span>
             </Link>
             </div>
@@ -267,7 +267,7 @@ export default function TradingDashboard() {
           <div className="col-span-12 lg:col-span-3 space-y-4">
             <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 rounded-2xl p-6">
               <div className="flex items-center gap-2 mb-4">
-                <BarChart3 className="w-5 h-5 text-cyan-400" />
+                <BarChart3 className="w-5 h-5 text-orange-500" />
                 <h3 className="text-slate-300 font-semibold">Usage</h3>
               </div>
               <div className="space-y-3">
@@ -294,7 +294,7 @@ export default function TradingDashboard() {
               <h3 className="text-slate-300 font-semibold mb-4">Quick Actions</h3>
               <button
                 onClick={() => router.push('/pricing')}
-                className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg text-white font-semibold hover:from-blue-700 hover:to-cyan-700 transition flex items-center justify-center gap-2"
+                className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-orange-600 rounded-lg text-white font-semibold hover:from-blue-700 hover:to-cyan-700 transition flex items-center justify-center gap-2"
               >
                 <CreditCard className="w-4 h-4" />
                 Upgrade Plan
@@ -335,14 +335,14 @@ export default function TradingDashboard() {
                 {...getRootProps()}
                 className={`relative overflow-hidden rounded-2xl border-2 border-dashed transition-all cursor-pointer
                   ${isDragActive 
-                    ? 'border-cyan-500 bg-cyan-500/10' 
-                    : 'border-slate-700 bg-slate-900/30 hover:border-cyan-500/50 hover:bg-slate-900/50'
+                    ? 'border-orange-500 bg-orange-500/10' 
+                    : 'border-slate-700 bg-slate-900/30 hover:border-orange-500/50 hover:bg-slate-900/50'
                   }`}
               >
                 <input {...getInputProps()} />
                 <div className="p-12 text-center">
                   <motion.div animate={{ y: isDragActive ? -10 : 0 }} className="mb-4">
-                    <Upload className="w-16 h-16 mx-auto text-cyan-400" />
+                    <Upload className="w-16 h-16 mx-auto text-orange-500" />
                   </motion.div>
                   <h3 className="text-2xl font-bold text-white mb-2">
                     {uploading ? 'Analyzing...' : 'Upload Trading Chart'}
@@ -359,8 +359,8 @@ export default function TradingDashboard() {
                 {uploading && (
                   <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center">
                     <div className="text-center">
-                      <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                      <p className="text-cyan-400 font-semibold">Analyzing Chart...</p>
+                      <div className="w-16 h-16 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                      <p className="text-orange-500 font-semibold">Analyzing Chart...</p>
                     </div>
                   </div>
                 )}
@@ -413,10 +413,10 @@ export default function TradingDashboard() {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {parsed.entry && (
-                        <div className="bg-slate-900/50 backdrop-blur-xl border border-blue-500/30 rounded-xl p-6">
+                        <div className="bg-slate-900/50 backdrop-blur-xl border border-orange-500/30 rounded-xl p-6">
                           <div className="flex items-center gap-2 mb-2">
-                            <DollarSign className="w-5 h-5 text-blue-400" />
-                            <h4 className="text-blue-400 font-semibold text-sm uppercase">Entry</h4>
+                            <DollarSign className="w-5 h-5 text-orange-500" />
+                            <h4 className="text-orange-500 font-semibold text-sm uppercase">Entry</h4>
                           </div>
                           <div className="text-2xl font-bold text-white">{parsed.entry}</div>
                         </div>
@@ -461,7 +461,7 @@ export default function TradingDashboard() {
                       {parsed.signalReason.length > 0 && (
                         <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 rounded-2xl p-6">
                           <div className="flex items-center gap-2 mb-4">
-                            <Activity className="w-5 h-5 text-cyan-400" />
+                            <Activity className="w-5 h-5 text-orange-500" />
                             <h3 className="text-white font-semibold">Signal Reason</h3>
                           </div>
                           <div className="space-y-2">

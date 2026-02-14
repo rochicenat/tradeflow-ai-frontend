@@ -121,8 +121,8 @@ export default function RefundPage() {
             </p>
           </section>
 
-          <section className="bg-blue-500/10 border border-blue-500/30 rounded-2xl p-6">
-            <h2 className="text-3xl font-semibold text-blue-400 mb-4">9. Educational Service Notice</h2>
+          <section className="bg-blue-500/10 border border-orange-500/30 rounded-2xl p-6">
+            <h2 className="text-3xl font-semibold text-orange-500 mb-4">9. Educational Service Notice</h2>
             <p className="text-slate-300 leading-relaxed">
               DataFlow Analytics is an educational data analytics platform. Refund requests based on 
               "lack of profitability" or "inaccurate predictions" are not valid, as we explicitly state 

@@ -217,7 +217,7 @@ export default function Dashboard() {
             <p className="text-4xl font-bold text-gray-900 dark:text-white mt-2 capitalize">
               {userData.plan === 'pro' ? '⭐ Pro' : userData.plan === 'premium' ? '👑 Premium' : '🆓 Free'}
             </p>
-            <Link href="/pricing" className="text-sm text-blue-600 dark:text-blue-400 hover:underline mt-2 inline-block">
+            <Link href="/pricing" className="text-sm text-blue-600 dark:text-orange-500 hover:underline mt-2 inline-block">
               Upgrade →
             </Link>
           </motion.div>
@@ -283,10 +283,10 @@ export default function Dashboard() {
               {...getRootProps()}
               className={`border-3 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all ${
                 isDragActive
-                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                  ? 'border-orange-500 bg-blue-50 dark:bg-blue-900/20'
                   : limitReached
                   ? 'border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 cursor-not-allowed opacity-50'
-                  : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:border-blue-400 dark:hover:border-blue-500'
+                  : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:border-blue-400 dark:hover:border-orange-500'
               }`}
             >
               <input {...getInputProps()} disabled={limitReached} />

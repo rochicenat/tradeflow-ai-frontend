@@ -120,10 +120,10 @@ export default function MarketAnalysisPage() {
       </div>
 
       {/* Info Banner */}
-      <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 mb-8 flex items-start gap-3">
-        <AlertCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+      <div className="bg-blue-500/10 border border-orange-500/30 rounded-xl p-4 mb-8 flex items-start gap-3">
+        <AlertCircle className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
         <div>
-          <h4 className="text-blue-400 font-semibold mb-1">Live Market Data</h4>
+          <h4 className="text-orange-500 font-semibold mb-1">Live Market Data</h4>
           <p className="text-slate-300 text-sm">
             Market data is updated in real-time. This is for educational and research purposes only, not financial advice.
           </p>

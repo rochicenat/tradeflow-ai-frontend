@@ -11,7 +11,7 @@ export default function Home() {
       <header className="fixed top-0 w-full bg-slate-950/80 backdrop-blur-md border-b border-slate-800 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <IconLogo className="w-8 h-8 text-blue-500" />
+            <IconLogo className="w-8 h-8 text-orange-500" />
             <span className="text-2xl font-bold text-white">DataFlow Analytics</span>
           </div>
           <nav className="hidden md:flex items-center gap-8">
@@ -179,7 +179,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="relative"
               >
-                <div className="text-7xl font-bold text-blue-500/20 mb-4">{item.step}</div>
+                <div className="text-7xl font-bold text-orange-500/20 mb-4">{item.step}</div>
                 <div className="text-5xl mb-4">{item.icon}</div>
                 <h3 className="text-2xl font-bold text-white mb-3">{item.title}</h3>
                 <p className="text-slate-400 leading-relaxed">{item.description}</p>
@@ -232,7 +232,7 @@ export default function Home() {
                 className="bg-slate-900/50 border border-slate-800 rounded-2xl p-8 hover:border-orange-500/50 transition"
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-orange-600 flex items-center justify-center text-white font-bold">
                     {testimonial.avatar}
                   </div>
                   <div>
@@ -398,7 +398,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <IconLogo className="w-6 h-6 text-blue-500" />
+              <IconLogo className="w-6 h-6 text-orange-500" />
               <span className="text-xl font-bold text-white">DataFlow Analytics</span>
             </div>
             <p className="text-slate-400 text-sm">Professional data analytics powered by AI</p>

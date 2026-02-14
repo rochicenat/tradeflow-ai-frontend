@@ -126,7 +126,7 @@ function CheckoutContent() {
               className={`
                 relative p-8 rounded-2xl cursor-pointer transition-all duration-300
                 ${selectedPlan === plan.id 
-                  ? 'bg-blue-600 shadow-2xl shadow-blue-500/50 scale-105' 
+                  ? 'bg-orange-500 shadow-2xl shadow-blue-500/50 scale-105' 
                   : 'bg-gray-800 hover:bg-gray-750'
                 }
               `}
@@ -158,7 +158,7 @@ function CheckoutContent() {
                   }
                 `}>
                   {selectedPlan === plan.id && (
-                    <div className="w-3 h-3 rounded-full bg-blue-600"></div>
+                    <div className="w-3 h-3 rounded-full bg-orange-500"></div>
                   )}
                 </div>
               </div>

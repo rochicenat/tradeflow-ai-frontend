@@ -489,10 +489,10 @@ export default function AnalyticsDashboard() {
 
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {parsed.entry && (
-                          <div className="bg-[#1A1A1A] border border-blue-500/30 rounded-xl p-6">
+                          <div className="bg-[#1A1A1A] border border-orange-500/30 rounded-xl p-6">
                             <div className="flex items-center gap-2 mb-2">
-                              <DollarSign className="w-5 h-5 text-blue-400" />
-                              <h4 className="text-blue-400 font-semibold text-sm uppercase">Reference</h4>
+                              <DollarSign className="w-5 h-5 text-orange-500" />
+                              <h4 className="text-orange-500 font-semibold text-sm uppercase">Reference</h4>
                             </div>
                             <div className="text-2xl font-bold text-white">{parsed.entry}</div>
                           </div>
