@@ -3,9 +3,13 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Upload, 
+  TrendingUp, 
+  TrendingDown, 
+  Minus,
   Activity,
   BarChart3,
   Target,
@@ -48,7 +52,7 @@ interface ParsedAnalysis {
   riskAssessment: string[];
 }
 
-export default function AnalyticsDashboard() {
+export default function TradingDashboard() {
   const router = useRouter();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [result, setResult] = useState<AnalysisResult | null>(null);
@@ -142,9 +146,9 @@ export default function AnalyticsDashboard() {
     const lines = analysis.split('\n').map(l => l.trim()).filter(l => l);
     
     let signal = trend.toUpperCase();
-    if (signal === 'BULLISH') signal = 'UPTREND';
-    if (signal === 'BEARISH') signal = 'DOWNTREND';
-    if (signal === 'SIDEWAYS') signal = 'NEUTRAL';
+    if (signal === 'BULLISH') signal = 'BUY';
+    if (signal === 'BEARISH') signal = 'SELL';
+    if (signal === 'SIDEWAYS') signal = 'HOLD';
     
     let entry = '';
     let stopLoss = '';
@@ -156,11 +160,8 @@ export default function AnalyticsDashboard() {
     let currentSection = '';
 
     for (const line of lines) {
-      if (line.match(/^(BUY|SELL|HOLD|UPTREND|DOWNTREND|NEUTRAL)$/i)) {
-        if (line === 'BUY') signal = 'UPTREND';
-        else if (line === 'SELL') signal = 'DOWNTREND';
-        else if (line === 'HOLD') signal = 'NEUTRAL';
-        else signal = line.toUpperCase();
+      if (line.match(/^(BUY|SELL|HOLD)$/i)) {
+        signal = line.toUpperCase();
       } else if (line.startsWith('Entry:')) {
         entry = line.replace('Entry:', '').trim();
       } else if (line.startsWith('SL:')) {
@@ -196,20 +197,20 @@ export default function AnalyticsDashboard() {
   };
 
   const getSignalIcon = (signal: string) => {
-    if (signal === 'UPTREND') return <ArrowUpCircle className="w-12 h-12" />;
-    if (signal === 'DOWNTREND') return <ArrowDownCircle className="w-12 h-12" />;
+    if (signal === 'BUY') return <ArrowUpCircle className="w-12 h-12" />;
+    if (signal === 'SELL') return <ArrowDownCircle className="w-12 h-12" />;
     return <PauseCircle className="w-12 h-12" />;
   };
 
   const getSignalColor = (signal: string) => {
-    if (signal === 'UPTREND') return 'from-green-500 to-emerald-600';
-    if (signal === 'DOWNTREND') return 'from-red-500 to-rose-600';
+    if (signal === 'BUY') return 'from-green-500 to-emerald-600';
+    if (signal === 'SELL') return 'from-red-500 to-rose-600';
     return 'from-yellow-500 to-orange-500';
   };
 
   const getSignalBg = (signal: string) => {
-    if (signal === 'UPTREND') return 'bg-green-500/10 border-green-500/30';
-    if (signal === 'DOWNTREND') return 'bg-red-500/10 border-red-500/30';
+    if (signal === 'BUY') return 'bg-green-500/10 border-green-500/30';
+    if (signal === 'SELL') return 'bg-red-500/10 border-red-500/30';
     return 'bg-yellow-500/10 border-yellow-500/30';
   };
 
@@ -228,24 +229,27 @@ export default function AnalyticsDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
       <header className="border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Activity className="w-8 h-8 text-orange-500" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
-              DataFlow Analytics
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition">
+            <Activity className="w-8 h-8 text-cyan-400" />
+            <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              TradeFlow AI
             </span>
+            </Link>
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="px-4 py-2 rounded-lg bg-gradient-to-r bg-orange-500/20 border border-orange-500/30">
+            <div className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30">
               <span className="text-blue-300 font-semibold text-sm uppercase">{userData?.plan || 'Free'}</span>
+            </Link>
             </div>
 
             <div className="flex items-center gap-3 px-4 py-2 rounded-lg bg-slate-800/50 border border-slate-700/50">
               <User className="w-5 h-5 text-slate-400" />
               <span className="text-slate-300 text-sm font-medium">{userData?.name || 'User'}</span>
+            </Link>
             </div>
 
             <button
@@ -263,20 +267,22 @@ export default function AnalyticsDashboard() {
           <div className="col-span-12 lg:col-span-3 space-y-4">
             <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 rounded-2xl p-6">
               <div className="flex items-center gap-2 mb-4">
-                <BarChart3 className="w-5 h-5 text-orange-500" />
+                <BarChart3 className="w-5 h-5 text-cyan-400" />
                 <h3 className="text-slate-300 font-semibold">Usage</h3>
               </div>
               <div className="space-y-3">
                 <div>
                   <div className="flex justify-between text-sm mb-1">
                     <span className="text-slate-400">Analyses</span>
+            </Link>
                     <span className="text-white font-semibold">
                       {userData?.analyses_used || 0} / {userData?.analyses_limit || 3}
                     </span>
+            </Link>
                   </div>
                   <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
                     <div 
-                      className="h-full bg-gradient-to-r from-orange-400 to-orange-600 transition-all"
+                      className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all"
                       style={{ width: `${((userData?.analyses_used || 0) / (userData?.analyses_limit || 3)) * 100}%` }}
                     />
                   </div>
@@ -288,7 +294,7 @@ export default function AnalyticsDashboard() {
               <h3 className="text-slate-300 font-semibold mb-4">Quick Actions</h3>
               <button
                 onClick={() => router.push('/pricing')}
-                className="w-full px-4 py-3 bg-gradient-to-r bg-orange-500 rounded-lg text-white font-semibold hover:from-blue-700 hover:to-cyan-700 transition flex items-center justify-center gap-2"
+                className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg text-white font-semibold hover:from-blue-700 hover:to-cyan-700 transition flex items-center justify-center gap-2"
               >
                 <CreditCard className="w-4 h-4" />
                 Upgrade Plan
@@ -298,20 +304,26 @@ export default function AnalyticsDashboard() {
             <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 rounded-2xl p-6">
               <div className="flex items-center gap-2 mb-4">
                 <Zap className="w-5 h-5 text-yellow-400" />
-                <h3 className="text-slate-300 font-semibold">Market Data</h3>
+                <h3 className="text-slate-300 font-semibold">Market</h3>
               </div>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
                   <span className="text-slate-400 text-sm">BTC</span>
+            </Link>
                   <span className="text-green-400 font-semibold text-sm">+2.4%</span>
+            </Link>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-slate-400 text-sm">ETH</span>
+            </Link>
                   <span className="text-green-400 font-semibold text-sm">+1.8%</span>
+            </Link>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-slate-400 text-sm">SOL</span>
+            </Link>
                   <span className="text-red-400 font-semibold text-sm">-0.5%</span>
+            </Link>
                 </div>
               </div>
             </div>
@@ -323,32 +335,32 @@ export default function AnalyticsDashboard() {
                 {...getRootProps()}
                 className={`relative overflow-hidden rounded-2xl border-2 border-dashed transition-all cursor-pointer
                   ${isDragActive 
-                    ? 'border-orange-500 bg-orange-500/10' 
-                    : 'border-slate-700 bg-slate-900/30 hover:border-orange-500/50 hover:bg-slate-900/50'
+                    ? 'border-cyan-500 bg-cyan-500/10' 
+                    : 'border-slate-700 bg-slate-900/30 hover:border-cyan-500/50 hover:bg-slate-900/50'
                   }`}
               >
                 <input {...getInputProps()} />
                 <div className="p-12 text-center">
                   <motion.div animate={{ y: isDragActive ? -10 : 0 }} className="mb-4">
-                    <Upload className="w-16 h-16 mx-auto text-orange-500" />
+                    <Upload className="w-16 h-16 mx-auto text-cyan-400" />
                   </motion.div>
                   <h3 className="text-2xl font-bold text-white mb-2">
-                    {uploading ? 'Analyzing...' : 'Upload Market Chart'}
+                    {uploading ? 'Analyzing...' : 'Upload Trading Chart'}
                   </h3>
                   <p className="text-slate-400">
                     {uploading 
-                      ? 'AI is processing your data...'
+                      ? 'AI is processing your chart...'
                       : isDragActive 
                         ? 'Drop your chart here'
-                        : 'Drag & drop or click to select a chart image for analysis'
+                        : 'Drag & drop or click to select a chart image'
                     }
                   </p>
                 </div>
                 {uploading && (
                   <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center">
                     <div className="text-center">
-                      <div className="w-16 h-16 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                      <p className="text-orange-500 font-semibold">Analyzing Chart...</p>
+                      <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                      <p className="text-cyan-400 font-semibold">Analyzing Chart...</p>
                     </div>
                   </div>
                 )}
@@ -377,9 +389,9 @@ export default function AnalyticsDashboard() {
                               {parsed.signal}
                             </h2>
                             <p className="text-slate-300 text-lg">
-                              {parsed.signal === 'UPTREND' ? 'Upward momentum detected in data' : 
-                               parsed.signal === 'DOWNTREND' ? 'Downward momentum detected in data' : 
-                               'Neutral consolidation pattern'}
+                              {parsed.signal === 'BUY' ? 'Long position recommended' : 
+                               parsed.signal === 'SELL' ? 'Short position recommended' : 
+                               'Wait for better setup'}
                             </p>
                           </div>
                         </div>
@@ -401,10 +413,10 @@ export default function AnalyticsDashboard() {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {parsed.entry && (
-                        <div className="bg-slate-900/50 backdrop-blur-xl border border-orange-500/30 rounded-xl p-6">
+                        <div className="bg-slate-900/50 backdrop-blur-xl border border-blue-500/30 rounded-xl p-6">
                           <div className="flex items-center gap-2 mb-2">
                             <DollarSign className="w-5 h-5 text-blue-400" />
-                            <h4 className="text-blue-400 font-semibold text-sm uppercase">Reference Level</h4>
+                            <h4 className="text-blue-400 font-semibold text-sm uppercase">Entry</h4>
                           </div>
                           <div className="text-2xl font-bold text-white">{parsed.entry}</div>
                         </div>
@@ -414,7 +426,7 @@ export default function AnalyticsDashboard() {
                         <div className="bg-slate-900/50 backdrop-blur-xl border border-red-500/30 rounded-xl p-6">
                           <div className="flex items-center gap-2 mb-2">
                             <Shield className="w-5 h-5 text-red-400" />
-                            <h4 className="text-red-400 font-semibold text-sm uppercase">Lower Boundary</h4>
+                            <h4 className="text-red-400 font-semibold text-sm uppercase">Stop Loss</h4>
                           </div>
                           <div className="text-2xl font-bold text-white">{parsed.stopLoss}</div>
                         </div>
@@ -424,7 +436,7 @@ export default function AnalyticsDashboard() {
                         <div className="bg-slate-900/50 backdrop-blur-xl border border-green-500/30 rounded-xl p-6">
                           <div className="flex items-center gap-2 mb-2">
                             <Target className="w-5 h-5 text-green-400" />
-                            <h4 className="text-green-400 font-semibold text-sm uppercase">Upper Target</h4>
+                            <h4 className="text-green-400 font-semibold text-sm uppercase">Take Profit</h4>
                           </div>
                           <div className="text-2xl font-bold text-white">{parsed.takeProfit}</div>
                         </div>
@@ -449,8 +461,8 @@ export default function AnalyticsDashboard() {
                       {parsed.signalReason.length > 0 && (
                         <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 rounded-2xl p-6">
                           <div className="flex items-center gap-2 mb-4">
-                            <Activity className="w-5 h-5 text-orange-500" />
-                            <h3 className="text-white font-semibold">Pattern Analysis</h3>
+                            <Activity className="w-5 h-5 text-cyan-400" />
+                            <h3 className="text-white font-semibold">Signal Reason</h3>
                           </div>
                           <div className="space-y-2">
                             {parsed.signalReason.map((reason, i) => (
@@ -464,7 +476,7 @@ export default function AnalyticsDashboard() {
                         <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 rounded-2xl p-6">
                           <div className="flex items-center gap-2 mb-4">
                             <AlertTriangle className="w-5 h-5 text-yellow-400" />
-                            <h3 className="text-white font-semibold">Risk Assessment</h3>
+                            <h3 className="text-white font-semibold">Risk</h3>
                           </div>
                           <div className="space-y-2">
                             {parsed.riskAssessment.map((risk, i) => (
@@ -479,9 +491,9 @@ export default function AnalyticsDashboard() {
                       <div className="flex items-start gap-3">
                         <AlertTriangle className="w-6 h-6 text-yellow-400 flex-shrink-0 mt-1" />
                         <div>
-                          <h4 className="text-yellow-400 font-semibold mb-1">Educational Disclaimer</h4>
+                          <h4 className="text-yellow-400 font-semibold mb-1">Risk Disclaimer</h4>
                           <p className="text-slate-300 text-sm">
-                            This is AI-generated data analysis for educational and research purposes only. Not financial or investment advice. Always conduct your own research.
+                            This is AI-generated analysis for educational purposes. Always use proper risk management and never risk more than you can afford to lose.
                           </p>
                         </div>
                       </div>
@@ -495,7 +507,7 @@ export default function AnalyticsDashboard() {
               <div className="bg-slate-900/30 border border-slate-800/50 rounded-2xl p-12 text-center">
                 <BarChart3 className="w-16 h-16 text-slate-600 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-slate-400 mb-2">No Analysis Yet</h3>
-                <p className="text-slate-500">Upload a market chart to get AI-powered insights</p>
+                <p className="text-slate-500">Upload a trading chart to get AI signals</p>
               </div>
             )}
           </div>

@@ -6,12 +6,12 @@ import { Activity } from 'lucide-react';
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black">
       <header className="border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <Activity className="w-8 h-8 text-cyan-400" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            <Activity className="w-8 h-8 text-orange-500" />
+            <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
               DataFlow Analytics
             </span>
           </Link>
@@ -151,7 +151,7 @@ export default function PrivacyPage() {
             </ul>
             <p className="text-slate-300 leading-relaxed mt-4">
               To exercise these rights, contact{' '}
-              <a href="mailto:privacy@tradeflowai.cloud" className="text-cyan-400 hover:underline">
+              <a href="mailto:privacy@tradeflowai.cloud" className="text-orange-500 hover:underline">
                 privacy@tradeflowai.cloud
               </a>
             </p>
@@ -206,12 +206,12 @@ export default function PrivacyPage() {
               For privacy questions or to exercise your rights:
             </p>
             <p className="text-slate-300 leading-relaxed mt-2">
-              Email: <a href="mailto:privacy@tradeflowai.cloud" className="text-cyan-400 hover:underline">
+              Email: <a href="mailto:privacy@tradeflowai.cloud" className="text-orange-500 hover:underline">
                 privacy@tradeflowai.cloud
               </a>
             </p>
             <p className="text-slate-300 leading-relaxed mt-2">
-              Website: <a href="https://tradeflowai.cloud" className="text-cyan-400 hover:underline">
+              Website: <a href="https://tradeflowai.cloud" className="text-orange-500 hover:underline">
                 tradeflowai.cloud
               </a>
             </p>

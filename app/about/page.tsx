@@ -6,13 +6,13 @@ import { Mail, Globe, Activity } from 'lucide-react';
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black">
       {/* Header */}
       <header className="border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <Activity className="w-8 h-8 text-cyan-400" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            <Activity className="w-8 h-8 text-orange-500" />
+            <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
               DataFlow Analytics
             </span>
           </Link>
@@ -92,28 +92,28 @@ export default function AboutPage() {
               <h2 className="text-3xl font-semibold text-white mb-4">Contact Us</h2>
               <div className="space-y-4">
                 <div className="flex items-center gap-3 text-slate-300 text-lg">
-                  <Mail className="w-6 h-6 text-cyan-400" />
+                  <Mail className="w-6 h-6 text-orange-500" />
                   <div>
                     <strong>Support:</strong>{' '}
-                    <a href="mailto:support@tradeflowai.cloud" className="text-cyan-400 hover:underline">
+                    <a href="mailto:support@tradeflowai.cloud" className="text-orange-500 hover:underline">
                       support@tradeflowai.cloud
                     </a>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 text-slate-300 text-lg">
-                  <Mail className="w-6 h-6 text-cyan-400" />
+                  <Mail className="w-6 h-6 text-orange-500" />
                   <div>
                     <strong>Privacy:</strong>{' '}
-                    <a href="mailto:privacy@tradeflowai.cloud" className="text-cyan-400 hover:underline">
+                    <a href="mailto:privacy@tradeflowai.cloud" className="text-orange-500 hover:underline">
                       privacy@tradeflowai.cloud
                     </a>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 text-slate-300 text-lg">
-                  <Globe className="w-6 h-6 text-cyan-400" />
+                  <Globe className="w-6 h-6 text-orange-500" />
                   <div>
                     <strong>Website:</strong>{' '}
-                    <a href="https://tradeflowai.cloud" className="text-cyan-400 hover:underline">
+                    <a href="https://tradeflowai.cloud" className="text-orange-500 hover:underline">
                       tradeflowai.cloud
                     </a>
                   </div>
@@ -127,7 +127,7 @@ export default function AboutPage() {
                 We take data privacy seriously. All uploaded charts are processed instantly and permanently deleted 
                 after analysis. We never store your research data or share it with third parties. For more information, 
                 please read our{' '}
-                <Link href="/privacy" className="text-cyan-400 hover:underline">Privacy Policy</Link>.
+                <Link href="/privacy" className="text-orange-500 hover:underline">Privacy Policy</Link>.
               </p>
             </section>
 

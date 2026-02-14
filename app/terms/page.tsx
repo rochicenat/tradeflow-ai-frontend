@@ -1,174 +1,164 @@
 'use client';
-import { IconLogo } from '@/components/Logo';
+
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { Activity } from 'lucide-react';
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
-      {/* Header */}
-      <header className="border-b border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center max-w-6xl">
-          <IconLogo />
-          <Link 
-            href="/"
-            className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-          >
+    <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black">
+      <header className="border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <Activity className="w-8 h-8 text-orange-500" />
+            <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+              DataFlow Analytics
+            </span>
+          </Link>
+          <Link href="/" className="text-sm text-slate-300 hover:text-white transition">
             Back to Home
           </Link>
         </div>
       </header>
 
-      {/* Content */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="container mx-auto px-4 py-16 max-w-4xl"
+        className="max-w-4xl mx-auto px-6 py-16"
       >
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-8">
-          Terms of Service
-        </h1>
-        
-        <div className="prose prose-gray dark:prose-invert max-w-none">
-          <p className="text-gray-600 dark:text-gray-300 mb-6">
-            Last updated: February 13, 2026
-          </p>
+        <h1 className="text-5xl font-bold text-white mb-4">Terms of Service</h1>
+        <p className="text-slate-400 mb-8">Last updated: February 14, 2026</p>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              1. Acceptance of Terms
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              By accessing and using TradeFlow AI, you accept and agree to be bound by these Terms of Service. 
-              If you do not agree to these terms, please do not use our service.
+        <div className="prose prose-invert max-w-none space-y-8">
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">1. Acceptance of Terms</h2>
+            <p className="text-slate-300 leading-relaxed">
+              By accessing or using DataFlow Analytics, you agree to be bound by these Terms of Service. 
+              If you do not agree to these terms, please do not use our platform.
             </p>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              2. Service Description
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              TradeFlow AI provides AI-powered trading chart analysis services. Our service includes:
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">2. Service Description</h2>
+            <p className="text-slate-300 leading-relaxed">
+              DataFlow Analytics is an <strong>educational AI data analytics platform</strong> that provides 
+              automated technical analysis of market charts for research purposes only. Our service:
             </p>
-            <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-2">
-              <li>Technical analysis of trading charts</li>
-              <li>AI-generated trading signals and insights</li>
-              <li>Trend detection and confidence scoring</li>
-              <li>Risk assessment and trading recommendations</li>
+            <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4 mt-2">
+              <li>Analyzes uploaded chart images using AI algorithms</li>
+              <li>Provides pattern recognition and statistical probability analysis</li>
+              <li>Offers quantitative insights for educational research</li>
+              <li>Is NOT a financial advisory service</li>
             </ul>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              3. User Responsibilities
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Users agree to:
+          <section className="bg-red-500/10 border-2 border-red-500/50 rounded-2xl p-8">
+            <h2 className="text-3xl font-semibold text-red-400 mb-4">3. CRITICAL DISCLAIMER - NOT FINANCIAL ADVICE</h2>
+            <p className="text-white text-lg font-semibold leading-relaxed">
+              <strong>IMPORTANT:</strong> DataFlow Analytics is strictly an educational data analytics tool. 
+              None of the information, analyses, patterns, probabilities, or insights provided on this platform 
+              constitute financial advice, investment recommendations, trading signals, or any form of professional 
+              financial guidance.
             </p>
-            <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-2">
+            <p className="text-slate-300 leading-relaxed mt-4">
+              Users acknowledge that:
+            </p>
+            <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4 mt-2">
+              <li>All analyses are for educational and research purposes only</li>
+              <li>Past patterns do not predict future outcomes</li>
+              <li>No guarantees of accuracy or profitability are made</li>
+              <li>Users are solely responsible for their own financial decisions</li>
+              <li>Users should consult licensed financial advisors before making any financial decisions</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">4. User Responsibilities</h2>
+            <p className="text-slate-300 leading-relaxed">You agree to:</p>
+            <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4 mt-2">
+              <li>Use the platform for lawful educational and research purposes only</li>
+              <li>Not share your account credentials with others</li>
               <li>Provide accurate registration information</li>
-              <li>Maintain the security of their account</li>
-              <li>Use the service in compliance with applicable laws</li>
-              <li>Not share account credentials with others</li>
+              <li>Comply with all applicable laws and regulations</li>
+              <li>Not attempt to reverse-engineer or abuse our AI systems</li>
             </ul>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              4. Subscription and Payments
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              TradeFlow AI offers multiple subscription tiers:
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">5. Subscriptions and Payments</h2>
+            <p className="text-slate-300 leading-relaxed">
+              We offer Free, Pro ($9.99/month), and Premium ($19.99/month) plans. By subscribing:
             </p>
-            <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-2">
-              <li><strong>Free Plan:</strong> Limited monthly analyses</li>
-              <li><strong>Pro Plan:</strong> Extended analysis limits</li>
-              <li><strong>Premium Plan:</strong> Unlimited analyses and priority support</li>
-            </ul>
-            <p className="text-gray-600 dark:text-gray-300 mt-4">
-              Payments are processed securely through our payment provider. Subscriptions renew automatically 
-              unless cancelled before the renewal date.
-            </p>
-          </section>
-
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              5. Disclaimer of Investment Advice
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 font-semibold mb-4">
-              IMPORTANT: TradeFlow AI provides technical analysis tools and is NOT financial advice.
-            </p>
-            <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-2">
-              <li>Our AI analysis is for informational purposes only</li>
-              <li>We do not guarantee trading profits or outcomes</li>
-              <li>Users are solely responsible for their trading decisions</li>
-              <li>Past performance does not indicate future results</li>
-              <li>Always consult with a licensed financial advisor</li>
+            <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4 mt-2">
+              <li>You authorize recurring monthly charges</li>
+              <li>Prices are subject to change with 30 days notice</li>
+              <li>You can cancel anytime from your dashboard</li>
+              <li>Refunds are handled per our Refund Policy (7-day money-back guarantee)</li>
             </ul>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              6. Limitation of Liability
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              TradeFlow AI and its operators shall not be liable for any trading losses, missed opportunities, 
-              or other financial damages resulting from the use of our service. Users assume all risks 
-              associated with trading decisions made based on our analysis.
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">6. Data Privacy</h2>
+            <p className="text-slate-300 leading-relaxed">
+              We respect your privacy. Uploaded charts are analyzed instantly and permanently deleted. 
+              We do not store your research data. See our{' '}
+              <Link href="/privacy" className="text-orange-500 hover:underline">Privacy Policy</Link> for details.
             </p>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              7. Refund Policy
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              Due to the nature of our digital service, refunds are handled on a case-by-case basis. 
-              Please contact support at support@tradeflowai.cloud for refund requests.
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">7. Intellectual Property</h2>
+            <p className="text-slate-300 leading-relaxed">
+              All content, AI models, algorithms, and technology are owned by DataFlow Analytics. 
+              You retain rights to your uploaded charts but grant us temporary license to process them.
             </p>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              8. Termination
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              We reserve the right to terminate or suspend access to our service for users who violate 
-              these terms or engage in fraudulent activity.
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">8. Limitation of Liability</h2>
+            <p className="text-slate-300 leading-relaxed">
+              DataFlow Analytics is provided "as is" without warranties. We are not liable for:
+            </p>
+            <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4 mt-2">
+              <li>Financial losses resulting from use of our platform</li>
+              <li>Inaccuracies in AI-generated analysis</li>
+              <li>Service interruptions or technical issues</li>
+              <li>Third-party actions or decisions based on our data</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">9. Termination</h2>
+            <p className="text-slate-300 leading-relaxed">
+              We reserve the right to suspend or terminate accounts that violate these terms, 
+              abuse our systems, or engage in fraudulent activity.
             </p>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              9. Changes to Terms
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              We may update these Terms of Service periodically. Continued use of the service after 
-              changes constitutes acceptance of the updated terms.
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">10. Changes to Terms</h2>
+            <p className="text-slate-300 leading-relaxed">
+              We may update these terms at any time. Continued use after changes constitutes acceptance. 
+              We will notify users of material changes via email.
             </p>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              10. Contact Information
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              For questions about these Terms of Service, contact us at:
-              <br />
-              Email: support@tradeflowai.cloud
+          <section>
+            <h2 className="text-3xl font-semibold text-white mb-4">11. Contact</h2>
+            <p className="text-slate-300 leading-relaxed">
+              For questions about these terms, contact us at:{' '}
+              <a href="mailto:support@tradeflowai.cloud" className="text-orange-500 hover:underline">
+                support@tradeflowai.cloud
+              </a>
             </p>
           </section>
         </div>
       </motion.div>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-200 dark:border-gray-700 py-8">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            © 2026 TradeFlow AI. All rights reserved.
-          </p>
+      <footer className="border-t border-slate-800 py-8">
+        <div className="max-w-7xl mx-auto px-6 text-center text-slate-500 text-sm">
+          © 2026 DataFlow Analytics. Educational research tool only.
         </div>
       </footer>
     </div>
