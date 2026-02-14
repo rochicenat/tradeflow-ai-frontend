@@ -193,6 +193,7 @@ export default function AboutPage() {
                 Terms
               </Link>
               <Link href="/privacy" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+              <Link href="/refund" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Refund</Link>
                 Privacy
               </Link>
               <Link href="/about" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">

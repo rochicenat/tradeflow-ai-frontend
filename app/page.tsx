@@ -275,6 +275,7 @@ export default function Home() {
               <li><Link href="/about" className="text-slate-400 hover:text-white text-sm">About</Link></li>
               <li><Link href="/terms" className="text-slate-400 hover:text-white text-sm">Terms</Link></li>
               <li><Link href="/privacy" className="text-slate-400 hover:text-white text-sm">Privacy</Link></li>
+              <li><Link href="/refund" className="text-slate-400 hover:text-white text-sm">Refund</Link></li>
             </ul>
           </div>
           <div>
