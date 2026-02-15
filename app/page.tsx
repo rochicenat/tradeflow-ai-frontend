@@ -19,7 +19,7 @@ export default function Home() {
             <Link href="#how-it-works" className="text-slate-300 hover:text-white transition">How It Works</Link>
             <Link href="/pricing" className="text-slate-300 hover:text-white transition">Pricing</Link>
             <Link href="/login" className="text-slate-300 hover:text-white transition">Login</Link>
-            <Link href="/signup" className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-cyan-700 transition">
+            <Link href="/signup" className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition">
               Start Free
             </Link>
           </nav>
@@ -48,7 +48,7 @@ export default function Home() {
               Upload any market chart and get instant AI-powered technical analysis with historical patterns, statistical probability, and quantitative insights for educational research.
             </p>
             <div className="flex gap-4 justify-center">
-              <Link href="/signup" className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:from-blue-700 hover:to-cyan-700 transition shadow-lg shadow-blue-500/50">
+              <Link href="/signup" className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:from-orange-600 hover:to-orange-700 transition shadow-lg shadow-blue-500/50">
                 Get Started Free
               </Link>
               <Link href="#how-it-works" className="bg-slate-800 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-slate-700 transition border border-slate-700">
