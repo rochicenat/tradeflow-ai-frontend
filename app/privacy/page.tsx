@@ -12,7 +12,7 @@ export default function PrivacyPage() {
           <Link href="/" className="flex items-center gap-2">
             <Activity className="w-8 h-8 text-orange-500" />
             <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
-              DataFlow Analytics
+              TradeFlow AI
             </span>
           </Link>
           <Link href="/" className="text-sm text-slate-300 hover:text-white transition">
@@ -34,7 +34,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-3xl font-semibold text-white mb-4">1. Introduction</h2>
             <p className="text-slate-300 leading-relaxed">
-              DataFlow Analytics ("we," "our," or "us") is committed to protecting your privacy. 
+              TradeFlow AI ("we," "our," or "us") is committed to protecting your privacy. 
               This Privacy Policy explains how we collect, use, and safeguard your information when you 
               use our educational AI data analytics platform.
             </p>
@@ -187,7 +187,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-3xl font-semibold text-white mb-4">10. Children's Privacy</h2>
             <p className="text-slate-300 leading-relaxed">
-              DataFlow Analytics is not intended for users under 18. We do not knowingly collect 
+              TradeFlow AI is not intended for users under 18. We do not knowingly collect 
               data from minors. If you believe a minor has provided data, contact us immediately.
             </p>
           </section>
@@ -221,7 +221,7 @@ export default function PrivacyPage() {
 
       <footer className="border-t border-slate-800 py-8">
         <div className="max-w-7xl mx-auto px-6 text-center text-slate-500 text-sm">
-          © 2026 DataFlow Analytics. Educational research tool only.
+          © 2026 TradeFlow AI. Educational research tool only.
         </div>
       </footer>
     </div>

@@ -12,7 +12,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <IconLogo className="w-8 h-8 text-orange-500" />
-            <span className="text-2xl font-bold text-white">DataFlow Analytics</span>
+            <span className="text-2xl font-bold text-white">TradeFlow AI</span>
           </div>
           <nav className="hidden md:flex items-center gap-8">
             <Link href="#features" className="text-slate-300 hover:text-white transition">Features</Link>
@@ -317,8 +317,8 @@ export default function Home() {
                 a: "Our AI model is trained on millions of historical market patterns and achieves 99.2% accuracy in technical pattern recognition for research purposes. This is an educational data analytics tool, not financial advice."
               },
               {
-                q: "What data sources does DataFlow Analytics support?",
-                a: "DataFlow Analytics processes charts from any source - crypto, stocks, forex, commodities. Simply upload a chart screenshot from TradingView, data platforms, or any visualization tool."
+                q: "What data sources does TradeFlow AI support?",
+                a: "TradeFlow AI processes charts from any source - crypto, stocks, forex, commodities. Simply upload a chart screenshot from TradingView, data platforms, or any visualization tool."
               },
               {
                 q: "How fast are the analysis results?",
@@ -330,7 +330,7 @@ export default function Home() {
               },
               {
                 q: "Do I need data analysis experience to use this?",
-                a: "No! DataFlow Analytics is designed for both beginners and professional researchers. The AI explains each analysis in clear terms with educational insights."
+                a: "No! TradeFlow AI is designed for both beginners and professional researchers. The AI explains each analysis in clear terms with educational insights."
               },
               {
                 q: "What's the difference between Pro and Premium?",
@@ -399,7 +399,7 @@ export default function Home() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <IconLogo className="w-6 h-6 text-orange-500" />
-              <span className="text-xl font-bold text-white">DataFlow Analytics</span>
+              <span className="text-xl font-bold text-white">TradeFlow AI</span>
             </div>
             <p className="text-slate-400 text-sm">Professional data analytics powered by AI</p>
           </div>
@@ -427,7 +427,7 @@ export default function Home() {
           </div>
         </div>
         <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-slate-800 text-center text-slate-500 text-sm">
-          © 2026 DataFlow Analytics. All rights reserved. Educational data analytics tool only.
+          © 2026 TradeFlow AI. All rights reserved. Educational data analytics tool only.
         </div>
       </footer>
     </div>

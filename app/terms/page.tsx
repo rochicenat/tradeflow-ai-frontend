@@ -12,7 +12,7 @@ export default function TermsPage() {
           <Link href="/" className="flex items-center gap-2">
             <Activity className="w-8 h-8 text-orange-500" />
             <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
-              DataFlow Analytics
+              TradeFlow AI
             </span>
           </Link>
           <Link href="/" className="text-sm text-slate-300 hover:text-white transition">
@@ -34,7 +34,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-3xl font-semibold text-white mb-4">1. Acceptance of Terms</h2>
             <p className="text-slate-300 leading-relaxed">
-              By accessing or using DataFlow Analytics, you agree to be bound by these Terms of Service. 
+              By accessing or using TradeFlow AI, you agree to be bound by these Terms of Service. 
               If you do not agree to these terms, please do not use our platform.
             </p>
           </section>
@@ -42,7 +42,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-3xl font-semibold text-white mb-4">2. Service Description</h2>
             <p className="text-slate-300 leading-relaxed">
-              DataFlow Analytics is an <strong>educational AI data analytics platform</strong> that provides 
+              TradeFlow AI is an <strong>educational AI data analytics platform</strong> that provides 
               automated technical analysis of market charts for research purposes only. Our service:
             </p>
             <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4 mt-2">
@@ -56,7 +56,7 @@ export default function TermsPage() {
           <section className="bg-red-500/10 border-2 border-red-500/50 rounded-2xl p-8">
             <h2 className="text-3xl font-semibold text-red-400 mb-4">3. CRITICAL DISCLAIMER - NOT FINANCIAL ADVICE</h2>
             <p className="text-white text-lg font-semibold leading-relaxed">
-              <strong>IMPORTANT:</strong> DataFlow Analytics is strictly an educational data analytics tool. 
+              <strong>IMPORTANT:</strong> TradeFlow AI is strictly an educational data analytics tool. 
               None of the information, analyses, patterns, probabilities, or insights provided on this platform 
               constitute financial advice, investment recommendations, trading signals, or any form of professional 
               financial guidance.
@@ -110,7 +110,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-3xl font-semibold text-white mb-4">7. Intellectual Property</h2>
             <p className="text-slate-300 leading-relaxed">
-              All content, AI models, algorithms, and technology are owned by DataFlow Analytics. 
+              All content, AI models, algorithms, and technology are owned by TradeFlow AI. 
               You retain rights to your uploaded charts but grant us temporary license to process them.
             </p>
           </section>
@@ -118,7 +118,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-3xl font-semibold text-white mb-4">8. Limitation of Liability</h2>
             <p className="text-slate-300 leading-relaxed">
-              DataFlow Analytics is provided "as is" without warranties. We are not liable for:
+              TradeFlow AI is provided "as is" without warranties. We are not liable for:
             </p>
             <ul className="list-disc list-inside text-slate-300 space-y-2 ml-4 mt-2">
               <li>Financial losses resulting from use of our platform</li>
@@ -158,7 +158,7 @@ export default function TermsPage() {
 
       <footer className="border-t border-slate-800 py-8">
         <div className="max-w-7xl mx-auto px-6 text-center text-slate-500 text-sm">
-          © 2026 DataFlow Analytics. Educational research tool only.
+          © 2026 TradeFlow AI. Educational research tool only.
         </div>
       </footer>
     </div>

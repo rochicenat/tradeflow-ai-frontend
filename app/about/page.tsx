@@ -13,7 +13,7 @@ export default function AboutPage() {
           <Link href="/" className="flex items-center gap-2">
             <Activity className="w-8 h-8 text-orange-500" />
             <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
-              DataFlow Analytics
+              TradeFlow AI
             </span>
           </Link>
           <Link 
@@ -31,13 +31,13 @@ export default function AboutPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-5xl font-bold text-white mb-8">About DataFlow Analytics</h1>
+          <h1 className="text-5xl font-bold text-white mb-8">About TradeFlow AI</h1>
 
           <div className="prose prose-invert max-w-none space-y-8">
             <section>
               <h2 className="text-3xl font-semibold text-white mb-4">Our Mission</h2>
               <p className="text-slate-300 text-lg leading-relaxed">
-                DataFlow Analytics is an advanced AI-powered data analytics platform designed for market researchers, 
+                TradeFlow AI is an advanced AI-powered data analytics platform designed for market researchers, 
                 quantitative analysts, and students. Our mission is to democratize access to professional-grade 
                 chart analysis tools through cutting-edge artificial intelligence technology.
               </p>
@@ -78,7 +78,7 @@ export default function AboutPage() {
                 <div>
                   <h3 className="text-2xl font-bold text-yellow-400 mb-3">Important Disclaimer</h3>
                   <p className="text-slate-300 text-lg leading-relaxed">
-                    <strong>DataFlow Analytics is an educational research tool only.</strong> None of the information, 
+                    <strong>TradeFlow AI is an educational research tool only.</strong> None of the information, 
                     analyses, or insights provided on this platform constitute financial advice, investment recommendations, 
                     or trading signals. All data is provided for educational and research purposes. Users should conduct 
                     their own independent research and consult with qualified financial professionals before making any 
@@ -162,7 +162,7 @@ export default function AboutPage() {
       <footer className="border-t border-slate-800 py-8 mt-16">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <p className="text-sm text-slate-400">
-            © 2026 DataFlow Analytics. All rights reserved. Educational research tool only.
+            © 2026 TradeFlow AI. All rights reserved. Educational research tool only.
           </p>
         </div>
       </footer>

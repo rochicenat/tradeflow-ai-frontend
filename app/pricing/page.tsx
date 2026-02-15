@@ -75,7 +75,7 @@ export default function PricingPage() {
           <Link href="/" className="flex items-center gap-2">
             <Activity className="w-8 h-8 text-orange-500" />
             <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-blue-500 bg-clip-text text-transparent">
-              DataFlow Analytics
+              TradeFlow AI
             </span>
           </Link>
           <div className="flex items-center gap-4">
@@ -207,7 +207,7 @@ export default function PricingPage() {
             <h3 className="text-xl font-bold text-yellow-400">Educational Tool Disclaimer</h3>
           </div>
           <p className="text-slate-300 text-lg max-w-3xl mx-auto">
-            DataFlow Analytics is a research and educational AI data analytics platform. None of the information provided is financial or investment advice. All analyses are for educational and research purposes only.
+            TradeFlow AI is a research and educational AI data analytics platform. None of the information provided is financial or investment advice. All analyses are for educational and research purposes only.
           </p>
         </motion.div>
 

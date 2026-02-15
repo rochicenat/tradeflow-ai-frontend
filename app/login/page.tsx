@@ -55,7 +55,7 @@ export default function LoginPage() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 mb-8">
             <Activity className="w-10 h-10 text-orange-500" />
-            <span className="text-2xl font-bold text-white">DataFlow Analytics</span>
+            <span className="text-2xl font-bold text-white">TradeFlow AI</span>
           </Link>
 
           <h1 className="text-4xl font-bold text-white mb-2">Welcome Back</h1>

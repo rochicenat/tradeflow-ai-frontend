@@ -12,7 +12,7 @@ export default function RefundPage() {
           <Link href="/" className="flex items-center gap-2">
             <Activity className="w-8 h-8 text-orange-500" />
             <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
-              DataFlow Analytics
+              TradeFlow AI
             </span>
           </Link>
           <Link href="/" className="text-sm text-slate-300 hover:text-white transition">
@@ -34,7 +34,7 @@ export default function RefundPage() {
           <section>
             <h2 className="text-3xl font-semibold text-white mb-4">1. Subscription Refunds</h2>
             <p className="text-slate-300 leading-relaxed">
-              DataFlow Analytics offers a <strong>7-day money-back guarantee</strong> for all paid subscriptions 
+              TradeFlow AI offers a <strong>7-day money-back guarantee</strong> for all paid subscriptions 
               (Pro and Premium plans). If you are not satisfied with our educational analytics service, you may 
               request a full refund within 7 days of your initial purchase.
             </p>
@@ -96,7 +96,7 @@ export default function RefundPage() {
           <section>
             <h2 className="text-3xl font-semibold text-white mb-4">6. Service Outages</h2>
             <p className="text-slate-300 leading-relaxed">
-              If DataFlow Analytics experiences significant downtime (more than 24 consecutive hours) 
+              If TradeFlow AI experiences significant downtime (more than 24 consecutive hours) 
               due to technical issues on our end, affected users may be eligible for a prorated 
               refund or service credit. Please contact support for assistance.
             </p>
@@ -117,14 +117,14 @@ export default function RefundPage() {
             <p className="text-slate-300 leading-relaxed">
               We reserve the right to update this Refund Policy at any time. Changes will 
               be posted on this page with an updated "Last updated" date. Continued use 
-              of DataFlow Analytics after policy changes constitutes acceptance of those changes.
+              of TradeFlow AI after policy changes constitutes acceptance of those changes.
             </p>
           </section>
 
           <section className="bg-blue-500/10 border border-orange-500/30 rounded-2xl p-6">
             <h2 className="text-3xl font-semibold text-orange-500 mb-4">9. Educational Service Notice</h2>
             <p className="text-slate-300 leading-relaxed">
-              DataFlow Analytics is an educational data analytics platform. Refund requests based on 
+              TradeFlow AI is an educational data analytics platform. Refund requests based on 
               "lack of profitability" or "inaccurate predictions" are not valid, as we explicitly state 
               that our service is for research and educational purposes only, not financial advice or 
               guaranteed outcomes.
@@ -147,7 +147,7 @@ export default function RefundPage() {
 
       <footer className="border-t border-slate-800 py-8">
         <div className="max-w-7xl mx-auto px-6 text-center text-slate-500 text-sm">
-          © 2026 DataFlow Analytics. Educational research tool only.
+          © 2026 TradeFlow AI. Educational research tool only.
         </div>
       </footer>
     </div>
