@@ -63,6 +63,7 @@ export default function AnalyticsDashboard() {
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(typeof window !== 'undefined' && window.innerWidth > 1024);
   const [currentPage, setCurrentPage] = useState('dashboard');
 
@@ -105,6 +106,10 @@ export default function AnalyticsDashboard() {
       router.push('/login');
       return;
     }
+
+    const reader = new FileReader();
+    reader.onloadend = () => setImagePreview(reader.result as string);
+    reader.readAsDataURL(file);
 
     setUploading(true);
     setLoading(true);
@@ -419,6 +424,9 @@ export default function AnalyticsDashboard() {
                 <div className="p-12 text-center">
                   <motion.div animate={{ y: isDragActive ? -10 : 0 }} className="mb-4">
                     <Upload className="w-16 h-16 mx-auto text-orange-500" />
+            {imagePreview && (
+              <img src={imagePreview} alt="Preview" className="max-w-full max-h-64 rounded-lg mb-4" />
+            )}
                   </motion.div>
                   <h3 className="text-2xl font-bold text-white mb-2">
                     {uploading ? 'Analyzing...' : 'Upload Market Chart'}
