@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Logo from '../components/Logo'
-import { BarChart3, TrendingUp, Shield, Zap, ChevronDown } from 'lucide-react'
+import { BarChart3, TrendingUp, Shield, Zap, ChevronDown, Upload, Brain, LineChart } from 'lucide-react'
 import { useState } from 'react'
 
 export default function Home() {
@@ -80,8 +80,87 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* How It Works */}
       <section className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">How It Works</h2>
+            <p className="text-xl text-gray-400">
+              Upload any chart screenshot and get instant AI-powered analysis
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Step 1 */}
+            <div className="relative">
+              <div className="absolute -top-4 left-8 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-xl font-bold z-10">
+                1
+              </div>
+              <div className="bg-gray-900 border border-gray-800 rounded-lg p-8 pt-12 hover:border-orange-500/50 transition-all">
+                <div className="mb-6 flex justify-center">
+                  <div className="w-full h-48 bg-gray-800 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-700">
+                    <Upload className="w-16 h-16 text-gray-600" />
+                  </div>
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Upload</h3>
+                <p className="text-gray-400 text-sm">Drop any chart screenshot from any platform or timeframe</p>
+              </div>
+              {/* Arrow */}
+              <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
+                <svg className="w-8 h-8 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="relative">
+              <div className="absolute -top-4 left-8 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-xl font-bold z-10">
+                2
+              </div>
+              <div className="bg-gray-900 border border-gray-800 rounded-lg p-8 pt-12 hover:border-orange-500/50 transition-all">
+                <div className="mb-6 flex justify-center">
+                  <div className="w-full h-48 bg-gray-800 rounded-lg flex items-center justify-center">
+                    <div className="relative">
+                      <Brain className="w-16 h-16 text-orange-500 animate-pulse" />
+                      <div className="absolute inset-0 bg-orange-500/20 rounded-full blur-xl"></div>
+                    </div>
+                  </div>
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Analyze</h3>
+                <p className="text-gray-400 text-sm">AI identifies patterns, trends, and key levels in seconds</p>
+              </div>
+              {/* Arrow */}
+              <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
+                <svg className="w-8 h-8 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="relative">
+              <div className="absolute -top-4 left-8 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-xl font-bold z-10">
+                3
+              </div>
+              <div className="bg-gray-900 border border-gray-800 rounded-lg p-8 pt-12 hover:border-orange-500/50 transition-all">
+                <div className="mb-6 flex justify-center">
+                  <div className="w-full h-48 bg-gradient-to-br from-green-900/20 to-red-900/20 rounded-lg flex items-center justify-center border border-gray-700 relative overflow-hidden">
+                    <LineChart className="w-16 h-16 text-orange-500" />
+                    <div className="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded">BUY</div>
+                    <div className="absolute bottom-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded">SELL</div>
+                  </div>
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Get Insights</h3>
+                <p className="text-gray-400 text-sm">Receive detailed analysis with entry points and risk levels</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 px-4 bg-gray-900/30">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-sm text-orange-500 font-semibold mb-2">FAQ</p>
@@ -121,7 +200,7 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 px-4 bg-gray-900/30">
+      <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-6">Ready for data-driven intelligence?</h2>
           <p className="text-xl text-gray-400 mb-8">
