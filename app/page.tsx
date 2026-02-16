@@ -34,16 +34,16 @@ export default function Home() {
       <section className="pt-20 pb-32 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-orange-500 to-orange-300 bg-clip-text text-transparent">
-            AI-Powered Chart Analysis
+            Decode Market Patterns with Advanced AI Technology
           </h1>
           <p className="text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto">
-            Upload your trading charts and get instant AI-powered technical analysis with pattern recognition and market insights.
+            Lightning-fast chart recognition and statistical modeling at your fingertips. Trusted by data analysts, researchers, and institutions seeking objective market intelligence through computational analysis.
           </p>
           <Link 
             href="/signup"
             className="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg text-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition-all transform hover:scale-105"
           >
-            Start Analyzing Charts
+            Start Analysis Now
           </Link>
         </div>
       </section>
@@ -57,23 +57,23 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <FeatureCard 
               icon={<BarChart3 className="w-12 h-12 text-orange-500" />}
-              title="Pattern Detection"
-              description="Instantly identify chart patterns, support/resistance levels, and trends"
+              title="Pattern Recognition"
+              description="Advanced AI identifies statistical patterns and trends across market data"
             />
             <FeatureCard 
               icon={<TrendingUp className="w-12 h-12 text-orange-500" />}
-              title="Market Insights"
-              description="Get actionable insights with entry/exit points and risk analysis"
+              title="Research Intelligence"
+              description="Data-driven insights for analysts conducting systematic market studies"
             />
             <FeatureCard 
               icon={<Zap className="w-12 h-12 text-orange-500" />}
-              title="Fast Analysis"
-              description="Upload and analyze charts in seconds with our AI engine"
+              title="Instant Analysis"
+              description="Upload and analyze charts in seconds with our computational engine"
             />
             <FeatureCard 
               icon={<Shield className="w-12 h-12 text-orange-500" />}
-              title="Secure & Private"
-              description="Your charts and data are encrypted and never shared"
+              title="Enterprise Security"
+              description="Your data is encrypted and protected with bank-level security standards"
             />
           </div>
         </div>
@@ -82,9 +82,9 @@ export default function Home() {
       {/* CTA */}
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6">Ready to elevate your trading?</h2>
+          <h2 className="text-4xl font-bold mb-6">Ready for data-driven intelligence?</h2>
           <p className="text-xl text-gray-400 mb-8">
-            Join traders using AI-powered analysis to make better decisions
+            Join analysts and researchers using AI-powered statistical analysis
           </p>
           <Link 
             href="/pricing"
