@@ -159,8 +159,49 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* Testimonials */}
       <section className="py-20 px-4 bg-gray-900/30">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-sm text-orange-500 font-semibold mb-2">TESTIMONIALS</p>
+            <h2 className="text-4xl font-bold">Trusted by Analysts Worldwide</h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <TestimonialCard
+              initials="SM"
+              name="Sarah Mitchell"
+              role="Market Researcher"
+              rating={5}
+              text="The pattern recognition feature saves me hours of manual chart analysis. I can now process 10x more data points in my research."
+            />
+            <TestimonialCard
+              initials="MC"
+              name="Michael Chen"
+              role="Data Analyst"
+              rating={5}
+              text="Been analyzing charts for 5 years. This AI spotted correlations I completely missed. Game-changer for systematic research."
+            />
+            <TestimonialCard
+              initials="JR"
+              name="Jennifer Rodriguez"
+              role="Financial Researcher"
+              rating={5}
+              text="Started using this for my thesis on market behavior patterns. The statistical insights are incredibly detailed and well-structured."
+            />
+            <TestimonialCard
+              initials="AT"
+              name="Alex Thompson"
+              role="Quantitative Analyst"
+              rating={5}
+              text="The speed is incredible. Upload a chart, get comprehensive pattern analysis in under 3 seconds. Saves hours every week."
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-sm text-orange-500 font-semibold mb-2">FAQ</p>
@@ -200,7 +241,7 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-gray-900/30">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-6">Ready for data-driven intelligence?</h2>
           <p className="text-xl text-gray-400 mb-8">
@@ -310,6 +351,36 @@ function FeatureCard({ icon, title, description }: { icon: React.ReactNode; titl
       <div className="mb-4">{icon}</div>
       <h3 className="text-xl font-semibold mb-2">{title}</h3>
       <p className="text-gray-400">{description}</p>
+    </div>
+  )
+}
+
+function TestimonialCard({ initials, name, role, rating, text }: { 
+  initials: string; 
+  name: string; 
+  role: string; 
+  rating: number; 
+  text: string;
+}) {
+  return (
+    <div className="bg-gray-900 border border-gray-800 rounded-lg p-6 hover:border-orange-500/50 transition-all">
+      <div className="flex items-center gap-4 mb-4">
+        <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center font-bold text-white">
+          {initials}
+        </div>
+        <div>
+          <div className="font-semibold">{name}</div>
+          <div className="text-sm text-gray-400">{role}</div>
+        </div>
+      </div>
+      <div className="flex gap-1 mb-4">
+        {[...Array(rating)].map((_, i) => (
+          <svg key={i} className="w-4 h-4 fill-orange-500" viewBox="0 0 20 20">
+            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+          </svg>
+        ))}
+      </div>
+      <p className="text-gray-400 text-sm">&ldquo;{text}&rdquo;</p>
     </div>
   )
 }
