@@ -1,5 +1,18 @@
 'use client';
 
+export default function Logo({ className = "" }: { className?: string }) {
+  return (
+    <div className={`flex items-center gap-2 ${className}`}>
+      <div className="relative">
+        <span className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
+          TradeFlow
+        </span>
+        <span className="ml-1 text-2xl font-light text-slate-400">AI</span>
+      </div>
+    </div>
+  );
+}
+
 export function TextLogo({ className = "" }: { className?: string }) {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
