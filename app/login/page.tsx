@@ -136,20 +136,20 @@ export default function LoginPage() {
             AI-Powered Data Analytics
           </h2>
           <p className="text-xl text-white/90 max-w-md mx-auto">
-            Professional chart analysis in seconds. Join thousands of researchers using our platform.
+            Professional chart analysis in seconds. Join researchers and analysts using our statistical intelligence platform.
           </p>
           <div className="mt-12 grid grid-cols-3 gap-8 text-white">
             <div>
-              <div className="text-3xl font-bold mb-1">99.2%</div>
-              <div className="text-sm opacity-90">Accuracy</div>
+              <div className="text-3xl font-bold mb-1">Fast</div>
+              <div className="text-sm opacity-90">Analysis</div>
             </div>
             <div>
-              <div className="text-3xl font-bold mb-1">&lt;3s</div>
-              <div className="text-sm opacity-90">Response</div>
+              <div className="text-3xl font-bold mb-1">Secure</div>
+              <div className="text-sm opacity-90">Platform</div>
             </div>
             <div>
-              <div className="text-3xl font-bold mb-1">24/7</div>
-              <div className="text-sm opacity-90">Available</div>
+              <div className="text-3xl font-bold mb-1">AI</div>
+              <div className="text-sm opacity-90">Powered</div>
             </div>
           </div>
         </motion.div>
