@@ -12,10 +12,17 @@ export default function SignupPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!agreedToTerms) {
+      toast.error('Please accept the Terms and Privacy Policy');
+      return;
+    }
+    
     setLoading(true);
 
     try {
@@ -149,22 +156,36 @@ export default function SignupPage() {
               <p className="text-xs text-slate-500 mt-1">Minimum 6 characters</p>
             </div>
 
+            {/* ✅ YENİ CHECKBOX */}
+            <div className="flex items-start gap-3">
+              <input
+                type="checkbox"
+                id="terms"
+                checked={agreedToTerms}
+                onChange={(e) => setAgreedToTerms(e.target.checked)}
+                className="mt-1 w-4 h-4 rounded border-[#252525] bg-[#1A1A1A] text-orange-500 focus:ring-orange-500 focus:ring-offset-0 cursor-pointer"
+              />
+              <label htmlFor="terms" className="text-sm text-slate-400 cursor-pointer">
+                I agree to the{' '}
+                <Link href="/terms" className="text-orange-500 hover:text-orange-400 underline">
+                  Terms of Service
+                </Link>
+                {' '}and{' '}
+                <Link href="/privacy" className="text-orange-500 hover:text-orange-400 underline">
+                  Privacy Policy
+                </Link>
+              </label>
+            </div>
+
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || !agreedToTerms}
               className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Creating account...' : 'Create Account'}
               {!loading && <ArrowRight className="w-5 h-5" />}
             </button>
           </form>
-
-          <p className="text-xs text-slate-500 mt-6 text-center">
-            By signing up, you agree to our{' '}
-            <Link href="/terms" className="text-orange-500 hover:underline">Terms</Link>
-            {' '}and{' '}
-            <Link href="/privacy" className="text-orange-500 hover:underline">Privacy Policy</Link>
-          </p>
 
           <div className="mt-8 text-center">
             <p className="text-slate-400">
