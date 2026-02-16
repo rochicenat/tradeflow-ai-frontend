@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import Logo from '../components/Logo'
-import { BarChart3, TrendingUp, Shield, Zap } from 'lucide-react'
+import { BarChart3, TrendingUp, Shield, Zap, ChevronDown } from 'lucide-react'
+import { useState } from 'react'
 
 export default function Home() {
   return (
@@ -79,8 +80,48 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* FAQ Section */}
       <section className="py-20 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-sm text-orange-500 font-semibold mb-2">FAQ</p>
+            <h2 className="text-4xl font-bold">Frequently Asked Questions</h2>
+          </div>
+          <div className="space-y-4">
+            <FAQItem 
+              question="What markets does TradeFlow AI support?"
+              answer="TradeFlow AI analyzes charts from all major financial markets including stocks, forex, cryptocurrencies, commodities, and indices. Our AI is trained on diverse market data to recognize patterns across different asset classes."
+            />
+            <FAQItem 
+              question="How does the AI analysis work?"
+              answer="Our deep learning models analyze uploaded charts to identify statistical patterns, trend lines, support/resistance levels, and technical indicators. The system processes visual data and compares it against historical market behavior to generate insights."
+            />
+            <FAQItem 
+              question="What's included in each plan?"
+              answer="Free plan includes 3 analyses per month. Pro plan offers 50 analyses with priority processing. Premium plan provides unlimited analyses, advanced pattern recognition, and API access for institutional users."
+            />
+            <FAQItem 
+              question="How do I cancel my subscription?"
+              answer="You can cancel anytime from your account settings under the Billing tab. Your access continues until the end of your current billing period, and you won't be charged again."
+            />
+            <FAQItem 
+              question="Can I switch between monthly and annual plans?"
+              answer="Yes, you can upgrade or downgrade between plans at any time. Changes take effect at your next billing cycle, and we'll prorate any differences in cost."
+            />
+            <FAQItem 
+              question="What payment methods do you accept?"
+              answer="We accept all major credit cards (Visa, Mastercard, American Express), debit cards, and PayPal. All payments are processed securely through our payment partner."
+            />
+            <FAQItem 
+              question="Do I need technical analysis experience?"
+              answer="No prior experience required. Our AI provides clear, structured insights that both beginners and professional analysts can use. The platform is designed to make complex analysis accessible to everyone."
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20 px-4 bg-gray-900/30">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-6">Ready for data-driven intelligence?</h2>
           <p className="text-xl text-gray-400 mb-8">
@@ -117,6 +158,29 @@ function FeatureCard({ icon, title, description }: { icon: React.ReactNode; titl
       <div className="mb-4">{icon}</div>
       <h3 className="text-xl font-semibold mb-2">{title}</h3>
       <p className="text-gray-400">{description}</p>
+    </div>
+  )
+}
+
+function FAQItem({ question, answer }: { question: string; answer: string }) {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <div className="border border-gray-800 rounded-lg overflow-hidden bg-gray-900/50">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-800/50 transition-colors"
+      >
+        <span className="font-semibold text-lg">{question}</span>
+        <ChevronDown 
+          className={`w-5 h-5 text-orange-500 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+        />
+      </button>
+      {isOpen && (
+        <div className="px-6 pb-4 text-gray-400">
+          {answer}
+        </div>
+      )}
     </div>
   )
 }
