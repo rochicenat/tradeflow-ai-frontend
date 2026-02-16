@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import Logo from './components/Logo'
+import Logo from '../components/Logo'
 import { BarChart3, TrendingUp, Shield, Zap } from 'lucide-react'
 
 export default function Home() {
