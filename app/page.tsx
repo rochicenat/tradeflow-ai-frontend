@@ -147,12 +147,12 @@ export default function Home() {
                 <div className="mb-6 flex justify-center">
                   <div className="w-full h-48 bg-gradient-to-br from-green-900/20 to-red-900/20 rounded-lg flex items-center justify-center border border-gray-700 relative overflow-hidden">
                     <LineChart className="w-16 h-16 text-orange-500" />
-                    <div className="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded">BUY</div>
-                    <div className="absolute bottom-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded">SELL</div>
+                    <div className="absolute top-2 right-2 bg-orange-500/20 text-orange-400 text-xs px-2 py-1 rounded border border-orange-500/50">PATTERN</div>
+                    <div className="absolute bottom-2 right-2 bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded border border-blue-500/50">DATA</div>
                   </div>
                 </div>
                 <h3 className="text-xl font-semibold mb-2">Get Insights</h3>
-                <p className="text-gray-400 text-sm">Receive detailed analysis with entry points and risk levels</p>
+                <p className="text-gray-400 text-sm">Receive detailed statistical analysis with pattern recognition and data visualization</p>
               </div>
             </div>
           </div>
