@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import { User, CreditCard, Shield, Bell } from 'lucide-react';
 
@@ -18,6 +17,40 @@ interface SettingsPageProps {
 
 export default function SettingsPage({ userData }: SettingsPageProps) {
   const [activeTab, setActiveTab] = useState('profile');
+  const [name, setName] = useState(userData?.name || '');
+  const [saving, setSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+
+  const handleSaveProfile = async () => {
+    setSaving(true);
+    setSaveSuccess(false);
+
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    try {
+      const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/update-profile', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name })
+      });
+
+      if (response.ok) {
+        setSaveSuccess(true);
+        setTimeout(() => setSaveSuccess(false), 3000);
+      } else {
+        alert('Failed to save changes');
+      }
+    } catch (error) {
+      console.error('Save failed:', error);
+      alert('Error saving changes');
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const tabs = [
     { id: 'profile', name: 'Profile', icon: User },
@@ -63,11 +96,11 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
                 <label className="block text-sm font-medium text-slate-300 mb-2">Full Name</label>
                 <input
                   type="text"
-                  defaultValue={userData?.name}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg px-4 py-3 text-white focus:border-orange-500 focus:outline-none transition"
                 />
               </div>
-
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">Email Address</label>
                 <input
@@ -78,10 +111,20 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
                 />
                 <p className="text-xs text-slate-500 mt-1">Email cannot be changed</p>
               </div>
-
-              <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold transition">
-                Save Changes
-              </button>
+              
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handleSaveProfile}
+                  disabled={saving}
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {saving ? 'Saving...' : 'Save Changes'}
+                </button>
+                
+                {saveSuccess && (
+                  <span className="text-green-400 text-sm font-medium">✓ Changes saved!</span>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -107,7 +150,6 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
                 Upgrade Plan
               </button>
             </div>
-
             <div className="h-2 bg-[#252525] rounded-full overflow-hidden">
               <div 
                 className="h-full bg-orange-500 transition-all"
@@ -129,12 +171,10 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
                 <label className="block text-sm font-medium text-slate-300 mb-2">Current Password</label>
                 <input type="password" className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg px-4 py-3 text-white focus:border-orange-500 focus:outline-none transition" placeholder="••••••••" />
               </div>
-
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">New Password</label>
                 <input type="password" className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg px-4 py-3 text-white focus:border-orange-500 focus:outline-none transition" placeholder="••••••••" />
               </div>
-
               <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold transition">
                 Update Password
               </button>
