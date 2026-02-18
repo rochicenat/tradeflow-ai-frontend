@@ -18,8 +18,12 @@ interface SettingsPageProps {
 export default function SettingsPage({ userData }: SettingsPageProps) {
   const [activeTab, setActiveTab] = useState('profile');
   const [name, setName] = useState(userData?.name || '');
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [passwordUpdating, setPasswordUpdating] = useState(false);
+  const [passwordSuccess, setPasswordSuccess] = useState(false);
 
   const handleSaveProfile = async () => {
     setSaving(true);
@@ -49,6 +53,54 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
       alert('Error saving changes');
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handlePasswordUpdate = async () => {
+    if (!currentPassword || !newPassword) {
+      alert('Please fill in all password fields');
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      alert('New password must be at least 6 characters');
+      return;
+    }
+
+    setPasswordUpdating(true);
+    setPasswordSuccess(false);
+
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    try {
+      const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/change-password', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          current_password: currentPassword,
+          new_password: newPassword
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setPasswordSuccess(true);
+        setCurrentPassword('');
+        setNewPassword('');
+        setTimeout(() => setPasswordSuccess(false), 3000);
+      } else {
+        alert(data.detail || 'Failed to update password');
+      }
+    } catch (error) {
+      console.error('Password update failed:', error);
+      alert('Error updating password');
+    } finally {
+      setPasswordUpdating(false);
     }
   };
 
@@ -169,15 +221,39 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">Current Password</label>
-                <input type="password" className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg px-4 py-3 text-white focus:border-orange-500 focus:outline-none transition" placeholder="••••••••" />
+                <input
+                  type="password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg px-4 py-3 text-white focus:border-orange-500 focus:outline-none transition"
+                  placeholder="••••••••"
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">New Password</label>
-                <input type="password" className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg px-4 py-3 text-white focus:border-orange-500 focus:outline-none transition" placeholder="••••••••" />
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg px-4 py-3 text-white focus:border-orange-500 focus:outline-none transition"
+                  placeholder="••••••••"
+                />
+                <p className="text-xs text-slate-500 mt-1">Minimum 6 characters</p>
               </div>
-              <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold transition">
-                Update Password
-              </button>
+              
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handlePasswordUpdate}
+                  disabled={passwordUpdating}
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {passwordUpdating ? 'Updating...' : 'Update Password'}
+                </button>
+                
+                {passwordSuccess && (
+                  <span className="text-green-400 text-sm font-medium">✓ Password updated!</span>
+                )}
+              </div>
             </div>
           </div>
 
