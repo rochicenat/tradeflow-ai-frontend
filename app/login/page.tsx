@@ -31,7 +31,7 @@ export default function LoginPage() {
       }
 
       localStorage.setItem('token', data.access_token);
-      toast.success('Welcome back!');
+      toast.success('Welcome back!', { duration: 2000 });
       setTimeout(() => router.push('/dashboard'), 500);
     } catch (error: any) {
       toast.error(error.message || 'Login failed. Please check your credentials.');
