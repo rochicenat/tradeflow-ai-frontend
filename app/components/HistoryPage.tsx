@@ -1,8 +1,7 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, TrendingUp, TrendingDown, Minus, AlertCircle } from 'lucide-react';
+import { Calendar, TrendingUp, TrendingDown, Minus, AlertCircle, Trash2 } from 'lucide-react';
 
 interface HistoryItem {
   id: number;
@@ -15,6 +14,7 @@ interface HistoryItem {
 export default function HistoryPage() {
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState<number | null>(null);
 
   useEffect(() => {
     fetchHistory();
@@ -28,7 +28,6 @@ export default function HistoryPage() {
       const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/analysis-history', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
-
       if (response.ok) {
         const data = await response.json();
         setHistory(data);
@@ -37,6 +36,30 @@ export default function HistoryPage() {
       console.error('Failed to fetch history:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const deleteAnalysis = async (id: number) => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    setDeleting(id);
+    try {
+      const response = await fetch(`https://tradeflow-ai-backend-production.up.railway.app/delete-analysis/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      if (response.ok) {
+        setHistory(history.filter(item => item.id !== id));
+      } else {
+        alert('Failed to delete analysis');
+      }
+    } catch (error) {
+      console.error('Failed to delete:', error);
+      alert('Error deleting analysis');
+    } finally {
+      setDeleting(null);
     }
   };
 
@@ -113,15 +136,29 @@ export default function HistoryPage() {
                     {item.trend === 'bullish' ? 'Uptrend' : item.trend === 'bearish' ? 'Downtrend' : 'Neutral'}
                   </span>
                 </div>
-
                 <div className={`px-3 py-1 rounded-lg border text-xs font-semibold uppercase ${getConfidenceBadge(item.confidence)}`}>
                   {item.confidence} Confidence
                 </div>
               </div>
-
-              <div className="flex items-center gap-2 text-slate-400 text-sm">
-                <Calendar className="w-4 h-4" />
-                {formatDate(item.created_at)}
+              
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 text-slate-400 text-sm">
+                  <Calendar className="w-4 h-4" />
+                  {formatDate(item.created_at)}
+                </div>
+                
+                <button
+                  onClick={() => deleteAnalysis(item.id)}
+                  disabled={deleting === item.id}
+                  className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  title="Delete analysis"
+                >
+                  {deleting === item.id ? (
+                    <div className="w-5 h-5 border-2 border-red-400 border-t-transparent rounded-full animate-spin"></div>
+                  ) : (
+                    <Trash2 className="w-5 h-5" />
+                  )}
+                </button>
               </div>
             </div>
 
