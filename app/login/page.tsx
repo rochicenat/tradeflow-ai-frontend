@@ -5,17 +5,18 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Activity, Mail, Lock, ArrowRight } from 'lucide-react';
-import toast, { Toaster } from 'react-hot-toast';
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
 
     try {
       const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/login', {
@@ -31,10 +32,9 @@ export default function LoginPage() {
       }
 
       localStorage.setItem('token', data.access_token);
-      toast.success('Welcome back!', { duration: 2000 });
-      setTimeout(() => router.push('/dashboard'), 500);
+      router.push('/dashboard');
     } catch (error: any) {
-      toast.error(error.message || 'Login failed. Please check your credentials.');
+      setError(error.message || 'Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
     }
@@ -42,8 +42,6 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-black flex">
-      <Toaster position="top-right" />
-      
       {/* Left Side - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
         <motion.div
@@ -52,7 +50,6 @@ export default function LoginPage() {
           transition={{ duration: 0.5 }}
           className="w-full max-w-md"
         >
-          {/* Logo */}
           <Link href="/" className="flex items-center gap-2 mb-8">
             <Activity className="w-10 h-10 text-orange-500" />
             <span className="text-2xl font-bold text-white">TradeFlow AI</span>
@@ -60,6 +57,12 @@ export default function LoginPage() {
 
           <h1 className="text-4xl font-bold text-white mb-2">Welcome Back</h1>
           <p className="text-slate-400 mb-8">Sign in to access your analytics dashboard</p>
+
+          {error && (
+            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm">
+              {error}
+            </div>
+          )}
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
