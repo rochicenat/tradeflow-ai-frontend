@@ -35,17 +35,54 @@ export default function Home() {
       <section className="pt-20 pb-32 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-orange-500 to-orange-300 bg-clip-text text-transparent">
-            Decode Market Patterns with Advanced AI Technology
+            AI-Powered Chart Analysis for Market Researchers
           </h1>
-          <p className="text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto">
-            Lightning-fast chart recognition and statistical modeling at your fingertips. Trusted by data analysts, researchers, and institutions seeking objective market intelligence through computational analysis.
+          <p className="text-xl md:text-2xl text-gray-400 mb-8 max-w-3xl mx-auto">
+            Upload any market chart and receive instant statistical pattern recognition. Built for analysts, researchers, and data professionals who need objective insights—not recommendations.
           </p>
+          
+          {/* 3 Key Features */}
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12 text-left">
+            <div className="flex items-start gap-3">
+              <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-1">
+                <span className="text-white text-sm">✓</span>
+              </div>
+              <div>
+                <h3 className="font-semibold text-white mb-1">Pattern Recognition Engine</h3>
+                <p className="text-sm text-gray-400">Advanced AI identifies technical formations, trend lines, and statistical anomalies across historical data</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-1">
+                <span className="text-white text-sm">✓</span>
+              </div>
+              <div>
+                <h3 className="font-semibold text-white mb-1">Instant Data Visualization</h3>
+                <p className="text-sm text-gray-400">Transform raw charts into structured analysis with support/resistance levels and volume patterns</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-1">
+                <span className="text-white text-sm">✓</span>
+              </div>
+              <div>
+                <h3 className="font-semibold text-white mb-1">Research-Grade Reports</h3>
+                <p className="text-sm text-gray-400">Export detailed breakdowns designed for systematic study and documentation, not trading decisions</p>
+              </div>
+            </div>
+          </div>
+
           <Link 
             href="/signup"
             className="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg text-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition-all transform hover:scale-105"
           >
-            Start Analysis Now
+            Start Free Analysis
           </Link>
+          
+          {/* Disclaimer */}
+          <p className="text-xs text-gray-500 mt-6 max-w-2xl mx-auto">
+            Educational data analysis tool. All outputs are for informational and research purposes only. Not financial advice. Past patterns do not predict future outcomes.
+          </p>
         </div>
       </section>
 
@@ -105,7 +142,6 @@ export default function Home() {
                 <h3 className="text-xl font-semibold mb-2">Upload</h3>
                 <p className="text-gray-400 text-sm">Drop any chart screenshot from any platform or timeframe</p>
               </div>
-              {/* Arrow */}
               <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
                 <svg className="w-8 h-8 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -130,7 +166,6 @@ export default function Home() {
                 <h3 className="text-xl font-semibold mb-2">Analyze</h3>
                 <p className="text-gray-400 text-sm">AI identifies patterns, trends, and key levels in seconds</p>
               </div>
-              {/* Arrow */}
               <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
                 <svg className="w-8 h-8 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -145,7 +180,7 @@ export default function Home() {
               </div>
               <div className="bg-gray-900 border border-gray-800 rounded-lg p-8 pt-12 hover:border-orange-500/50 transition-all">
                 <div className="mb-6 flex justify-center">
-                  <div className="w-full h-48 bg-gradient-to-br from-green-900/20 to-red-900/20 rounded-lg flex items-center justify-center border border-gray-700 relative overflow-hidden">
+                  <div className="w-full h-48 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg flex items-center justify-center border border-gray-700 relative overflow-hidden">
                     <LineChart className="w-16 h-16 text-orange-500" />
                     <div className="absolute top-2 right-2 bg-orange-500/20 text-orange-400 text-xs px-2 py-1 rounded border border-orange-500/50">PATTERN</div>
                     <div className="absolute bottom-2 right-2 bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded border border-blue-500/50">DATA</div>
@@ -260,7 +295,6 @@ export default function Home() {
       <footer className="border-t border-gray-800 bg-black">
         <div className="max-w-7xl mx-auto px-4 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            {/* Brand */}
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
@@ -290,7 +324,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Analysis Tools */}
             <div>
               <h3 className="font-semibold text-white mb-4">Analysis Tools</h3>
               <ul className="space-y-2 text-sm text-gray-400">
@@ -300,7 +333,6 @@ export default function Home() {
               </ul>
             </div>
 
-            {/* Get Started */}
             <div>
               <h3 className="font-semibold text-white mb-4">Get Started</h3>
               <ul className="space-y-2 text-sm text-gray-400">
@@ -311,7 +343,6 @@ export default function Home() {
               </ul>
             </div>
 
-            {/* Legal */}
             <div>
               <h3 className="font-semibold text-white mb-4">Legal</h3>
               <ul className="space-y-2 text-sm text-gray-400">
@@ -322,14 +353,12 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Disclaimer */}
           <div className="border-t border-gray-800 pt-8">
             <p className="text-xs text-gray-500 text-center max-w-4xl mx-auto">
               Market analysis involves significant risk. TradeFlow AI provides AI-powered analysis tools for educational and research purposes only and does not constitute financial advice. Past patterns do not guarantee future results. Users are responsible for their own decisions and should consult with qualified financial advisors before making any decisions.
             </p>
           </div>
 
-          {/* Copyright */}
           <div className="mt-8 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-sm">
             <div>© 2024 TradeFlow AI. All rights reserved.</div>
             <div className="flex gap-6">
