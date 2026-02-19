@@ -410,12 +410,6 @@ export default function Home() {
 
           <div className="mt-8 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-sm">
             <div>© 2024 TradeFlow AI. All rights reserved.</div>
-            <div className="flex gap-6">
-              <Link href="/about" className="hover:text-orange-500 transition-colors">About</Link>
-              <Link href="/privacy" className="hover:text-orange-500 transition-colors">Privacy</Link>
-              <Link href="/terms" className="hover:text-orange-500 transition-colors">Terms</Link>
-              <Link href="/refund" className="hover:text-orange-500 transition-colors">Refund</Link>
-            </div>
           </div>
         </div>
       </footer>
