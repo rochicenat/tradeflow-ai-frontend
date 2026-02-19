@@ -339,21 +339,6 @@ export default function Home() {
           </div>
         </section>
 
-      {/* CTA */}
-      <section className="py-20 px-4 bg-gray-900/30">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6">Ready for data-driven intelligence?</h2>
-          <p className="text-xl text-gray-400 mb-8">
-            Join analysts and researchers using AI-powered statistical analysis
-          </p>
-          <Link 
-            href="/pricing"
-            className="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg text-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition-all"
-          >
-            View Pricing
-          </Link>
-        </div>
-      </section>
 
       {/* Footer */}
       <footer className="border-t border-gray-800 bg-black">
