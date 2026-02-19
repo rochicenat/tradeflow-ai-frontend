@@ -15,7 +15,7 @@ export default function Home() {
             <Logo />
             <div className="hidden md:flex items-center gap-6">
               <a href="/dashboard" className="text-gray-300 hover:text-orange-500 transition-colors text-sm">Dashboard</a>
-              <a href="/pricing" className="text-gray-300 hover:text-orange-500 transition-colors text-sm">Pricing</a>
+              <a href="#pricing" className="text-gray-300 hover:text-orange-500 transition-colors text-sm">Pricing</a>
               <a href="#how-it-works" className="text-gray-300 hover:text-orange-500 transition-colors text-sm">How It Works</a>
             </div>
             <div className="flex items-center gap-3">
@@ -113,7 +113,7 @@ export default function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 px-4">
+      <section id="how-it-works" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">How It Works</h2>
@@ -270,7 +270,7 @@ export default function Home() {
         </div>
       </section>
         {/* Pricing Section */}
-        <section className="py-20 px-4">
+        <section id="pricing" className="py-20 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
               <p className="text-sm text-orange-500 font-semibold mb-2">PRICING</p>
@@ -363,7 +363,7 @@ export default function Home() {
               </div>
               <div className="hidden md:flex items-center gap-6">
               <a href="/dashboard" className="text-gray-300 hover:text-orange-500 transition-colors text-sm">Dashboard</a>
-              <a href="/pricing" className="text-gray-300 hover:text-orange-500 transition-colors text-sm">Pricing</a>
+              <a href="#pricing" className="text-gray-300 hover:text-orange-500 transition-colors text-sm">Pricing</a>
               <a href="#how-it-works" className="text-gray-300 hover:text-orange-500 transition-colors text-sm">How It Works</a>
             </div>
             <div className="flex items-center gap-3">
