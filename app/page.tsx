@@ -274,6 +274,70 @@ export default function Home() {
           </div>
         </div>
       </section>
+        {/* Pricing Section */}
+        <section className="py-20 px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <p className="text-sm text-orange-500 font-semibold mb-2">PRICING</p>
+              <h2 className="text-4xl font-bold text-white mb-4">Simple, Transparent Pricing</h2>
+              <p className="text-xl text-gray-400">Choose the plan that fits your research needs</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-8">
+                <h3 className="text-2xl font-bold text-white mb-2">Free</h3>
+                <div className="text-5xl font-bold text-white mb-1">$0</div>
+                <div className="text-gray-400 mb-6">3 analyses/month</div>
+                <ul className="space-y-3 mb-8">
+                  {['Basic AI analysis','Pattern recognition','Historical data insights','Email support'].map((f,i) => (
+                    <li key={i} className="flex items-center gap-2 text-gray-300 text-sm">
+                      <span className="text-green-400">✓</span> {f}
+                    </li>
+                  ))}
+                </ul>
+                <a href="https://whop.com/checkout/plan_zSMyqiw1BKut9" target="_blank" rel="noopener noreferrer" className="block w-full py-3 rounded-lg font-semibold text-center bg-gray-800 text-white hover:bg-gray-700 transition">
+                  Get Started
+                </a>
+              </div>
+              <div className="bg-orange-500/20 border-2 border-orange-500/50 rounded-2xl p-8 relative scale-105">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-orange-500 text-white px-4 py-1 rounded-full text-sm font-semibold">Most Popular</div>
+                <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
+                <div className="flex items-baseline gap-2 mb-1">
+                  <span className="text-5xl font-bold text-white">$9.99</span>
+                  <span className="text-gray-400">/month</span>
+                </div>
+                <div className="text-gray-400 mb-6">50 analyses/month</div>
+                <ul className="space-y-3 mb-8">
+                  {['Everything in Free','50 analyses per month','Advanced probability models','Statistical analysis','Quantitative insights','Data visualization','Priority support'].map((f,i) => (
+                    <li key={i} className="flex items-center gap-2 text-gray-300 text-sm">
+                      <span className="text-green-400">✓</span> {f}
+                    </li>
+                  ))}
+                </ul>
+                <a href="https://whop.com/checkout/plan_f2hyqFEMb7xE3" target="_blank" rel="noopener noreferrer" className="block w-full py-3 rounded-lg font-semibold text-center bg-orange-500 text-white hover:bg-orange-600 transition">
+                  Get Pro
+                </a>
+              </div>
+              <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-8">
+                <h3 className="text-2xl font-bold text-white mb-2">Premium</h3>
+                <div className="flex items-baseline gap-2 mb-1">
+                  <span className="text-5xl font-bold text-white">$19.99</span>
+                  <span className="text-gray-400">/month</span>
+                </div>
+                <div className="text-gray-400 mb-6">Unlimited analyses/month</div>
+                <ul className="space-y-3 mb-8">
+                  {['Everything in Pro','Unlimited analyses','API access','Custom models','Real-time data processing','Research dashboard','24/7 priority support','Early access to features'].map((f,i) => (
+                    <li key={i} className="flex items-center gap-2 text-gray-300 text-sm">
+                      <span className="text-green-400">✓</span> {f}
+                    </li>
+                  ))}
+                </ul>
+                <a href="https://whop.com/checkout/plan_SOzquxn3BDrmw" target="_blank" rel="noopener noreferrer" className="block w-full py-3 rounded-lg font-semibold text-center bg-gray-800 text-white hover:bg-gray-700 transition">
+                  Get Premium
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
 
       {/* CTA */}
       <section className="py-20 px-4 bg-gray-900/30">
