@@ -1,17 +1,19 @@
 'use client';
+
 import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Check, Activity } from 'lucide-react';
+
 export default function PricingPage() {
   const [isAnnual, setIsAnnual] = useState(false);
+
   const plans = [
     {
       name: 'Free',
       monthlyPrice: 0,
       annualPrice: 0,
       analyses: 3,
-      whopLink: 'https://whop.com/checkout/plan_zSMyqiw1BKut9',
       features: [
         'Basic AI analysis',
         'Pattern recognition',
@@ -24,7 +26,6 @@ export default function PricingPage() {
       monthlyPrice: 9.99,
       annualPrice: 99.99,
       analyses: 50,
-      whopLink: 'https://whop.com/checkout/plan_f2hyqFEMb7xE3',
       features: [
         'Everything in Free',
         '50 analyses per month',
@@ -41,7 +42,6 @@ export default function PricingPage() {
       monthlyPrice: 19.99,
       annualPrice: 199.99,
       analyses: 'Unlimited',
-      whopLink: 'https://whop.com/checkout/plan_SOzquxn3BDrmw',
       features: [
         'Everything in Pro',
         'Unlimited analyses',
@@ -54,18 +54,22 @@ export default function PricingPage() {
       ]
     }
   ];
+
   const getPrice = (plan: typeof plans[0]) => {
     if (plan.monthlyPrice === 0) return '$0';
     return isAnnual ? `$${plan.annualPrice}` : `$${plan.monthlyPrice}`;
   };
+
   const getSavings = (plan: typeof plans[0]) => {
     if (plan.monthlyPrice === 0) return null;
     const monthlyCost = plan.monthlyPrice * 12;
     const savings = monthlyCost - plan.annualPrice;
     return `Save $${savings.toFixed(0)}/year`;
   };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black">
+      {/* Header */}
       <header className="border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
@@ -78,31 +82,46 @@ export default function PricingPage() {
             <Link href="/login" className="text-slate-300 hover:text-white transition">
               Login
             </Link>
-            <Link href="/signup" className="bg-orange-500 text-white px-6 py-2 rounded-lg font-semibold transition">
+            <Link href="/signup" className="bg-gradient-to-r bg-orange-500 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-cyan-700 transition">
               Start Free
             </Link>
           </div>
         </div>
       </header>
+
       <div className="max-w-7xl mx-auto px-6 py-20">
+        {/* Title */}
         <div className="text-center mb-12">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
               Simple, Transparent Pricing
             </h1>
             <p className="text-xl text-slate-400 mb-8">
               Choose the plan that fits your research needs
             </p>
+
+            {/* Toggle */}
             <div className="inline-flex items-center gap-4 bg-slate-900/50 border border-slate-800 rounded-full p-2">
               <button
                 onClick={() => setIsAnnual(false)}
-                className={`px-6 py-2 rounded-full font-semibold transition ${!isAnnual ? 'bg-orange-500 text-white' : 'text-slate-400 hover:text-white'}`}
+                className={`px-6 py-2 rounded-full font-semibold transition ${
+                  !isAnnual 
+                    ? 'bg-gradient-to-r bg-orange-500 text-white' 
+                    : 'text-slate-400 hover:text-white'
+                }`}
               >
                 Monthly
               </button>
               <button
                 onClick={() => setIsAnnual(true)}
-                className={`px-6 py-2 rounded-full font-semibold transition relative ${isAnnual ? 'bg-orange-500 text-white' : 'text-slate-400 hover:text-white'}`}
+                className={`px-6 py-2 rounded-full font-semibold transition relative ${
+                  isAnnual 
+                    ? 'bg-gradient-to-r bg-orange-500 text-white' 
+                    : 'text-slate-400 hover:text-white'
+                }`}
               >
                 Annual
                 <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-green-500 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap">
@@ -112,6 +131,8 @@ export default function PricingPage() {
             </div>
           </motion.div>
         </div>
+
+        {/* Plans */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {plans.map((plan, index) => (
             <motion.div
@@ -119,14 +140,20 @@ export default function PricingPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className={`rounded-2xl p-8 relative ${plan.popular ? 'bg-orange-500/20 border-2 border-orange-500/50 scale-105' : 'bg-slate-900/50 border border-slate-800'}`}
+              className={`rounded-2xl p-8 relative ${
+                plan.popular
+                  ? 'bg-gradient-to-b bg-orange-500/20 border-2 border-orange-500/50 scale-105'
+                  : 'bg-slate-900/50 border border-slate-800'
+              }`}
             >
               {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-orange-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r bg-orange-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
                   Most Popular
                 </div>
               )}
+
               <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
+              
               <div className="mb-6">
                 <div className="flex items-baseline gap-2 mb-1">
                   <span className="text-5xl font-bold text-white">{getPrice(plan)}</span>
@@ -135,12 +162,16 @@ export default function PricingPage() {
                   )}
                 </div>
                 {isAnnual && plan.monthlyPrice > 0 && (
-                  <div className="text-green-400 text-sm font-semibold">💰 {getSavings(plan)}</div>
+                  <div className="text-green-400 text-sm font-semibold">
+                    💰 {getSavings(plan)}
+                  </div>
                 )}
               </div>
+
               <div className="text-slate-300 mb-6">
                 <span className="font-semibold">{plan.analyses}</span> analyses/month
               </div>
+
               <ul className="space-y-3 mb-8">
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-2 text-slate-300">
@@ -149,17 +180,22 @@ export default function PricingPage() {
                   </li>
                 ))}
               </ul>
-              
-                href={plan.whopLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`block w-full py-3 rounded-lg font-semibold text-center transition ${plan.popular ? 'bg-orange-500 text-white hover:bg-orange-600' : 'bg-slate-800 text-white hover:bg-slate-700'}`}
+
+              <Link
+                href="/signup"
+                className={`block w-full py-3 rounded-lg font-semibold text-center transition ${
+                  plan.popular
+                    ? 'bg-gradient-to-r bg-orange-500 text-white hover:from-blue-700 hover:to-cyan-700'
+                    : 'bg-slate-800 text-white hover:bg-slate-700'
+                }`}
               >
                 {plan.monthlyPrice === 0 ? 'Get Started' : `Get ${plan.name}`}
-              </a>
+              </Link>
             </motion.div>
           ))}
         </div>
+
+        {/* Disclaimer */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -174,6 +210,8 @@ export default function PricingPage() {
             TradeFlow AI is a research and educational AI data analytics platform. None of the information provided is financial or investment advice. All analyses are for educational and research purposes only.
           </p>
         </motion.div>
+
+        {/* Footer Note */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
