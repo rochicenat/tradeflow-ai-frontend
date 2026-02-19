@@ -409,7 +409,7 @@ export default function Home() {
           </div>
 
           <div className="mt-8 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-sm">
-            <div>© 2024 TradeFlow AI. All rights reserved.</div>
+            <div>© 2026 TradeFlow AI. All rights reserved.</div>
           </div>
         </div>
       </footer>
