@@ -361,6 +361,16 @@ export default function Home() {
                   </svg>
                 </a>
               </div>
+              <div className="hidden md:flex items-center gap-6">
+              <a href="/dashboard" className="text-gray-300 hover:text-orange-500 transition-colors text-sm">Dashboard</a>
+              <a href="#pricing" className="text-gray-300 hover:text-orange-500 transition-colors text-sm">Pricing</a>
+              <a href="#how-it-works" className="text-gray-300 hover:text-orange-500 transition-colors text-sm">How It Works</a>
+            </div>
+            <div className="flex items-center gap-3">
+              <a href="/login" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Log In</a>
+              <a href="/signup" className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg text-sm font-semibold transition">Sign Up</a>
+            </div>
+            </div>
 
             <div>
               <h3 className="font-semibold text-white mb-4">Analysis Tools</h3>
