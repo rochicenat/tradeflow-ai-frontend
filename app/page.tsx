@@ -8,7 +8,6 @@ import { useState } from 'react'
 export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Navbar */}
       <nav className="border-b border-gray-800 backdrop-blur-lg bg-black/50 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -25,109 +24,65 @@ export default function Home() {
           </div>
         </div>
       </nav>
-
-      {/* Hero Section */}
       <section className="pt-20 pb-32 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-orange-500 to-orange-300 bg-clip-text text-transparent">
             AI-Powered Chart Analysis for Market Researchers
           </h1>
           <p className="text-xl md:text-2xl text-gray-400 mb-8 max-w-3xl mx-auto">
-            Upload any market chart and receive instant statistical pattern recognition. Built for analysts, researchers, and data professionals who need objective insights—not recommendations.
+            Upload any market chart and receive instant statistical pattern recognition. Built for analysts, researchers, and data professionals who need objective insights.
           </p>
-          
-          {/* 3 Key Features */}
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12 text-left">
             <div className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-1">
-                <span className="text-white text-sm">✓</span>
-              </div>
+              <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-1"><span className="text-white text-sm">✓</span></div>
               <div>
                 <h3 className="font-semibold text-white mb-1">Pattern Recognition Engine</h3>
-                <p className="text-sm text-gray-400">Advanced AI identifies technical formations, trend lines, and statistical anomalies across historical data</p>
+                <p className="text-sm text-gray-400">Advanced AI identifies technical formations, trend lines, and statistical anomalies</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-1">
-                <span className="text-white text-sm">✓</span>
-              </div>
+              <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-1"><span className="text-white text-sm">✓</span></div>
               <div>
                 <h3 className="font-semibold text-white mb-1">Instant Data Visualization</h3>
-                <p className="text-sm text-gray-400">Transform raw charts into structured analysis with support/resistance levels and volume patterns</p>
+                <p className="text-sm text-gray-400">Transform raw charts into structured analysis with support/resistance levels</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-1">
-                <span className="text-white text-sm">✓</span>
-              </div>
+              <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-1"><span className="text-white text-sm">✓</span></div>
               <div>
                 <h3 className="font-semibold text-white mb-1">Research-Grade Reports</h3>
-                <p className="text-sm text-gray-400">Export detailed breakdowns designed for systematic study and documentation, not trading decisions</p>
+                <p className="text-sm text-gray-400">Export detailed breakdowns designed for systematic study and documentation</p>
               </div>
             </div>
           </div>
-
-          <Link 
-            href="/signup"
-            className="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg text-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition-all transform hover:scale-105"
-          >
+          <Link href="/signup" className="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg text-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition-all transform hover:scale-105">
             Start Free Analysis
           </Link>
-          
-          {/* Disclaimer */}
           <p className="text-xs text-gray-500 mt-6 max-w-2xl mx-auto">
-            Educational data analysis tool. All outputs are for informational and research purposes only. Not financial advice. Past patterns do not predict future outcomes.
+            Educational data analysis tool. All outputs are for informational and research purposes only. Not financial advice.
           </p>
         </div>
       </section>
-
-      {/* Features */}
       <section className="py-20 px-4 bg-gray-900/30">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-16">
-            Why Choose <span className="text-orange-500">TradeFlow AI?</span>
-          </h2>
+          <h2 className="text-4xl font-bold text-center mb-16">Why Choose <span className="text-orange-500">TradeFlow AI?</span></h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <FeatureCard 
-              icon={<BarChart3 className="w-12 h-12 text-orange-500" />}
-              title="Pattern Recognition"
-              description="Advanced AI identifies statistical patterns and trends across market data"
-            />
-            <FeatureCard 
-              icon={<TrendingUp className="w-12 h-12 text-orange-500" />}
-              title="Research Intelligence"
-              description="Data-driven insights for analysts conducting systematic market studies"
-            />
-            <FeatureCard 
-              icon={<Zap className="w-12 h-12 text-orange-500" />}
-              title="Instant Analysis"
-              description="Upload and analyze charts in seconds with our computational engine"
-            />
-            <FeatureCard 
-              icon={<Shield className="w-12 h-12 text-orange-500" />}
-              title="Enterprise Security"
-              description="Your data is encrypted and protected with bank-level security standards"
-            />
+            <FeatureCard icon={<BarChart3 className="w-12 h-12 text-orange-500" />} title="Pattern Recognition" description="Advanced AI identifies statistical patterns and trends across market data" />
+            <FeatureCard icon={<TrendingUp className="w-12 h-12 text-orange-500" />} title="Research Intelligence" description="Data-driven insights for analysts conducting systematic market studies" />
+            <FeatureCard icon={<Zap className="w-12 h-12 text-orange-500" />} title="Instant Analysis" description="Upload and analyze charts in seconds with our computational engine" />
+            <FeatureCard icon={<Shield className="w-12 h-12 text-orange-500" />} title="Enterprise Security" description="Your data is encrypted and protected with bank-level security standards" />
           </div>
         </div>
       </section>
-
-      {/* How It Works */}
       <section id="how-it-works" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">How It Works</h2>
-            <p className="text-xl text-gray-400">
-              Upload any chart screenshot and get instant AI-powered analysis
-            </p>
+            <p className="text-xl text-gray-400">Upload any chart screenshot and get instant AI-powered analysis</p>
           </div>
-
           <div className="grid md:grid-cols-3 gap-8">
-            {/* Step 1 */}
             <div className="relative">
-              <div className="absolute -top-4 left-8 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-xl font-bold z-10">
-                1
-              </div>
+              <div className="absolute -top-4 left-8 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-xl font-bold z-10">1</div>
               <div className="bg-gray-900 border border-gray-800 rounded-lg p-8 pt-12 hover:border-orange-500/50 transition-all">
                 <div className="mb-6 flex justify-center">
                   <div className="w-full h-48 bg-gray-800 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-700">
@@ -143,12 +98,8 @@ export default function Home() {
                 </svg>
               </div>
             </div>
-
-            {/* Step 2 */}
             <div className="relative">
-              <div className="absolute -top-4 left-8 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-xl font-bold z-10">
-                2
-              </div>
+              <div className="absolute -top-4 left-8 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-xl font-bold z-10">2</div>
               <div className="bg-gray-900 border border-gray-800 rounded-lg p-8 pt-12 hover:border-orange-500/50 transition-all">
                 <div className="mb-6 flex justify-center">
                   <div className="w-full h-48 bg-gray-800 rounded-lg flex items-center justify-center">
@@ -167,12 +118,8 @@ export default function Home() {
                 </svg>
               </div>
             </div>
-
-            {/* Step 3 */}
             <div className="relative">
-              <div className="absolute -top-4 left-8 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-xl font-bold z-10">
-                3
-              </div>
+              <div className="absolute -top-4 left-8 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-xl font-bold z-10">3</div>
               <div className="bg-gray-900 border border-gray-800 rounded-lg p-8 pt-12 hover:border-orange-500/50 transition-all">
                 <div className="mb-6 flex justify-center">
                   <div className="w-full h-48 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg flex items-center justify-center border border-gray-700 relative overflow-hidden">
@@ -188,49 +135,20 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Testimonials */}
       <section className="py-20 px-4 bg-gray-900/30">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-sm text-orange-500 font-semibold mb-2">TESTIMONIALS</p>
             <h2 className="text-4xl font-bold">Trusted by Analysts Worldwide</h2>
           </div>
-
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <TestimonialCard
-              initials="SM"
-              name="Sarah Mitchell"
-              role="Market Researcher"
-              rating={5}
-              text="The pattern recognition feature saves me hours of manual chart analysis. I can now process 10x more data points in my research."
-            />
-            <TestimonialCard
-              initials="MC"
-              name="Michael Chen"
-              role="Data Analyst"
-              rating={5}
-              text="Been analyzing charts for 5 years. This AI spotted correlations I completely missed. Game-changer for systematic research."
-            />
-            <TestimonialCard
-              initials="JR"
-              name="Jennifer Rodriguez"
-              role="Financial Researcher"
-              rating={5}
-              text="Started using this for my thesis on market behavior patterns. The statistical insights are incredibly detailed and well-structured."
-            />
-            <TestimonialCard
-              initials="AT"
-              name="Alex Thompson"
-              role="Quantitative Analyst"
-              rating={5}
-              text="The speed is incredible. Upload a chart, get comprehensive pattern analysis in under 3 seconds. Saves hours every week."
-            />
+            <TestimonialCard initials="SM" name="Sarah Mitchell" role="Market Researcher" rating={5} text="The pattern recognition feature saves me hours of manual chart analysis. I can now process 10x more data points in my research." />
+            <TestimonialCard initials="MC" name="Michael Chen" role="Data Analyst" rating={5} text="Been analyzing charts for 5 years. This AI spotted correlations I completely missed. Game-changer for systematic research." />
+            <TestimonialCard initials="JR" name="Jennifer Rodriguez" role="Financial Researcher" rating={5} text="Started using this for my thesis on market behavior patterns. The statistical insights are incredibly detailed and well-structured." />
+            <TestimonialCard initials="AT" name="Alex Thompson" role="Quantitative Analyst" rating={5} text="The speed is incredible. Upload a chart, get comprehensive pattern analysis in under 3 seconds. Saves hours every week." />
           </div>
         </div>
       </section>
-
-      {/* FAQ Section */}
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
@@ -238,117 +156,75 @@ export default function Home() {
             <h2 className="text-4xl font-bold">Frequently Asked Questions</h2>
           </div>
           <div className="space-y-4">
-            <FAQItem 
-              question="What markets does TradeFlow AI support?"
-              answer="TradeFlow AI analyzes charts from all major financial markets including stocks, forex, cryptocurrencies, commodities, and indices. Our AI is trained on diverse market data to recognize patterns across different asset classes."
-            />
-            <FAQItem 
-              question="How does the AI analysis work?"
-              answer="Our deep learning models analyze uploaded charts to identify statistical patterns, trend lines, support/resistance levels, and technical indicators. The system processes visual data and compares it against historical market behavior to generate insights."
-            />
-            <FAQItem 
-              question="What's included in each plan?"
-              answer="Free plan includes 3 analyses per month. Pro plan offers 50 analyses with priority processing. Premium plan provides unlimited analyses, advanced pattern recognition, and API access for institutional users."
-            />
-            <FAQItem 
-              question="How do I cancel my subscription?"
-              answer="You can cancel anytime from your account settings under the Billing tab. Your access continues until the end of your current billing period, and you won't be charged again."
-            />
-            <FAQItem 
-              question="Can I switch between monthly and annual plans?"
-              answer="Yes, you can upgrade or downgrade between plans at any time. Changes take effect at your next billing cycle, and we'll prorate any differences in cost."
-            />
-            <FAQItem 
-              question="What payment methods do you accept?"
-              answer="We accept all major credit cards (Visa, Mastercard, American Express), debit cards, and PayPal. All payments are processed securely through our payment partner."
-            />
-            <FAQItem 
-              question="Do I need technical analysis experience?"
-              answer="No prior experience required. Our AI provides clear, structured insights that both beginners and professional analysts can use. The platform is designed to make complex analysis accessible to everyone."
-            />
+            <FAQItem question="What markets does TradeFlow AI support?" answer="TradeFlow AI analyzes charts from all major financial markets including stocks, forex, cryptocurrencies, commodities, and indices." />
+            <FAQItem question="How does the AI analysis work?" answer="Our deep learning models analyze uploaded charts to identify statistical patterns, trend lines, support/resistance levels, and technical indicators." />
+            <FAQItem question="What is included in each plan?" answer="Free plan includes 3 analyses per month. Pro plan offers 50 analyses with priority processing. Premium plan provides unlimited analyses." />
+            <FAQItem question="How do I cancel my subscription?" answer="You can cancel anytime from your account settings under the Billing tab. Your access continues until the end of your current billing period." />
+            <FAQItem question="What payment methods do you accept?" answer="We accept all major credit cards (Visa, Mastercard, American Express), debit cards, and PayPal." />
+            <FAQItem question="Do I need technical analysis experience?" answer="No prior experience required. Our AI provides clear, structured insights that both beginners and professional analysts can use." />
           </div>
         </div>
       </section>
-        {/* Pricing Section */}
-        <section id="pricing" className="py-20 px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <p className="text-sm text-orange-500 font-semibold mb-2">PRICING</p>
-              <h2 className="text-4xl font-bold text-white mb-4">Simple, Transparent Pricing</h2>
-              <p className="text-xl text-gray-400">Choose the plan that fits your research needs</p>
+      <section id="pricing" className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-sm text-orange-500 font-semibold mb-2">PRICING</p>
+            <h2 className="text-4xl font-bold text-white mb-4">Simple, Transparent Pricing</h2>
+            <p className="text-xl text-gray-400">Choose the plan that fits your research needs</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-8">
+              <h3 className="text-2xl font-bold text-white mb-2">Free</h3>
+              <div className="text-5xl font-bold text-white mb-1">$0</div>
+              <div className="text-gray-400 mb-6">3 analyses/month</div>
+              <ul className="space-y-3 mb-8">
+                {['Basic AI analysis','Pattern recognition','Historical data insights','Email support'].map((f,i) => (
+                  <li key={i} className="flex items-center gap-2 text-gray-300 text-sm"><span className="text-green-400">✓</span> {f}</li>
+                ))}
+              </ul>
+              <a href="https://whop.com/checkout/plan_zSMyqiw1BKut9" target="_blank" rel="noopener noreferrer" className="block w-full py-3 rounded-lg font-semibold text-center bg-gray-800 text-white hover:bg-gray-700 transition">Get Started</a>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-8">
-                <h3 className="text-2xl font-bold text-white mb-2">Free</h3>
-                <div className="text-5xl font-bold text-white mb-1">$0</div>
-                <div className="text-gray-400 mb-6">3 analyses/month</div>
-                <ul className="space-y-3 mb-8">
-                  {['Basic AI analysis','Pattern recognition','Historical data insights','Email support'].map((f,i) => (
-                    <li key={i} className="flex items-center gap-2 text-gray-300 text-sm">
-                      <span className="text-green-400">✓</span> {f}
-                    </li>
-                  ))}
-                </ul>
-                <a href="https://whop.com/checkout/plan_zSMyqiw1BKut9" target="_blank" rel="noopener noreferrer" className="block w-full py-3 rounded-lg font-semibold text-center bg-gray-800 text-white hover:bg-gray-700 transition">
-                  Get Started
-                </a>
+            <div className="bg-orange-500/20 border-2 border-orange-500/50 rounded-2xl p-8 relative scale-105">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-orange-500 text-white px-4 py-1 rounded-full text-sm font-semibold">Most Popular</div>
+              <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
+              <div className="flex items-baseline gap-2 mb-1">
+                <span className="text-5xl font-bold text-white">$9.99</span>
+                <span className="text-gray-400">/month</span>
               </div>
-              <div className="bg-orange-500/20 border-2 border-orange-500/50 rounded-2xl p-8 relative scale-105">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-orange-500 text-white px-4 py-1 rounded-full text-sm font-semibold">Most Popular</div>
-                <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
-                <div className="flex items-baseline gap-2 mb-1">
-                  <span className="text-5xl font-bold text-white">$9.99</span>
-                  <span className="text-gray-400">/month</span>
-                </div>
-                <div className="text-gray-400 mb-6">50 analyses/month</div>
-                <ul className="space-y-3 mb-8">
-                  {['Everything in Free','50 analyses per month','Advanced probability models','Statistical analysis','Quantitative insights','Data visualization','Priority support'].map((f,i) => (
-                    <li key={i} className="flex items-center gap-2 text-gray-300 text-sm">
-                      <span className="text-green-400">✓</span> {f}
-                    </li>
-                  ))}
-                </ul>
-                <a href="https://whop.com/checkout/plan_f2hyqFEMb7xE3" target="_blank" rel="noopener noreferrer" className="block w-full py-3 rounded-lg font-semibold text-center bg-orange-500 text-white hover:bg-orange-600 transition">
-                  Get Pro
-                </a>
+              <div className="text-gray-400 mb-6">50 analyses/month</div>
+              <ul className="space-y-3 mb-8">
+                {['Everything in Free','50 analyses per month','Advanced probability models','Statistical analysis','Quantitative insights','Data visualization','Priority support'].map((f,i) => (
+                  <li key={i} className="flex items-center gap-2 text-gray-300 text-sm"><span className="text-green-400">✓</span> {f}</li>
+                ))}
+              </ul>
+              <a href="https://whop.com/checkout/plan_f2hyqFEMb7xE3" target="_blank" rel="noopener noreferrer" className="block w-full py-3 rounded-lg font-semibold text-center bg-orange-500 text-white hover:bg-orange-600 transition">Get Pro</a>
+            </div>
+            <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-8">
+              <h3 className="text-2xl font-bold text-white mb-2">Premium</h3>
+              <div className="flex items-baseline gap-2 mb-1">
+                <span className="text-5xl font-bold text-white">$19.99</span>
+                <span className="text-gray-400">/month</span>
               </div>
-              <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-8">
-                <h3 className="text-2xl font-bold text-white mb-2">Premium</h3>
-                <div className="flex items-baseline gap-2 mb-1">
-                  <span className="text-5xl font-bold text-white">$19.99</span>
-                  <span className="text-gray-400">/month</span>
-                </div>
-                <div className="text-gray-400 mb-6">Unlimited analyses/month</div>
-                <ul className="space-y-3 mb-8">
-                  {['Everything in Pro','Unlimited analyses','API access','Custom models','Real-time data processing','Research dashboard','24/7 priority support','Early access to features'].map((f,i) => (
-                    <li key={i} className="flex items-center gap-2 text-gray-300 text-sm">
-                      <span className="text-green-400">✓</span> {f}
-                    </li>
-                  ))}
-                </ul>
-                <a href="https://whop.com/checkout/plan_SOzquxn3BDrmw" target="_blank" rel="noopener noreferrer" className="block w-full py-3 rounded-lg font-semibold text-center bg-gray-800 text-white hover:bg-gray-700 transition">
-                  Get Premium
-                </a>
-              </div>
+              <div className="text-gray-400 mb-6">Unlimited analyses/month</div>
+              <ul className="space-y-3 mb-8">
+                {['Everything in Pro','Unlimited analyses','API access','Custom models','Real-time data processing','Research dashboard','24/7 priority support','Early access to features'].map((f,i) => (
+                  <li key={i} className="flex items-center gap-2 text-gray-300 text-sm"><span className="text-green-400">✓</span> {f}</li>
+                ))}
+              </ul>
+              <a href="https://whop.com/checkout/plan_SOzquxn3BDrmw" target="_blank" rel="noopener noreferrer" className="block w-full py-3 rounded-lg font-semibold text-center bg-gray-800 text-white hover:bg-gray-700 transition">Get Premium</a>
             </div>
           </div>
-        </section>
-
-
-      {/* Footer */}
+        </div>
+      </section>
       <footer className="border-t border-gray-800 bg-black">
         <div className="max-w-7xl mx-auto px-4 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
-                  TradeFlow
-                </span>
+                <span className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">TradeFlow</span>
                 <span className="text-2xl font-light text-gray-400">AI</span>
               </div>
-              <p className="text-gray-400 text-sm mb-4">
-                AI-powered market analysis platform for researchers and analysts
-              </p>
+              <p className="text-gray-400 text-sm mb-4">AI-powered market analysis platform for researchers and analysts</p>
               <div className="flex gap-4">
                 <a href="https://www.instagram.com/aitradeflow/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-orange-500 transition-colors">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -361,17 +237,7 @@ export default function Home() {
                   </svg>
                 </a>
               </div>
-              <div className="hidden md:flex items-center gap-6">
-              <a href="/dashboard" className="text-gray-300 hover:text-orange-500 transition-colors text-sm">Dashboard</a>
-              <a href="#pricing" className="text-gray-300 hover:text-orange-500 transition-colors text-sm">Pricing</a>
-              <a href="#how-it-works" className="text-gray-300 hover:text-orange-500 transition-colors text-sm">How It Works</a>
             </div>
-            <div className="flex items-center gap-3">
-              <a href="/login" className="text-gray-300 hover:text-white transition-colors text-sm font-medium">Log In</a>
-              <a href="/signup" className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg text-sm font-semibold transition">Sign Up</a>
-            </div>
-            </div>
-
             <div>
               <h3 className="font-semibold text-white mb-4">Analysis Tools</h3>
               <ul className="space-y-2 text-sm text-gray-400">
@@ -380,7 +246,6 @@ export default function Home() {
                 <li><Link href="/pricing" className="hover:text-orange-500 transition-colors">Pricing</Link></li>
               </ul>
             </div>
-
             <div>
               <h3 className="font-semibold text-white mb-4">Get Started</h3>
               <ul className="space-y-2 text-sm text-gray-400">
@@ -390,7 +255,6 @@ export default function Home() {
                 <li><Link href="/about" className="hover:text-orange-500 transition-colors">About</Link></li>
               </ul>
             </div>
-
             <div>
               <h3 className="font-semibold text-white mb-4">Legal</h3>
               <ul className="space-y-2 text-sm text-gray-400">
@@ -400,13 +264,11 @@ export default function Home() {
               </ul>
             </div>
           </div>
-
           <div className="border-t border-gray-800 pt-8">
             <p className="text-xs text-gray-500 text-center max-w-4xl mx-auto">
-              Market analysis involves significant risk. TradeFlow AI provides AI-powered analysis tools for educational and research purposes only and does not constitute financial advice. Past patterns do not guarantee future results. Users are responsible for their own decisions and should consult with qualified financial advisors before making any decisions.
+              Market analysis involves significant risk. TradeFlow AI provides AI-powered analysis tools for educational and research purposes only and does not constitute financial advice. Past patterns do not guarantee future results.
             </p>
           </div>
-
           <div className="mt-8 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-sm">
             <div>© 2026 TradeFlow AI. All rights reserved.</div>
           </div>
@@ -426,19 +288,11 @@ function FeatureCard({ icon, title, description }: { icon: React.ReactNode; titl
   )
 }
 
-function TestimonialCard({ initials, name, role, rating, text }: { 
-  initials: string; 
-  name: string; 
-  role: string; 
-  rating: number; 
-  text: string;
-}) {
+function TestimonialCard({ initials, name, role, rating, text }: { initials: string; name: string; role: string; rating: number; text: string }) {
   return (
     <div className="bg-gray-900 border border-gray-800 rounded-lg p-6 hover:border-orange-500/50 transition-all">
       <div className="flex items-center gap-4 mb-4">
-        <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center font-bold text-white">
-          {initials}
-        </div>
+        <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center font-bold text-white">{initials}</div>
         <div>
           <div className="font-semibold">{name}</div>
           <div className="text-sm text-gray-400">{role}</div>
@@ -458,23 +312,13 @@ function TestimonialCard({ initials, name, role, rating, text }: {
 
 function FAQItem({ question, answer }: { question: string; answer: string }) {
   const [isOpen, setIsOpen] = useState(false)
-
   return (
     <div className="border border-gray-800 rounded-lg overflow-hidden bg-gray-900/50">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-800/50 transition-colors"
-      >
+      <button onClick={() => setIsOpen(!isOpen)} className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-800/50 transition-colors">
         <span className="font-semibold text-lg">{question}</span>
-        <ChevronDown 
-          className={`w-5 h-5 text-orange-500 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-        />
+        <ChevronDown className={`w-5 h-5 text-orange-500 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
-      {isOpen && (
-        <div className="px-6 pb-4 text-gray-400">
-          {answer}
-        </div>
-      )}
+      {isOpen && <div className="px-6 pb-4 text-gray-400">{answer}</div>}
     </div>
   )
 }
