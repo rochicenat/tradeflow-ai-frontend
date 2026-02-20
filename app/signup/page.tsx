@@ -17,13 +17,13 @@ export default function SignupPage() {
     password.length >= 8 &&
     /[A-Z]/.test(password) &&
     /[0-9]/.test(password);
+  const passwordsMatch = confirmPassword.length === 0 || password === confirmPassword;
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!passwordValid) {
       return;
     }
     if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
       return;
     }
     if (!agreed) {
@@ -94,14 +94,19 @@ export default function SignupPage() {
                 <p className="text-red-500 text-xs px-1">Password must be at least 8 characters, include 1 uppercase and 1 number</p>
               )}
             </div>
-            <input
-              required
-              type="password"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={e => setConfirmPassword(e.target.value)}
-              className="w-full bg-[#1A1A1A] p-3 rounded text-white"
-            />
+            <div className="space-y-1">
+              <input
+                required
+                type="password"
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}
+                className="w-full bg-[#1A1A1A] p-3 rounded text-white"
+              />
+              {!passwordsMatch && (
+                <p className="text-red-500 text-xs px-1">Passwords do not match</p>
+              )}
+            </div>
             <label className="flex items-center gap-2 text-sm text-slate-400">
               <input type="checkbox" checked={agreed} onChange={e => setAgreed(e.target.checked)} />
               I accept <Link href="/terms" className="text-orange-500">Terms</Link> & <Link href="/privacy" className="text-orange-500">Privacy</Link>
