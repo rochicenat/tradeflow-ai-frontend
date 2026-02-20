@@ -437,7 +437,7 @@ export default function AnalyticsDashboard() {
                           </div>
                         </div>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {parsed.entry && (
                           <div className="bg-[#1A1A1A] border border-orange-500/30 rounded-xl p-6">
                             <div className="flex items-center gap-2 mb-2"><DollarSign className="w-5 h-5 text-orange-500" /><h4 className="text-orange-500 font-semibold text-sm uppercase">Reference</h4></div>
@@ -457,7 +457,7 @@ export default function AnalyticsDashboard() {
                           </div>
                         )}
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {parsed.keyLevels.length > 0 && (
                           <div className="bg-[#1A1A1A] border border-[#252525] rounded-2xl p-6">
                             <div className="flex items-center gap-2 mb-4"><Target className="w-5 h-5 text-purple-400" /><h3 className="text-white font-semibold">Key Levels</h3></div>
