@@ -22,7 +22,7 @@ export default function LoginPage() {
       const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ email, password })
+        body: new URLSearchParams({ username: email, password })
       });
 
       const data = await response.json();
