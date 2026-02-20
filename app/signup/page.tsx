@@ -1,60 +1,45 @@
 'use client';
-
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Activity, Mail, Lock, User as UserIcon, ArrowRight } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
-
 export default function SignupPage() {
   const router = useRouter();
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const passwordValid =
     password.length >= 8 &&
     /[A-Z]/.test(password) &&
     /[0-9]/.test(password);
-
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!passwordValid) {
-      toast.error('Password must be at least 8 characters, include 1 uppercase and 1 number');
       return;
     }
-
     if (password !== confirmPassword) {
       toast.error('Passwords do not match');
       return;
     }
-
     if (!agreed) {
       toast.error('You must accept Terms & Privacy Policy');
       return;
     }
-
     setLoading(true);
-
     try {
       const res = await fetch('https://tradeflow-ai-backend-production.up.railway.app/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({ name, email, password }),
       });
-
       const data = await res.json();
-
       if (!res.ok) throw new Error(data.detail || 'Signup failed');
-
       localStorage.setItem('token', data.access_token);
-
       toast.success('Account created successfully!');
       setTimeout(() => router.push('/dashboard'), 500);
     } catch (err: any) {
@@ -63,11 +48,9 @@ export default function SignupPage() {
       setLoading(false);
     }
   };
-
   return (
     <div className="min-h-screen bg-black flex">
       <Toaster position="top-right" />
-
       <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-orange-500 to-orange-600 items-center justify-center p-12">
         <div className="text-white text-center">
           <Activity className="w-24 h-24 mx-auto mb-6" />
@@ -75,16 +58,13 @@ export default function SignupPage() {
           <p className="opacity-90">AI-powered chart analysis in seconds</p>
         </div>
       </div>
-
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md">
           <Link href="/" className="flex items-center gap-2 mb-8">
             <Activity className="w-8 h-8 text-orange-500" />
             <span className="text-2xl font-bold text-white">TradeFlow AI</span>
           </Link>
-
           <h1 className="text-3xl font-bold text-white mb-6">Create Account</h1>
-
           <form onSubmit={handleSignup} className="space-y-5">
             <input
               required
@@ -93,7 +73,6 @@ export default function SignupPage() {
               onChange={e => setName(e.target.value)}
               className="w-full bg-[#1A1A1A] p-3 rounded text-white"
             />
-
             <input
               required
               type="email"
@@ -102,16 +81,19 @@ export default function SignupPage() {
               onChange={e => setEmail(e.target.value)}
               className="w-full bg-[#1A1A1A] p-3 rounded text-white"
             />
-
-            <input
-              required
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              className="w-full bg-[#1A1A1A] p-3 rounded text-white"
-            />
-
+            <div className="space-y-1">
+              <input
+                required
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                className="w-full bg-[#1A1A1A] p-3 rounded text-white"
+              />
+              {!passwordValid && password.length > 0 && (
+                <p className="text-red-500 text-xs px-1">Password must be at least 8 characters, include 1 uppercase and 1 number</p>
+              )}
+            </div>
             <input
               required
               type="password"
@@ -120,12 +102,10 @@ export default function SignupPage() {
               onChange={e => setConfirmPassword(e.target.value)}
               className="w-full bg-[#1A1A1A] p-3 rounded text-white"
             />
-
             <label className="flex items-center gap-2 text-sm text-slate-400">
               <input type="checkbox" checked={agreed} onChange={e => setAgreed(e.target.checked)} />
               I accept <Link href="/terms" className="text-orange-500">Terms</Link> & <Link href="/privacy" className="text-orange-500">Privacy</Link>
             </label>
-
             <button
               disabled={loading}
               className="w-full bg-orange-500 hover:bg-orange-600 py-3 rounded text-white flex justify-center gap-2"
@@ -134,11 +114,9 @@ export default function SignupPage() {
               {!loading && <ArrowRight size={18} />}
             </button>
           </form>
-
           <div className="mt-6 text-center text-slate-400">
             Already have an account? <Link href="/login" className="text-orange-500">Login</Link>
           </div>
-
           <div className="mt-6 text-center">
             <Link href="/" className="text-slate-500">← Back to Home</Link>
           </div>
