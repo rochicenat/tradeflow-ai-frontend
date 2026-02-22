@@ -28,6 +28,9 @@ export const metadata: Metadata = {
     description: "Analyze trading charts instantly with AI. Get entry points, stop loss and take profit levels.",
     images: ["/og-image.png"],
   },
+  verification: {
+    google: "loFLu7ez9F9h8aYTJU0_yxZ014bjHtCxwUnmyE-sA94",
+  },
   robots: {
     index: true,
     follow: true,
@@ -41,6 +44,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="google-site-verification" content="loFLu7ez9F9h8aYTJU0_yxZ014bjHtCxwUnmyE-sA94" />
+      </head>
       <body className={inter.className}>
         <Providers>
           {children}
