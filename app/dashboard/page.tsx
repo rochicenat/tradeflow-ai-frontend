@@ -416,13 +416,13 @@ export default function AnalyticsDashboard() {
                   return (
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="space-y-6">
                       <div className={`relative overflow-hidden rounded-2xl border ${getSignalBg(parsed.signal)} p-8`}>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-6">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                          <div className="flex items-center gap-4 sm:gap-6">
                             <div className={`p-6 rounded-2xl bg-gradient-to-br ${getSignalColor(parsed.signal)} text-white shadow-2xl`}>
                               {getSignalIcon(parsed.signal)}
                             </div>
                             <div>
-                              <h2 className="text-5xl font-black text-white uppercase mb-2 tracking-tight">{parsed.signal}</h2>
+                              <h2 className="text-3xl sm:text-5xl font-black text-white uppercase mb-2 tracking-tight">{parsed.signal}</h2>
                               <p className="text-slate-300 text-lg">
                                 {parsed.signal === 'UPTREND' ? 'Upward momentum detected' : parsed.signal === 'DOWNTREND' ? 'Downward momentum detected' : 'Neutral consolidation'}
                               </p>
@@ -431,7 +431,7 @@ export default function AnalyticsDashboard() {
                           <div className="text-right">
                             <div className="text-sm text-slate-400 mb-2">Confidence</div>
                             <div className="text-4xl font-bold text-white mb-3">{getConfidenceValue(parsed.confidence)}%</div>
-                            <div className="w-48 h-3 bg-[#252525] rounded-full overflow-hidden">
+                            <div className="w-full sm:w-48 h-3 bg-[#252525] rounded-full overflow-hidden">
                               <div className={`h-full ${getConfidenceColor(getConfidenceValue(parsed.confidence))} transition-all`} style={{ width: `${getConfidenceValue(parsed.confidence)}%` }} />
                             </div>
                           </div>
