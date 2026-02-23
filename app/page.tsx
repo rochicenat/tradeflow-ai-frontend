@@ -56,7 +56,7 @@ export default function Home() {
             </div>
           </div>
           <Link href="/signup" className="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg text-lg font-semibold hover:from-orange-600 hover:to-orange-700 transition-all transform hover:scale-105">
-            Start Free Analysis
+            Start Analysis
           </Link>
           <p className="text-xs text-gray-500 mt-6 max-w-2xl mx-auto">
             Educational data analysis tool. All outputs are for informational and research purposes only. Not financial advice.
