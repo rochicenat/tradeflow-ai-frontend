@@ -204,12 +204,12 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
                 Upgrade Plan
               </button>
             </div>
-            <div className="h-2 bg-[#252525] rounded-full overflow-hidden">
+            {userData?.plan !== "free" && (<div className="h-2 bg-[#252525] rounded-full overflow-hidden">
               <div 
                 className="h-full bg-orange-500 transition-all"
                 style={{ width: `${((userData?.analyses_used || 0) / (userData?.analyses_limit || 3)) * 100}%` }}
               />
-            </div>
+            </div>)}
           </div>
         </div>
       )}
