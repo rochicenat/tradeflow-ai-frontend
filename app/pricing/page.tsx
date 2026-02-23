@@ -1,10 +1,16 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, Activity } from 'lucide-react';
 
 export default function PricingPage() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) setIsLoggedIn(true);
+  }, []);
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black">
       <header className="border-b border-slate-800/50 bg-slate-950/80 backdrop-blur-xl sticky top-0 z-50">
@@ -14,8 +20,14 @@ export default function PricingPage() {
             <span className="text-2xl font-bold text-orange-500">TradeFlow AI</span>
           </Link>
           <div className="flex items-center gap-4">
-            <Link href="/login" className="text-slate-300 hover:text-white transition">Login</Link>
-            <Link href="/signup" className="bg-orange-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-600 transition">Sign Up</Link>
+            {isLoggedIn ? (
+              <Link href="/dashboard" className="bg-orange-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-600 transition">Go to Dashboard</Link>
+            ) : (
+              <>
+                <Link href="/login" className="text-slate-300 hover:text-white transition">Login</Link>
+                <Link href="/signup" className="bg-orange-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-600 transition">Sign Up</Link>
+              </>
+            )}
           </div>
         </div>
       </header>
