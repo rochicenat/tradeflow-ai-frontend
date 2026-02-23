@@ -187,19 +187,19 @@ export default function HistoryPage() {
                 <div className="grid grid-cols-3 gap-3 mb-4">
                   {parsed.entry && (
                     <div className="bg-black/30 border border-orange-500/20 rounded-lg p-3">
-                      <div className="flex items-center gap-1 mb-1"><DollarSign className="w-3 h-3 text-orange-500" /><span className="text-orange-500 text-xs font-semibold uppercase">Reference</span></div>
+                      <div className="flex items-center gap-1 mb-1"><DollarSign className="w-3 h-3 text-orange-500" /><span className="text-orange-500 text-xs font-semibold uppercase">Entry Price</span></div>
                       <div className="text-white font-bold text-sm">{parsed.entry}</div>
                     </div>
                   )}
                   {parsed.stopLoss && (
                     <div className="bg-black/30 border border-red-500/20 rounded-lg p-3">
-                      <div className="flex items-center gap-1 mb-1"><Shield className="w-3 h-3 text-red-400" /><span className="text-red-400 text-xs font-semibold uppercase">Lower</span></div>
+                      <div className="flex items-center gap-1 mb-1"><Shield className="w-3 h-3 text-red-400" /><span className="text-red-400 text-xs font-semibold uppercase">Stop Loss</span></div>
                       <div className="text-white font-bold text-sm">{parsed.stopLoss}</div>
                     </div>
                   )}
                   {parsed.takeProfit && (
                     <div className="bg-black/30 border border-green-500/20 rounded-lg p-3">
-                      <div className="flex items-center gap-1 mb-1"><Target className="w-3 h-3 text-green-400" /><span className="text-green-400 text-xs font-semibold uppercase">Upper</span></div>
+                      <div className="flex items-center gap-1 mb-1"><Target className="w-3 h-3 text-green-400" /><span className="text-green-400 text-xs font-semibold uppercase">Take Profit</span></div>
                       <div className="text-white font-bold text-sm">{parsed.takeProfit}</div>
                     </div>
                   )}
