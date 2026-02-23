@@ -611,19 +611,19 @@ export default function AnalyticsDashboard() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {parsed.entry && (
                           <div className="bg-[#1A1A1A] border border-orange-500/30 rounded-xl p-6">
-                            <div className="flex items-center gap-2 mb-2"><DollarSign className="w-5 h-5 text-orange-500" /><h4 className="text-orange-500 font-semibold text-sm uppercase">Reference</h4></div>
+                            <div className="flex items-center gap-2 mb-2"><DollarSign className="w-5 h-5 text-orange-500" /><h4 className="text-orange-500 font-semibold text-sm uppercase">Entry Price</h4></div>
                             <div className="text-2xl font-bold text-white">{parsed.entry}</div>
                           </div>
                         )}
                         {parsed.stopLoss && (
                           <div className="bg-[#1A1A1A] border border-red-500/30 rounded-xl p-6">
-                            <div className="flex items-center gap-2 mb-2"><Shield className="w-5 h-5 text-red-400" /><h4 className="text-red-400 font-semibold text-sm uppercase">Lower</h4></div>
+                            <div className="flex items-center gap-2 mb-2"><Shield className="w-5 h-5 text-red-400" /><h4 className="text-red-400 font-semibold text-sm uppercase">Stop Loss</h4></div>
                             <div className="text-2xl font-bold text-white">{parsed.stopLoss}</div>
                           </div>
                         )}
                         {parsed.takeProfit && (
                           <div className="bg-[#1A1A1A] border border-green-500/30 rounded-xl p-6">
-                            <div className="flex items-center gap-2 mb-2"><Target className="w-5 h-5 text-green-400" /><h4 className="text-green-400 font-semibold text-sm uppercase">Upper</h4></div>
+                            <div className="flex items-center gap-2 mb-2"><Target className="w-5 h-5 text-green-400" /><h4 className="text-green-400 font-semibold text-sm uppercase">Take Profit</h4></div>
                             <div className="text-2xl font-bold text-white">{parsed.takeProfit}</div>
                           </div>
                         )}
