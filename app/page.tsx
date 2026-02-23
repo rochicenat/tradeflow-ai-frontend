@@ -186,7 +186,7 @@ export default function Home() {
                   <li key={i} className="flex items-center gap-2 text-gray-300 text-sm"><span className="text-green-400">✓</span> {f}</li>
                 ))}
               </ul>
-              <a href="https://tradeflowai.lemonsqueezy.com/checkout/buy/60423ba8-053a-4d04-a924-69b6aaae30e3" target="_blank" rel="noopener noreferrer" className="block w-full py-3 rounded-lg font-semibold text-center bg-orange-500 text-white hover:bg-orange-600 transition">Get Pro</a>
+              <a href="/signup" target="_blank" rel="noopener noreferrer" className="block w-full py-3 rounded-lg font-semibold text-center bg-orange-500 text-white hover:bg-orange-600 transition">Get Pro</a>
             </div>
             <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-8">
               <h3 className="text-2xl font-bold text-white mb-2">Premium</h3>
@@ -200,7 +200,7 @@ export default function Home() {
                   <li key={i} className="flex items-center gap-2 text-gray-300 text-sm"><span className="text-green-400">✓</span> {f}</li>
                 ))}
               </ul>
-              <a href="https://tradeflowai.lemonsqueezy.com/checkout/buy/47621ebf-7c5e-4b6e-bbc9-d6bee626b2d4" target="_blank" rel="noopener noreferrer" className="block w-full py-3 rounded-lg font-semibold text-center bg-gray-800 text-white hover:bg-gray-700 transition">Get Premium</a>
+              <a href="/signup" target="_blank" rel="noopener noreferrer" className="block w-full py-3 rounded-lg font-semibold text-center bg-gray-800 text-white hover:bg-gray-700 transition">Get Premium</a>
             </div>
           </div>
         </div>
