@@ -177,7 +177,7 @@ export default function Home() {
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-orange-500 text-white px-4 py-1 rounded-full text-sm font-semibold">Most Popular</div>
               <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
               <div className="flex items-baseline gap-2 mb-1">
-                <span className="text-5xl font-bold text-white">.99</span>
+                <span className="text-5xl font-bold text-white">$9.99</span>
                 <span className="text-gray-400">/month</span>
               </div>
               <div className="text-gray-400 mb-6">50 analyses/month</div>
@@ -191,7 +191,7 @@ export default function Home() {
             <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-8">
               <h3 className="text-2xl font-bold text-white mb-2">Premium</h3>
               <div className="flex items-baseline gap-2 mb-1">
-                <span className="text-5xl font-bold text-white">.99</span>
+                <span className="text-5xl font-bold text-white">$9.99</span>
                 <span className="text-gray-400">/month</span>
               </div>
               <div className="text-gray-400 mb-6">Unlimited analyses/month</div>
