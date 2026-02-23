@@ -329,7 +329,7 @@ export default function AnalyticsDashboard() {
           {sidebarOpen ? (
             <div className="flex items-center gap-2">
               <Activity className="w-8 h-8 text-orange-500" />
-              <span className="text-xl font-bold text-white">TradeFlow</span>
+              <span className="text-xl font-bold text-orange-500">TradeFlow</span><span className="text-xl font-light text-orange-400"> AI</span>
             </div>
           ) : (
             <Activity className="w-8 h-8 text-orange-500 mx-auto" />
