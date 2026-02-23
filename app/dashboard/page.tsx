@@ -464,6 +464,26 @@ export default function AnalyticsDashboard() {
               </div>
 
               {/* Free plan banner */}
+              {/* How to use - only for free plan */}
+              {userData?.plan === "free" && (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+                  <div className="bg-[#1A1A1A] border border-[#252525] rounded-xl p-5 flex flex-col items-center text-center">
+                    <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold text-lg mb-3">1</div>
+                    <h4 className="text-white font-semibold mb-1">Choose Trading Type</h4>
+                    <p className="text-slate-400 text-sm">Select Swing or Scalp Trading from the sidebar</p>
+                  </div>
+                  <div className="bg-[#1A1A1A] border border-[#252525] rounded-xl p-5 flex flex-col items-center text-center">
+                    <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold text-lg mb-3">2</div>
+                    <h4 className="text-white font-semibold mb-1">Upload Your Chart</h4>
+                    <p className="text-slate-400 text-sm">Drag & drop any trading chart screenshot</p>
+                  </div>
+                  <div className="bg-[#1A1A1A] border border-[#252525] rounded-xl p-5 flex flex-col items-center text-center">
+                    <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold text-lg mb-3">3</div>
+                    <h4 className="text-white font-semibold mb-1">Get AI Analysis</h4>
+                    <p className="text-slate-400 text-sm">Receive instant pattern recognition and insights</p>
+                  </div>
+                </div>
+              )}
               {userData?.plan === 'free' && (
                 <div className="bg-gradient-to-r from-orange-500/10 to-purple-500/10 border border-orange-500/20 rounded-xl p-4 flex items-center justify-between">
                   <div className="flex items-center gap-3">
