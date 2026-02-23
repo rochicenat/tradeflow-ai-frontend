@@ -191,9 +191,11 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
             <div className="flex items-center justify-between mb-6">
               <div>
                 <div className="text-3xl font-bold text-white mb-1 uppercase">{userData?.plan || 'Free'}</div>
+                {userData?.plan !== "free" && (
                 <div className="text-slate-400">
                   {userData?.analyses_used || 0} / {userData?.analyses_limit || 3} analyses used
                 </div>
+                )}
               </div>
               <button
                 onClick={() => window.location.href = '/pricing'}
