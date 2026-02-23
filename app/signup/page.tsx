@@ -54,7 +54,7 @@ export default function SignupPage() {
       <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-orange-500 to-orange-600 items-center justify-center p-12">
         <div className="text-white text-center">
           <Activity className="w-24 h-24 mx-auto mb-6" />
-          <h2 className="text-4xl font-bold mb-4">Start Free</h2>
+          <h2 className="text-4xl font-bold mb-4">Start Analysis</h2>
           <p className="opacity-90">AI-powered chart analysis in seconds</p>
         </div>
       </div>
