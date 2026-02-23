@@ -197,12 +197,14 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
                 </div>
                 )}
               </div>
+              {userData?.plan === "free" && (
               <button
                 onClick={() => window.location.href = '/pricing'}
                 className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold transition"
               >
                 Upgrade Plan
               </button>
+              )}
             </div>
             {userData?.plan !== "free" && (<div className="h-2 bg-[#252525] rounded-full overflow-hidden">
               <div 
