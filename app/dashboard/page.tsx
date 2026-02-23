@@ -437,6 +437,7 @@ export default function AnalyticsDashboard() {
             <div className="space-y-6">
               {/* Stats */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {userData?.plan !== "free" && (
                 <div className="bg-[#1A1A1A] border border-[#252525] rounded-xl p-6">
                   <div className="flex items-center gap-2 mb-2">
                     <BarChart3 className="w-5 h-5 text-orange-500" />
@@ -449,6 +450,7 @@ export default function AnalyticsDashboard() {
                     <div className="h-full bg-orange-500 transition-all" style={{ width: `${((userData?.analyses_used || 0) / (userData?.analyses_limit || 3)) * 100}%` }} />
                   </div>
                 </div>
+                )}
                 <div className="bg-[#1A1A1A] border border-[#252525] rounded-xl p-6">
                   <h3 className="text-slate-300 font-semibold mb-4">Quick Actions</h3>
                   <button
