@@ -419,7 +419,7 @@ export default function AnalyticsDashboard() {
                       <div {...getRootProps()} className={`relative overflow-hidden rounded-xl border-2 border-dashed transition-all cursor-pointer
                         ${isDragActive ? 'border-orange-500 bg-orange-500/5' : 'border-[#1A1A1A] bg-[#0D0D0D] hover:border-[#2A2A2A]'}`}>
                         <input {...getInputProps()} />
-                        <div className="p-8 sm:p-10 text-center">
+                        <div className="p-16 sm:p-24 text-center">
                           {imagePreview ? (
                             <img src={imagePreview} alt="Preview" className="max-w-full max-h-40 rounded-lg mb-4 mx-auto border border-[#1A1A1A]" />
                           ) : (
@@ -527,7 +527,7 @@ export default function AnalyticsDashboard() {
                     })()}
                   </AnimatePresence>
                   {!result && !loading && analysisType && (
-                    <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-10 text-center">
+                    <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-20 text-center">
                       <BarChart3 className="w-10 h-10 text-slate-700 mx-auto mb-3" />
                       <p className="text-slate-500 text-sm">Upload a chart to get AI-powered analysis</p>
                     </div>
