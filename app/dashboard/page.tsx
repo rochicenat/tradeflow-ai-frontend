@@ -322,23 +322,23 @@ export default function AnalyticsDashboard() {
                 <div className="space-y-6 max-w-6xl">
                   {userData?.plan !== 'free' && (
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                      <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
+                      <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
                         <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Used</div>
                         <div className="text-2xl sm:text-3xl font-black text-white">{userData?.analyses_used || 0}</div>
                         <div className="text-xs text-slate-500 mt-1">of {userData?.analyses_limit}</div>
                       </div>
-                      <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
+                      <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
                         <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Left</div>
                         <div className={`text-2xl sm:text-3xl font-black ${((userData?.analyses_limit || 0) - (userData?.analyses_used || 0)) <= 5 ? 'text-red-400' : 'text-green-400'}`}>
                           {(userData?.analyses_limit || 0) - (userData?.analyses_used || 0)}
                         </div>
                         <div className="text-xs text-slate-500 mt-1">remaining</div>
                       </div>
-                      <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
+                      <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
                         <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Plan</div>
                         <div className={`text-2xl sm:text-3xl font-black uppercase ${userData?.plan === 'premium' ? 'text-purple-400' : 'text-orange-400'}`}>{userData?.plan}</div>
                       </div>
-                      <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
+                      <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
                         <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Usage</div>
                         <div className="text-2xl sm:text-3xl font-black text-white">{usagePercent}%</div>
                         <div className="h-1.5 bg-[#1A1A1A] rounded-full mt-2 overflow-hidden">
@@ -364,7 +364,7 @@ export default function AnalyticsDashboard() {
                   {!analysisType && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} onClick={() => setAnalysisType('swing')}
-                        className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-orange-500/30 rounded-xl p-10 text-left transition-all group">
+                        className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-orange-500/30 rounded-xl p-12 text-left transition-all group min-h-[220px]">
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-3">
                             <div className="p-2 rounded-lg bg-orange-500/10 border border-orange-500/20">
@@ -384,7 +384,7 @@ export default function AnalyticsDashboard() {
                         </div>
                       </motion.button>
                       <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} onClick={() => setAnalysisType('scalp')}
-                        className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-blue-500/30 rounded-xl p-10 text-left transition-all group">
+                        className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-blue-500/30 rounded-xl p-12 text-left transition-all group min-h-[220px]">
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-3">
                             <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
@@ -491,7 +491,7 @@ export default function AnalyticsDashboard() {
                           </div>
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                             {parsed.keyLevels.length > 0 && (
-                              <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
+                              <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
                                 <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
                                   <Target className="w-4 h-4 text-purple-400" />
                                   <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Key Levels</span>
@@ -500,7 +500,7 @@ export default function AnalyticsDashboard() {
                               </div>
                             )}
                             {parsed.signalReason.length > 0 && (
-                              <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
+                              <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
                                 <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
                                   <Activity className="w-4 h-4 text-orange-400" />
                                   <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Pattern Analysis</span>
@@ -509,7 +509,7 @@ export default function AnalyticsDashboard() {
                               </div>
                             )}
                             {parsed.riskAssessment.length > 0 && (
-                              <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
+                              <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
                                 <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
                                   <AlertTriangle className="w-4 h-4 text-yellow-400" />
                                   <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Risk Assessment</span>
