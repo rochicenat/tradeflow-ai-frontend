@@ -195,7 +195,7 @@ export default function AnalyticsDashboard() {
       <AnimatePresence>{showUpgradeModal && <UpgradeModal onClose={() => setShowUpgradeModal(false)} />}</AnimatePresence>
 
       {/* SIDEBAR */}
-      <div className={`${sidebarOpen ? 'w-56' : 'w-14'} bg-[#0A0A0A] border-r border-[#1A1A1A] transition-all duration-300 flex flex-col flex-shrink-0`}>
+      <div className={`hidden lg:flex flex-col ${sidebarOpen ? 'w-56' : 'w-14'} bg-[#0A0A0A] border-r border-[#1A1A1A] transition-all duration-300 flex-shrink-0`}>
         {/* Logo */}
         <div className="h-14 border-b border-[#1A1A1A] flex items-center px-3 gap-2">
           <div className="w-7 h-7 bg-orange-500 rounded-md flex items-center justify-center flex-shrink-0">
@@ -626,7 +626,7 @@ function NewsPanel() {
   };
 
   return (
-    <div className="w-80 flex-shrink-0 bg-[#0A0A0A] border-l border-[#1A1A1A] flex flex-col overflow-hidden" style={{height: "calc(100vh - 56px)", position: "sticky", top: "56px"}}>
+    <div className="hidden lg:flex w-80 flex-shrink-0 bg-[#0A0A0A] border-l border-[#1A1A1A] flex-col overflow-hidden" style={{height: "calc(100vh - 56px)", position: "sticky", top: "56px"}}>
       {/* Header */}
       <div className="px-4 py-3 border-b border-[#1A1A1A] flex items-center justify-between flex-shrink-0">
         <div className="flex items-center gap-2">
