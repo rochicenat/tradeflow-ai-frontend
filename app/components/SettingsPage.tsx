@@ -25,6 +25,25 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
   const [passwordUpdating, setPasswordUpdating] = useState(false);
   const [passwordSuccess, setPasswordSuccess] = useState(false);
 
+
+  const handleDeleteAccount = async () => {
+    if (!window.confirm('Are you sure? This action cannot be undone.')) return;
+    const token = localStorage.getItem('token');
+    try {
+      const res = await fetch('https://tradeflow-ai-backend-production.up.railway.app/delete-account', {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        localStorage.removeItem('token');
+        window.location.href = '/';
+      } else {
+        alert('Failed to delete account');
+      }
+    } catch (e) {
+      alert('Error deleting account');
+    }
+  };
   const handleSaveProfile = async () => {
     setSaving(true);
     setSaveSuccess(false);
