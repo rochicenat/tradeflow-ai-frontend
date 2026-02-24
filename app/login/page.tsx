@@ -47,12 +47,12 @@ export default function LoginPage() {
 
           {/* Google Login */}
           
-            href="https://tradeflow-ai-backend-production.up.railway.app/auth/google"
+            onClick={() => window.location.href="https://tradeflow-ai-backend-production.up.railway.app/auth/google"
             className="w-full flex items-center justify-center gap-3 bg-[#1A1A1A] hover:bg-[#222] border border-[#333] text-white py-3 rounded-lg transition font-medium mb-4"
           >
             <img src="https://www.google.com/favicon.ico" className="w-5 h-5" alt="Google" />
             Continue with Google
-          </a>
+          </button>
 
           <div className="flex items-center gap-3 mb-6">
             <div className="flex-1 h-px bg-[#333]"></div>
