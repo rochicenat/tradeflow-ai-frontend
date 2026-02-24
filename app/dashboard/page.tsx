@@ -7,7 +7,7 @@ import {
   Upload, Activity, BarChart3, Target, AlertTriangle, Shield,
   LogOut, CreditCard, DollarSign, ArrowUpCircle, ArrowDownCircle,
   PauseCircle, Home, TrendingUp, History, Settings as SettingsIcon,
-  Menu, X, Timer, Crown, Star, ChevronRight, Zap, Clock
+  Menu, X, Timer, Crown, Star, ChevronRight, Zap, Clock, Newspaper
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import SettingsPage from '../components/SettingsPage';
@@ -69,7 +69,7 @@ function LiveClock() {
     const interval = setInterval(update, 1000);
     return () => clearInterval(interval);
   }, []);
-  return <span className="font-mono text-sm text-slate-400">{time} UTC</span>;
+  return <span className="font-mono text-xs text-slate-400 hidden sm:inline">{time} UTC</span>;
 }
 
 export default function AnalyticsDashboard() {
@@ -79,10 +79,17 @@ export default function AnalyticsDashboard() {
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(typeof window !== 'undefined' && window.innerWidth > 1024);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [analysisType, setAnalysisType] = useState<'swing' | 'scalp' | null>(null);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [showMobileNews, setShowMobileNews] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setSidebarOpen(window.innerWidth > 1024);
+    }
+  }, []);
 
   useEffect(() => { fetchUserData(); }, []);
 
@@ -164,9 +171,9 @@ export default function AnalyticsDashboard() {
   };
 
   const getSignalIcon = (signal: string) => {
-    if (signal === 'UPTREND') return <ArrowUpCircle className="w-10 h-10" />;
-    if (signal === 'DOWNTREND') return <ArrowDownCircle className="w-10 h-10" />;
-    return <PauseCircle className="w-10 h-10" />;
+    if (signal === 'UPTREND') return <ArrowUpCircle className="w-8 h-8 sm:w-10 sm:h-10" />;
+    if (signal === 'DOWNTREND') return <ArrowDownCircle className="w-8 h-8 sm:w-10 sm:h-10" />;
+    return <PauseCircle className="w-8 h-8 sm:w-10 sm:h-10" />;
   };
   const getSignalColor = (signal: string) => signal === 'UPTREND' ? 'from-green-500 to-emerald-600' : signal === 'DOWNTREND' ? 'from-red-500 to-rose-600' : 'from-yellow-500 to-orange-500';
   const getSignalBg = (signal: string) => signal === 'UPTREND' ? 'bg-green-500/10 border-green-500/20' : signal === 'DOWNTREND' ? 'bg-red-500/10 border-red-500/20' : 'bg-yellow-500/10 border-yellow-500/20';
@@ -191,21 +198,374 @@ export default function AnalyticsDashboard() {
   const usagePercent = userData ? Math.round((userData.analyses_used / userData.analyses_limit) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-[#050505] flex font-sans">
+    <div className="min-h-screen bg-[#050505] flex flex-col font-sans">
       <AnimatePresence>{showUpgradeModal && <UpgradeModal onClose={() => setShowUpgradeModal(false)} />}</AnimatePresence>
 
-      {/* SIDEBAR */}
-      <div className={`${sidebarOpen ? 'w-56' : 'w-14'} bg-[#0A0A0A] border-r border-[#1A1A1A] transition-all duration-300 flex-col flex-shrink-0 hidden lg:flex`}>
-        {/* Logo */}
-        <div className="h-14 border-b border-[#1A1A1A] flex items-center px-3 gap-2">
-          <div className="w-7 h-7 bg-orange-500 rounded-md flex items-center justify-center flex-shrink-0">
+      {/* Mobile News Modal */}
+      <AnimatePresence>
+        {showMobileNews && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/90 flex flex-col lg:hidden">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-[#1A1A1A]">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                <span className="text-white font-semibold">Crypto News</span>
+              </div>
+              <button onClick={() => setShowMobileNews(false)} className="text-slate-400 hover:text-white">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto">
+              <NewsPanel />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* HEADER */}
+      <header className="h-14 border-b border-[#1A1A1A] bg-[#0A0A0A] flex items-center px-3 sm:px-6 gap-2 flex-shrink-0 sticky top-0 z-40">
+        <div className="flex items-center gap-2 lg:hidden mr-1">
+          <div className="w-7 h-7 bg-orange-500 rounded-md flex items-center justify-center">
             <Activity className="w-4 h-4 text-white" />
           </div>
-          {sidebarOpen && <span className="text-white font-bold text-sm tracking-wide">TradeFlow <span className="text-orange-500">AI</span></span>}
+        </div>
+        <div className="flex-1 flex items-center gap-1.5 text-sm min-w-0">
+          <span className="text-slate-500 hidden sm:inline">TradeFlow</span>
+          <span className="text-slate-600 hidden sm:inline">/</span>
+          <span className="text-slate-200 font-medium truncate">
+            {currentPage === 'dashboard' && analysisType === 'swing' ? 'Swing Trading' :
+             currentPage === 'dashboard' && analysisType === 'scalp' ? 'Scalp Trading' :
+             menuItems.find(i => i.id === currentPage)?.name || 'Dashboard'}
+          </span>
+          {analysisType && currentPage === 'dashboard' && (
+            <span className={`text-xs font-medium px-1.5 py-0.5 rounded-full flex-shrink-0 ${analysisType === 'swing' ? 'bg-orange-500/15 text-orange-400' : 'bg-blue-500/15 text-blue-400'}`}>
+              {analysisType === 'swing' ? '📈' : '⚡'}
+            </span>
+          )}
+        </div>
+        <div className="flex items-center gap-1.5 sm:gap-3">
+          <LiveClock />
+          <button onClick={() => setShowMobileNews(true)}
+            className="lg:hidden p-1.5 rounded-md bg-[#141414] border border-[#1A1A1A] text-slate-400 hover:text-white transition">
+            <Newspaper className="w-4 h-4" />
+          </button>
+          <div className={`px-2 py-1 rounded-md border text-xs font-bold uppercase cursor-pointer transition ${
+            userData?.plan === 'premium' ? 'bg-purple-500/10 border-purple-500/20 text-purple-400' :
+            userData?.plan === 'pro' ? 'bg-orange-500/10 border-orange-500/20 text-orange-400' :
+            'bg-red-500/10 border-red-500/20 text-red-400'
+          }`} onClick={() => userData?.plan === 'free' && setShowUpgradeModal(true)}>
+            {userData?.plan || 'free'}
+          </div>
+          <div className="flex items-center gap-2 bg-[#141414] border border-[#1A1A1A] rounded-md px-2 py-1.5">
+            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white font-bold text-xs">
+              {userData?.name?.charAt(0)?.toUpperCase() || 'U'}
+            </div>
+            <span className="text-slate-300 text-sm font-medium hidden sm:block">{userData?.name || 'User'}</span>
+          </div>
+          <button onClick={handleLogout} className="p-1.5 rounded-md hover:bg-red-500/10 text-slate-500 hover:text-red-400 transition" title="Logout">
+            <LogOut className="w-4 h-4" />
+          </button>
+        </div>
+      </header>
+
+      {/* BODY */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* SIDEBAR - desktop only */}
+        <div className={`hidden lg:flex flex-col ${sidebarOpen ? 'w-56' : 'w-14'} bg-[#0A0A0A] border-r border-[#1A1A1A] transition-all duration-300 flex-shrink-0`}>
+          <div className="h-14 border-b border-[#1A1A1A] flex items-center px-3 gap-2">
+            <div className="w-7 h-7 bg-orange-500 rounded-md flex items-center justify-center flex-shrink-0">
+              <Activity className="w-4 h-4 text-white" />
+            </div>
+            {sidebarOpen && <span className="text-white font-bold text-sm tracking-wide">TradeFlow <span className="text-orange-500">AI</span></span>}
+          </div>
+          <nav className="flex-1 py-3 px-2 space-y-0.5">
+            {menuItems.map((item) => {
+              const Icon = item.icon;
+              const isActive =
+                (item.id === 'swing' && analysisType === 'swing' && currentPage === 'dashboard') ||
+                (item.id === 'scalp' && analysisType === 'scalp' && currentPage === 'dashboard') ||
+                (item.id === currentPage && item.id !== 'swing' && item.id !== 'scalp');
+              return (
+                <button key={item.id} onClick={() => handleMenuClick(item.id)}
+                  className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-md transition-all text-sm ${
+                    isActive ? 'bg-orange-500/15 text-orange-400 border border-orange-500/20' : 'text-slate-500 hover:text-slate-200 hover:bg-[#141414]'
+                  }`}>
+                  <Icon className="w-4 h-4 flex-shrink-0" />
+                  {sidebarOpen && <span className="font-medium">{item.name}</span>}
+                  {sidebarOpen && isActive && <ChevronRight className="w-3 h-3 ml-auto" />}
+                </button>
+              );
+            })}
+          </nav>
+          {sidebarOpen && userData?.plan !== 'free' && (
+            <div className="px-3 py-3 border-t border-[#1A1A1A]">
+              <div className="flex justify-between text-xs text-slate-500 mb-1.5">
+                <span>Usage</span>
+                <span className="text-slate-400">{userData?.analyses_used}/{userData?.analyses_limit}</span>
+              </div>
+              <div className="h-1 bg-[#1A1A1A] rounded-full overflow-hidden">
+                <div className={`h-full rounded-full transition-all ${usagePercent > 80 ? 'bg-red-500' : 'bg-orange-500'}`} style={{ width: `${usagePercent}%` }} />
+              </div>
+            </div>
+          )}
+          <button onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="h-10 border-t border-[#1A1A1A] hover:bg-[#141414] transition flex items-center justify-center text-slate-500 hover:text-slate-300">
+            <Menu className="w-4 h-4" />
+          </button>
         </div>
 
-        {/* Nav */}
-        <nav className="flex-1 py-3 px-2 space-y-0.5">
+        {/* MAIN CONTENT */}
+        <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+          <div className="flex flex-1 overflow-hidden">
+            <div className="flex-1 p-3 sm:p-6 overflow-auto pb-20 lg:pb-6">
+              {currentPage === 'dashboard' && (
+                <div className="space-y-4 max-w-6xl">
+                  {userData?.plan !== 'free' && (
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
+                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Used</div>
+                        <div className="text-2xl sm:text-3xl font-black text-white">{userData?.analyses_used || 0}</div>
+                        <div className="text-xs text-slate-500 mt-1">of {userData?.analyses_limit}</div>
+                      </div>
+                      <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
+                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Left</div>
+                        <div className={`text-2xl sm:text-3xl font-black ${((userData?.analyses_limit || 0) - (userData?.analyses_used || 0)) <= 5 ? 'text-red-400' : 'text-green-400'}`}>
+                          {(userData?.analyses_limit || 0) - (userData?.analyses_used || 0)}
+                        </div>
+                        <div className="text-xs text-slate-500 mt-1">remaining</div>
+                      </div>
+                      <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
+                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Plan</div>
+                        <div className={`text-2xl sm:text-3xl font-black uppercase ${userData?.plan === 'premium' ? 'text-purple-400' : 'text-orange-400'}`}>{userData?.plan}</div>
+                      </div>
+                      <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
+                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Usage</div>
+                        <div className="text-2xl sm:text-3xl font-black text-white">{usagePercent}%</div>
+                        <div className="h-1.5 bg-[#1A1A1A] rounded-full mt-2 overflow-hidden">
+                          <div className={`h-full rounded-full ${usagePercent > 80 ? 'bg-red-500' : 'bg-orange-500'}`} style={{ width: `${usagePercent}%` }} />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {userData?.plan === 'free' && (
+                    <div className="bg-gradient-to-r from-orange-500/10 to-orange-600/5 border border-orange-500/20 rounded-xl p-4 flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <Crown className="w-5 h-5 text-orange-400 flex-shrink-0" />
+                        <div className="min-w-0">
+                          <div className="text-white text-sm font-semibold">Upgrade to Pro or Premium</div>
+                          <div className="text-slate-400 text-xs">Starting at $9.99/mo</div>
+                        </div>
+                      </div>
+                      <button onClick={() => setShowUpgradeModal(true)} className="px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-lg transition flex-shrink-0">
+                        Upgrade
+                      </button>
+                    </div>
+                  )}
+                  {!analysisType && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} onClick={() => setAnalysisType('swing')}
+                        className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-orange-500/30 rounded-xl p-6 text-left transition-all group">
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center gap-3">
+                            <div className="p-2 rounded-lg bg-orange-500/10 border border-orange-500/20">
+                              <TrendingUp className="w-5 h-5 text-orange-500" />
+                            </div>
+                            <div>
+                              <h3 className="text-white font-bold">Swing Trading</h3>
+                              <p className="text-xs text-slate-500">2-10 day positions</p>
+                            </div>
+                          </div>
+                          <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-orange-400 transition" />
+                        </div>
+                        <div className="grid grid-cols-3 gap-2 text-center">
+                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Timeframe</div><div className="text-xs sm:text-sm text-white font-semibold">Daily/4H</div></div>
+                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Target</div><div className="text-xs sm:text-sm text-white font-semibold">2-8%</div></div>
+                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Risk</div><div className="text-xs sm:text-sm text-green-400 font-semibold">Lower</div></div>
+                        </div>
+                      </motion.button>
+                      <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} onClick={() => setAnalysisType('scalp')}
+                        className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-blue-500/30 rounded-xl p-6 text-left transition-all group">
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center gap-3">
+                            <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                              <Timer className="w-5 h-5 text-blue-400" />
+                            </div>
+                            <div>
+                              <h3 className="text-white font-bold">Scalp Trading</h3>
+                              <p className="text-xs text-slate-500">1-30 minute trades</p>
+                            </div>
+                          </div>
+                          <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-blue-400 transition" />
+                        </div>
+                        <div className="grid grid-cols-3 gap-2 text-center">
+                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Timeframe</div><div className="text-xs sm:text-sm text-white font-semibold">1-15 min</div></div>
+                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Target</div><div className="text-xs sm:text-sm text-white font-semibold">5-20 pips</div></div>
+                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Risk</div><div className="text-xs sm:text-sm text-yellow-400 font-semibold">Higher</div></div>
+                        </div>
+                      </motion.button>
+                    </div>
+                  )}
+                  {analysisType && (
+                    <>
+                      <div className="flex items-center gap-3">
+                        <button onClick={() => { setAnalysisType(null); setResult(null); setImagePreview(null); }}
+                          className="text-slate-500 hover:text-slate-300 text-xs flex items-center gap-1 transition">← Back</button>
+                        <div className={`px-2.5 py-1 rounded-full text-xs font-semibold border ${
+                          analysisType === 'swing' ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
+                        }`}>
+                          {analysisType === 'swing' ? '📈 Swing Trading' : '⚡ Scalp Trading'}
+                        </div>
+                      </div>
+                      <div {...getRootProps()} className={`relative overflow-hidden rounded-xl border-2 border-dashed transition-all cursor-pointer
+                        ${isDragActive ? 'border-orange-500 bg-orange-500/5' : 'border-[#1A1A1A] bg-[#0D0D0D] hover:border-[#2A2A2A]'}`}>
+                        <input {...getInputProps()} />
+                        <div className="p-8 sm:p-10 text-center">
+                          {imagePreview ? (
+                            <img src={imagePreview} alt="Preview" className="max-w-full max-h-40 rounded-lg mb-4 mx-auto border border-[#1A1A1A]" />
+                          ) : (
+                            <div className="w-12 h-12 bg-[#141414] border border-[#1A1A1A] rounded-xl flex items-center justify-center mx-auto mb-4">
+                              <Upload className="w-5 h-5 text-slate-500" />
+                            </div>
+                          )}
+                          <p className="text-slate-300 font-semibold mb-1">{uploading ? 'Analyzing...' : 'Upload Chart'}</p>
+                          <p className="text-slate-600 text-sm">{uploading ? 'AI is processing...' : 'Drop your chart here or tap to browse'}</p>
+                        </div>
+                        {uploading && (
+                          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center">
+                            <div className="text-center">
+                              <div className="w-10 h-10 border-2 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+                              <p className="text-orange-400 text-sm font-medium">Analyzing Chart...</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </>
+                  )}
+                  <AnimatePresence>
+                    {result && (() => {
+                      const parsed = parseNewFormat(result.analysis, result.trend, result.confidence);
+                      return (
+                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="space-y-3">
+                          <div className={`rounded-xl border p-4 sm:p-6 ${getSignalBg(parsed.signal)}`}>
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                              <div className="flex items-center gap-4">
+                                <div className={`p-3 sm:p-4 rounded-xl bg-gradient-to-br ${getSignalColor(parsed.signal)} text-white`}>
+                                  {getSignalIcon(parsed.signal)}
+                                </div>
+                                <div>
+                                  <div className="text-xs text-slate-400 uppercase tracking-wider mb-1">Signal</div>
+                                  <h2 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight">{parsed.signal}</h2>
+                                  <p className="text-slate-400 text-xs sm:text-sm mt-1">
+                                    {parsed.signal === 'UPTREND' ? 'Bullish momentum detected' : parsed.signal === 'DOWNTREND' ? 'Bearish momentum detected' : 'Neutral / Consolidation'}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="text-left sm:text-right w-full sm:w-auto">
+                                <div className="text-xs text-slate-400 uppercase tracking-wider mb-2">Confidence</div>
+                                <div className="text-2xl sm:text-3xl font-black text-white mb-2">{getConfidenceValue(parsed.confidence)}%</div>
+                                <div className="w-full sm:w-40 h-2 bg-[#1A1A1A] rounded-full overflow-hidden">
+                                  <div className={`h-full ${getConfidenceColor(getConfidenceValue(parsed.confidence))}`} style={{ width: `${getConfidenceValue(parsed.confidence)}%` }} />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            {parsed.entry && (
+                              <div className="bg-[#0D0D0D] border border-orange-500/20 rounded-xl p-4">
+                                <div className="flex items-center gap-2 mb-2"><DollarSign className="w-4 h-4 text-orange-500" /><span className="text-orange-400 text-xs font-bold uppercase">Entry</span></div>
+                                <div className="text-xl font-black text-white">{parsed.entry}</div>
+                              </div>
+                            )}
+                            {parsed.stopLoss && (
+                              <div className="bg-[#0D0D0D] border border-red-500/20 rounded-xl p-4">
+                                <div className="flex items-center gap-2 mb-2"><Shield className="w-4 h-4 text-red-400" /><span className="text-red-400 text-xs font-bold uppercase">Stop Loss</span></div>
+                                <div className="text-xl font-black text-white">{parsed.stopLoss}</div>
+                              </div>
+                            )}
+                            {parsed.takeProfit && (
+                              <div className="bg-[#0D0D0D] border border-green-500/20 rounded-xl p-4">
+                                <div className="flex items-center gap-2 mb-2"><Target className="w-4 h-4 text-green-400" /><span className="text-green-400 text-xs font-bold uppercase">Take Profit</span></div>
+                                <div className="text-xl font-black text-white">{parsed.takeProfit}</div>
+                              </div>
+                            )}
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            {parsed.keyLevels.length > 0 && (
+                              <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
+                                <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
+                                  <Target className="w-4 h-4 text-purple-400" />
+                                  <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Key Levels</span>
+                                </div>
+                                <div className="space-y-1.5">{parsed.keyLevels.map((level, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-purple-400 mt-0.5">▸</span>{level}</div>)}</div>
+                              </div>
+                            )}
+                            {parsed.signalReason.length > 0 && (
+                              <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
+                                <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
+                                  <Activity className="w-4 h-4 text-orange-400" />
+                                  <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Pattern Analysis</span>
+                                </div>
+                                <div className="space-y-1.5">{parsed.signalReason.map((reason, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-orange-400 mt-0.5">▸</span>{reason}</div>)}</div>
+                              </div>
+                            )}
+                            {parsed.riskAssessment.length > 0 && (
+                              <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
+                                <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
+                                  <AlertTriangle className="w-4 h-4 text-yellow-400" />
+                                  <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Risk Assessment</span>
+                                </div>
+                                <div className="space-y-1.5">{parsed.riskAssessment.map((risk, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-yellow-400 mt-0.5">▸</span>{risk}</div>)}</div>
+                              </div>
+                            )}
+                          </div>
+                          <div className="bg-yellow-500/5 border border-yellow-500/20 rounded-xl p-4 flex items-start gap-3">
+                            <AlertTriangle className="w-4 h-4 text-yellow-500 flex-shrink-0 mt-0.5" />
+                            <p className="text-slate-400 text-xs">Educational analysis only. Not financial advice. Always do your own research before trading.</p>
+                          </div>
+                        </motion.div>
+                      );
+                    })()}
+                  </AnimatePresence>
+                  {!result && !loading && analysisType && (
+                    <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-10 text-center">
+                      <BarChart3 className="w-10 h-10 text-slate-700 mx-auto mb-3" />
+                      <p className="text-slate-500 text-sm">Upload a chart to get AI-powered analysis</p>
+                    </div>
+                  )}
+                  {userData?.plan === 'free' && !analysisType && (
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      {[
+                        { num: '01', title: 'Choose Type', desc: 'Select Swing or Scalp' },
+                        { num: '02', title: 'Upload Chart', desc: 'Drop any trading chart screenshot' },
+                        { num: '03', title: 'Get Analysis', desc: 'Receive instant AI-powered insights' },
+                      ].map((step, i) => (
+                        <div key={i} className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4 flex items-center gap-4">
+                          <div className="text-2xl font-black text-orange-500/30">{step.num}</div>
+                          <div>
+                            <div className="text-white text-sm font-semibold">{step.title}</div>
+                            <div className="text-slate-500 text-xs mt-0.5">{step.desc}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+              {currentPage === 'market' && <MarketAnalysisPage />}
+              {currentPage === 'history' && <HistoryPage />}
+              {currentPage === 'settings' && <SettingsPage userData={userData} />}
+            </div>
+            {/* NEWS PANEL - desktop only */}
+            <div className="hidden lg:flex w-80 flex-shrink-0 bg-[#0A0A0A] border-l border-[#1A1A1A] flex-col overflow-hidden" style={{height: "calc(100vh - 56px)", position: "sticky", top: "56px"}}>
+              <NewsPanel />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* MOBILE BOTTOM NAV */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#0A0A0A] border-t border-[#1A1A1A] z-40">
+        <div className="flex items-center justify-around px-2 py-2">
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive =
@@ -214,372 +574,16 @@ export default function AnalyticsDashboard() {
               (item.id === currentPage && item.id !== 'swing' && item.id !== 'scalp');
             return (
               <button key={item.id} onClick={() => handleMenuClick(item.id)}
-                className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-md transition-all text-sm ${
-                  isActive ? 'bg-orange-500/15 text-orange-400 border border-orange-500/20' : 'text-slate-500 hover:text-slate-200 hover:bg-[#141414]'
+                className={`flex flex-col items-center gap-1 px-2 py-1.5 rounded-lg transition-all ${
+                  isActive ? 'text-orange-400' : 'text-slate-600 hover:text-slate-400'
                 }`}>
-                <Icon className="w-4 h-4 flex-shrink-0" />
-                {sidebarOpen && <span className="font-medium">{item.name}</span>}
-                {sidebarOpen && isActive && <ChevronRight className="w-3 h-3 ml-auto" />}
+                <Icon className="w-5 h-5" />
+                <span className="text-[10px] font-medium">{item.name.split(' ')[0]}</span>
               </button>
             );
           })}
-        </nav>
-
-        {/* Usage bar in sidebar */}
-        {sidebarOpen && userData?.plan !== 'free' && (
-          <div className="px-3 py-3 border-t border-[#1A1A1A]">
-            <div className="flex justify-between text-xs text-slate-500 mb-1.5">
-              <span>Usage</span>
-              <span className="text-slate-400">{userData?.analyses_used}/{userData?.analyses_limit}</span>
-            </div>
-            <div className="h-1 bg-[#1A1A1A] rounded-full overflow-hidden">
-              <div className={`h-full rounded-full transition-all ${usagePercent > 80 ? 'bg-red-500' : 'bg-orange-500'}`} style={{ width: `${usagePercent}%` }} />
-            </div>
-          </div>
-        )}
-
-        {/* Collapse button */}
-        <button onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="h-10 border-t border-[#1A1A1A] hover:bg-[#141414] transition flex items-center justify-center text-slate-500 hover:text-slate-300">
-          <Menu className="w-4 h-4" />
-        </button>
-      </div>
-
-      {/* MAIN */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {/* HEADER */}
-        <header className="h-14 border-b border-[#1A1A1A] bg-[#0A0A0A] flex items-center px-6 gap-4 flex-shrink-0 sticky top-0 z-40">
-          {/* Breadcrumb */}
-          <div className="flex-1 flex items-center gap-2 text-sm">
-            <span className="text-slate-500">TradeFlow</span>
-            <span className="text-slate-600">/</span>
-            <span className="text-slate-200 font-medium">
-              {currentPage === 'dashboard' && analysisType === 'swing' ? 'Swing Trading' :
-               currentPage === 'dashboard' && analysisType === 'scalp' ? 'Scalp Trading' :
-               menuItems.find(i => i.id === currentPage)?.name || 'Dashboard'}
-            </span>
-            {analysisType && currentPage === 'dashboard' && (
-              <>
-                <span className="text-slate-600">/</span>
-                <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${analysisType === 'swing' ? 'bg-orange-500/15 text-orange-400' : 'bg-blue-500/15 text-blue-400'}`}>
-                  {analysisType === 'swing' ? '📈 Swing' : '⚡ Scalp'}
-                </span>
-              </>
-            )}
-          </div>
-
-          {/* Right side */}
-          <div className="flex items-center gap-3">
-            <LiveClock />
-            <div className="w-px h-5 bg-[#1A1A1A]" />
-            {/* Plan badge */}
-            <div className={`px-2.5 py-1 rounded-md border text-xs font-bold uppercase cursor-pointer transition ${
-              userData?.plan === 'premium' ? 'bg-purple-500/10 border-purple-500/20 text-purple-400' :
-              userData?.plan === 'pro' ? 'bg-orange-500/10 border-orange-500/20 text-orange-400' :
-              'bg-red-500/10 border-red-500/20 text-red-400 hover:border-orange-500/30 hover:text-orange-400'
-            }`} onClick={() => userData?.plan === 'free' && setShowUpgradeModal(true)}>
-              {userData?.plan || 'free'}{userData?.plan === 'free' && ' ↑'}
-            </div>
-            {/* Avatar */}
-            <div className="flex items-center gap-2 bg-[#141414] border border-[#1A1A1A] rounded-md px-2.5 py-1.5">
-              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white font-bold text-xs">
-                {userData?.name?.charAt(0)?.toUpperCase() || 'U'}
-              </div>
-              <span className="text-slate-300 text-sm font-medium hidden sm:block">{userData?.name || 'User'}</span>
-            </div>
-            {/* Logout */}
-            <button onClick={handleLogout} className="p-1.5 rounded-md hover:bg-red-500/10 text-slate-500 hover:text-red-400 transition" title="Logout">
-              <LogOut className="w-4 h-4" />
-            </button>
-          </div>
-        </header>
-
-        {/* PAGE CONTENT */}
-        <div className="flex-1 flex overflow-hidden">
-          <div className="flex-1 p-6 overflow-auto">
-          {currentPage === 'dashboard' && (
-            <div className="space-y-5 max-w-6xl">
-
-              {/* Stats row */}
-              {userData?.plan !== 'free' && (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-5">
-                    <div className="text-xs text-slate-500 mb-2 uppercase tracking-wider">Analyses Used</div>
-                    <div className="text-3xl font-black text-white">{userData?.analyses_used || 0}</div>
-                    <div className="text-xs text-slate-500 mt-1.5">of {userData?.analyses_limit} this month</div>
-                  </div>
-                  <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-5">
-                    <div className="text-xs text-slate-500 mb-2 uppercase tracking-wider">Remaining</div>
-                    <div className={`text-3xl font-black ${((userData?.analyses_limit || 0) - (userData?.analyses_used || 0)) <= 5 ? 'text-red-400' : 'text-green-400'}`}>
-                      {(userData?.analyses_limit || 0) - (userData?.analyses_used || 0)}
-                    </div>
-                    <div className="text-xs text-slate-500 mt-1.5">analyses left</div>
-                  </div>
-                  <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-5">
-                    <div className="text-xs text-slate-500 mb-2 uppercase tracking-wider">Plan</div>
-                    <div className={`text-3xl font-black uppercase ${userData?.plan === 'premium' ? 'text-purple-400' : 'text-orange-400'}`}>{userData?.plan}</div>
-                    <div className="text-xs text-slate-500 mt-1.5">current plan</div>
-                  </div>
-                  <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-5">
-                    <div className="text-xs text-slate-500 mb-2 uppercase tracking-wider">Usage</div>
-                    <div className="text-3xl font-black text-white">{usagePercent}%</div>
-                    <div className="h-1.5 bg-[#1A1A1A] rounded-full mt-3 overflow-hidden">
-                      <div className={`h-full rounded-full ${usagePercent > 80 ? 'bg-red-500' : 'bg-orange-500'}`} style={{ width: `${usagePercent}%` }} />
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Free plan banner */}
-              {userData?.plan === 'free' && (
-                <div className="bg-gradient-to-r from-orange-500/10 to-orange-600/5 border border-orange-500/20 rounded-xl p-4 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Crown className="w-5 h-5 text-orange-400 flex-shrink-0" />
-                    <div>
-                      <div className="text-white text-sm font-semibold">Upgrade to Pro or Premium</div>
-                      <div className="text-slate-400 text-xs">Unlock full AI analysis — starting at $9.99/mo</div>
-                    </div>
-                  </div>
-                  <button onClick={() => setShowUpgradeModal(true)} className="px-4 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-lg transition flex-shrink-0">
-                    Upgrade
-                  </button>
-                </div>
-              )}
-
-              {/* Trading type selection */}
-              {!analysisType && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} onClick={() => setAnalysisType('swing')}
-                    className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-orange-500/30 rounded-xl p-8 text-left transition-all group">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg bg-orange-500/10 border border-orange-500/20">
-                          <TrendingUp className="w-5 h-5 text-orange-500" />
-                        </div>
-                        <div>
-                          <h3 className="text-white font-bold">Swing Trading</h3>
-                          <p className="text-xs text-slate-500">2-10 day positions</p>
-                        </div>
-                      </div>
-                      <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-orange-400 transition" />
-                    </div>
-                    <div className="grid grid-cols-3 gap-3 text-center">
-                      <div className="bg-[#111] rounded-lg p-3">
-                        <div className="text-xs text-slate-500 mb-1">Timeframe</div>
-                        <div className="text-sm text-white font-semibold">Daily/4H</div>
-                      </div>
-                      <div className="bg-[#111] rounded-lg p-3">
-                        <div className="text-xs text-slate-500 mb-1">Target</div>
-                        <div className="text-sm text-white font-semibold">2-8%</div>
-                      </div>
-                      <div className="bg-[#111] rounded-lg p-3">
-                        <div className="text-xs text-slate-500 mb-1">Risk</div>
-                        <div className="text-sm text-green-400 font-semibold">Lower</div>
-                      </div>
-                    </div>
-                  </motion.button>
-
-                  <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} onClick={() => setAnalysisType('scalp')}
-                    className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-blue-500/30 rounded-xl p-8 text-left transition-all group">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                          <Timer className="w-5 h-5 text-blue-400" />
-                        </div>
-                        <div>
-                          <h3 className="text-white font-bold">Scalp Trading</h3>
-                          <p className="text-xs text-slate-500">1-30 minute trades</p>
-                        </div>
-                      </div>
-                      <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-blue-400 transition" />
-                    </div>
-                    <div className="grid grid-cols-3 gap-3 text-center">
-                      <div className="bg-[#111] rounded-lg p-3">
-                        <div className="text-xs text-slate-500 mb-1">Timeframe</div>
-                        <div className="text-sm text-white font-semibold">1-15 min</div>
-                      </div>
-                      <div className="bg-[#111] rounded-lg p-3">
-                        <div className="text-xs text-slate-500 mb-1">Target</div>
-                        <div className="text-sm text-white font-semibold">5-20 pips</div>
-                      </div>
-                      <div className="bg-[#111] rounded-lg p-3">
-                        <div className="text-xs text-slate-500 mb-1">Risk</div>
-                        <div className="text-sm text-yellow-400 font-semibold">Higher</div>
-                      </div>
-                    </div>
-                  </motion.button>
-                </div>
-              )}
-
-              {/* Upload area */}
-              {analysisType && (
-                <>
-                  <div className="flex items-center gap-3">
-                    <button onClick={() => { setAnalysisType(null); setResult(null); setImagePreview(null); }}
-                      className="text-slate-500 hover:text-slate-300 text-xs flex items-center gap-1 transition">
-                      ← Back
-                    </button>
-                    <div className={`px-2.5 py-1 rounded-full text-xs font-semibold border ${
-                      analysisType === 'swing' ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
-                    }`}>
-                      {analysisType === 'swing' ? '📈 Swing Trading' : '⚡ Scalp Trading'}
-                    </div>
-                  </div>
-
-                  <div {...getRootProps()} className={`relative overflow-hidden rounded-xl border-2 border-dashed transition-all cursor-pointer
-                    ${isDragActive ? 'border-orange-500 bg-orange-500/5' : 'border-[#1A1A1A] bg-[#0D0D0D] hover:border-[#2A2A2A]'}`}>
-                    <input {...getInputProps()} />
-                    <div className="p-10 text-center">
-                      {imagePreview ? (
-                        <img src={imagePreview} alt="Preview" className="max-w-full max-h-48 rounded-lg mb-4 mx-auto border border-[#1A1A1A]" />
-                      ) : (
-                        <div className="w-12 h-12 bg-[#141414] border border-[#1A1A1A] rounded-xl flex items-center justify-center mx-auto mb-4">
-                          <Upload className="w-5 h-5 text-slate-500" />
-                        </div>
-                      )}
-                      <p className="text-slate-300 font-semibold mb-1">{uploading ? 'Analyzing...' : 'Upload Chart'}</p>
-                      <p className="text-slate-600 text-sm">{uploading ? 'AI is processing...' : 'Drop your chart here or click to browse'}</p>
-                    </div>
-                    {uploading && (
-                      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="w-10 h-10 border-2 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
-                          <p className="text-orange-400 text-sm font-medium">Analyzing Chart...</p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </>
-              )}
-
-              {/* Results */}
-              <AnimatePresence>
-                {result && (() => {
-                  const parsed = parseNewFormat(result.analysis, result.trend, result.confidence);
-                  return (
-                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="space-y-4">
-                      {/* Signal header */}
-                      <div className={`rounded-xl border p-6 ${getSignalBg(parsed.signal)}`}>
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                          <div className="flex items-center gap-4">
-                            <div className={`p-4 rounded-xl bg-gradient-to-br ${getSignalColor(parsed.signal)} text-white`}>
-                              {getSignalIcon(parsed.signal)}
-                            </div>
-                            <div>
-                              <div className="text-xs text-slate-400 uppercase tracking-wider mb-1">Signal</div>
-                              <h2 className="text-3xl font-black text-white uppercase tracking-tight">{parsed.signal}</h2>
-                              <p className="text-slate-400 text-sm mt-1">
-                                {parsed.signal === 'UPTREND' ? 'Bullish momentum detected' : parsed.signal === 'DOWNTREND' ? 'Bearish momentum detected' : 'Neutral / Consolidation'}
-                              </p>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <div className="text-xs text-slate-400 uppercase tracking-wider mb-2">Confidence</div>
-                            <div className="text-3xl font-black text-white mb-2">{getConfidenceValue(parsed.confidence)}%</div>
-                            <div className="w-40 h-2 bg-[#1A1A1A] rounded-full overflow-hidden">
-                              <div className={`h-full ${getConfidenceColor(getConfidenceValue(parsed.confidence))}`} style={{ width: `${getConfidenceValue(parsed.confidence)}%` }} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Entry / SL / TP */}
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        {parsed.entry && (
-                          <div className="bg-[#0D0D0D] border border-orange-500/20 rounded-xl p-4">
-                            <div className="flex items-center gap-2 mb-2"><DollarSign className="w-4 h-4 text-orange-500" /><span className="text-orange-400 text-xs font-bold uppercase">Entry</span></div>
-                            <div className="text-xl font-black text-white">{parsed.entry}</div>
-                          </div>
-                        )}
-                        {parsed.stopLoss && (
-                          <div className="bg-[#0D0D0D] border border-red-500/20 rounded-xl p-4">
-                            <div className="flex items-center gap-2 mb-2"><Shield className="w-4 h-4 text-red-400" /><span className="text-red-400 text-xs font-bold uppercase">Stop Loss</span></div>
-                            <div className="text-xl font-black text-white">{parsed.stopLoss}</div>
-                          </div>
-                        )}
-                        {parsed.takeProfit && (
-                          <div className="bg-[#0D0D0D] border border-green-500/20 rounded-xl p-4">
-                            <div className="flex items-center gap-2 mb-2"><Target className="w-4 h-4 text-green-400" /><span className="text-green-400 text-xs font-bold uppercase">Take Profit</span></div>
-                            <div className="text-xl font-black text-white">{parsed.takeProfit}</div>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Analysis details */}
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        {parsed.keyLevels.length > 0 && (
-                          <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
-                            <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
-                              <Target className="w-4 h-4 text-purple-400" />
-                              <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Key Levels</span>
-                            </div>
-                            <div className="space-y-1.5">{parsed.keyLevels.map((level, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-purple-400 mt-0.5">▸</span>{level}</div>)}</div>
-                          </div>
-                        )}
-                        {parsed.signalReason.length > 0 && (
-                          <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
-                            <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
-                              <Activity className="w-4 h-4 text-orange-400" />
-                              <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Pattern Analysis</span>
-                            </div>
-                            <div className="space-y-1.5">{parsed.signalReason.map((reason, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-orange-400 mt-0.5">▸</span>{reason}</div>)}</div>
-                          </div>
-                        )}
-                        {parsed.riskAssessment.length > 0 && (
-                          <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
-                            <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
-                              <AlertTriangle className="w-4 h-4 text-yellow-400" />
-                              <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Risk Assessment</span>
-                            </div>
-                            <div className="space-y-1.5">{parsed.riskAssessment.map((risk, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-yellow-400 mt-0.5">▸</span>{risk}</div>)}</div>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Disclaimer */}
-                      <div className="bg-yellow-500/5 border border-yellow-500/20 rounded-xl p-4 flex items-start gap-3">
-                        <AlertTriangle className="w-4 h-4 text-yellow-500 flex-shrink-0 mt-0.5" />
-                        <p className="text-slate-400 text-xs">Educational analysis only. Not financial advice. Always do your own research before trading.</p>
-                      </div>
-                    </motion.div>
-                  );
-                })()}
-              </AnimatePresence>
-
-              {!result && !loading && analysisType && (
-                <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-12 text-center">
-                  <BarChart3 className="w-10 h-10 text-slate-700 mx-auto mb-3" />
-                  <p className="text-slate-500 text-sm">Upload a chart to get AI-powered analysis</p>
-                </div>
-              )}
-
-              {/* How to use - free plan */}
-              {userData?.plan === 'free' && !analysisType && (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  {[
-                    { num: '01', title: 'Choose Type', desc: 'Select Swing or Scalp from sidebar' },
-                    { num: '02', title: 'Upload Chart', desc: 'Drop any trading chart screenshot' },
-                    { num: '03', title: 'Get Analysis', desc: 'Receive instant AI-powered insights' },
-                  ].map((step, i) => (
-                    <div key={i} className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4 flex items-center gap-4">
-                      <div className="text-2xl font-black text-orange-500/30">{step.num}</div>
-                      <div>
-                        <div className="text-white text-sm font-semibold">{step.title}</div>
-                        <div className="text-slate-500 text-xs mt-0.5">{step.desc}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-          {currentPage === 'market' && <MarketAnalysisPage />}
-          {currentPage === 'history' && <HistoryPage />}
-          {currentPage === 'settings' && <SettingsPage userData={userData} />}
-          </div>
-          <NewsPanel />
         </div>
-      </div>
+      </nav>
     </div>
   );
 }
@@ -626,8 +630,7 @@ function NewsPanel() {
   };
 
   return (
-    <div className="hidden lg:flex w-80 flex-shrink-0 bg-[#0A0A0A] border-l border-[#1A1A1A] flex-col overflow-hidden" style={{height: "calc(100vh - 56px)", position: "sticky", top: "56px"}}>
-      {/* Header */}
+    <>
       <div className="px-4 py-3 border-b border-[#1A1A1A] flex items-center justify-between flex-shrink-0">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
@@ -635,8 +638,6 @@ function NewsPanel() {
         </div>
         <span className="text-slate-600 text-xs">Live Feed</span>
       </div>
-
-      {/* News list */}
       <div className="flex-1 overflow-y-auto">
         {loading ? (
           <div className="flex items-center justify-center h-32">
@@ -651,7 +652,6 @@ function NewsPanel() {
               return (
                 <a key={i} href={item.url} target="_blank" rel="noopener noreferrer"
                   className="block px-4 py-3 hover:bg-[#111] transition-colors group">
-                  {/* Currencies + time */}
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-1.5">
                       {item.currencies?.slice(0, 3).map((c: string, j: number) => (
@@ -667,9 +667,7 @@ function NewsPanel() {
                       <span className="text-xs text-slate-600">{getTimeAgo(item.published_at)}</span>
                     </div>
                   </div>
-                  {/* Title */}
                   <p className="text-slate-300 text-xs leading-relaxed group-hover:text-white transition-colors line-clamp-2">{item.title}</p>
-                  {/* Source */}
                   <div className="mt-1.5 text-slate-600 text-xs">{item.source}</div>
                 </a>
               );
@@ -677,11 +675,10 @@ function NewsPanel() {
           </div>
         )}
       </div>
-
-      {/* Footer */}
       <div className="px-4 py-2 border-t border-[#1A1A1A] flex-shrink-0">
         <p className="text-slate-700 text-xs text-center">Powered by CryptoPanic</p>
       </div>
-    </div>
+    </>
   );
 }
+EOF
