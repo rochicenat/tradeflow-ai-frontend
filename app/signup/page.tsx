@@ -77,8 +77,8 @@ function SignupContent() {
 
           <h1 className="text-3xl font-bold text-white mb-6">Create Account</h1>
 
-          
-            onClick={() => window.location.href="https://tradeflow-ai-backend-production.up.railway.app/auth/google"
+          <button
+            onClick={() => window.location.href="https://tradeflow-ai-backend-production.up.railway.app/auth/google"}
             className="w-full flex items-center justify-center gap-3 bg-[#1A1A1A] hover:bg-[#222] border border-[#333] text-white py-3 rounded-lg transition font-medium mb-4"
           >
             <img src="https://www.google.com/favicon.ico" className="w-5 h-5" alt="G" />

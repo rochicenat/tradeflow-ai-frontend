@@ -46,8 +46,8 @@ export default function LoginPage() {
           {error && <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm">{error}</div>}
 
           {/* Google Login */}
-          
-            onClick={() => window.location.href="https://tradeflow-ai-backend-production.up.railway.app/auth/google"
+          <button
+            onClick={() => window.location.href="https://tradeflow-ai-backend-production.up.railway.app/auth/google"}
             className="w-full flex items-center justify-center gap-3 bg-[#1A1A1A] hover:bg-[#222] border border-[#333] text-white py-3 rounded-lg transition font-medium mb-4"
           >
             <img src="https://www.google.com/favicon.ico" className="w-5 h-5" alt="Google" />
