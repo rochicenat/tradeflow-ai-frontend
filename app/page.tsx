@@ -149,12 +149,7 @@ export default function Home() {
             </div>
             <div className="text-gray-400 text-sm font-medium">Active Users</div>
           </div>
-          <div>
-            <div className="text-4xl md:text-5xl font-black text-orange-500 mb-2">
-              <AnimatedCounter end={98} suffix="%" />
-            </div>
-            <div className="text-gray-400 text-sm font-medium">Accuracy Rate</div>
-          </div>
+
           <div>
             <div className="text-4xl md:text-5xl font-black text-orange-500 mb-2">
               <AnimatedCounter end={3} suffix="s" />
