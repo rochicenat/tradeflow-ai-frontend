@@ -319,7 +319,7 @@ export default function AnalyticsDashboard() {
           <div className="flex flex-1 overflow-hidden">
             <div className="flex-1 p-3 sm:p-6 overflow-auto pb-20 lg:pb-6">
               {currentPage === 'dashboard' && (
-                <div className="space-y-4 max-w-6xl">
+                <div className="space-y-6 max-w-6xl">
                   {userData?.plan !== 'free' && (
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
@@ -364,7 +364,7 @@ export default function AnalyticsDashboard() {
                   {!analysisType && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} onClick={() => setAnalysisType('swing')}
-                        className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-orange-500/30 rounded-xl p-6 text-left transition-all group">
+                        className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-orange-500/30 rounded-xl p-10 text-left transition-all group">
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-3">
                             <div className="p-2 rounded-lg bg-orange-500/10 border border-orange-500/20">
@@ -384,7 +384,7 @@ export default function AnalyticsDashboard() {
                         </div>
                       </motion.button>
                       <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} onClick={() => setAnalysisType('scalp')}
-                        className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-blue-500/30 rounded-xl p-6 text-left transition-all group">
+                        className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-blue-500/30 rounded-xl p-10 text-left transition-all group">
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-3">
                             <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
