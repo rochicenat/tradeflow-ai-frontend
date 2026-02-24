@@ -256,7 +256,7 @@ export default function Home() {
                   <li key={i} className="flex items-center gap-2 text-gray-300 text-sm"><span className="text-green-400 font-bold">✓</span> {f}</li>
                 ))}
               </ul>
-              <a href="https://tradeflowai.lemonsqueezy.com/checkout/buy/60423ba8-053a-4d04-a924-69b6aaae30e3" target="_blank" rel="noopener noreferrer" className="block w-full py-3 rounded-xl font-bold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg">
+              <a href="/signup?plan=pro" className="block w-full py-3 rounded-xl font-bold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg">
                 Get Pro — $9.99/mo
               </a>
             </div>
@@ -273,7 +273,7 @@ export default function Home() {
                   <li key={i} className="flex items-center gap-2 text-gray-300 text-sm"><span className="text-green-400 font-bold">✓</span> {f}</li>
                 ))}
               </ul>
-              <a href="https://tradeflowai.lemonsqueezy.com/checkout/buy/47621ebf-7c5e-4b6e-bbc9-d6bee626b2d4" target="_blank" rel="noopener noreferrer" className="block w-full py-3 rounded-xl font-bold text-center bg-purple-500 text-white hover:bg-purple-600 transition text-lg">
+              <a href="/signup?plan=premium" className="block w-full py-3 rounded-xl font-bold text-center bg-purple-500 text-white hover:bg-purple-600 transition text-lg">
                 Get Premium — $19.99/mo
               </a>
             </div>

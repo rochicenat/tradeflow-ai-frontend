@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -13,6 +14,13 @@ export default function SignupPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
+  const searchParams = useSearchParams();
+  const plan = searchParams.get('plan');
+
+  const PLAN_URLS: Record<string, string> = {
+    pro: 'https://tradeflowai.lemonsqueezy.com/checkout/buy/60423ba8-053a-4d04-a924-69b6aaae30e3',
+    premium: 'https://tradeflowai.lemonsqueezy.com/checkout/buy/47621ebf-7c5e-4b6e-bbc9-d6bee626b2d4',
+  };
   const passwordValid =
     password.length >= 8 &&
     /[A-Z]/.test(password) &&
@@ -41,7 +49,14 @@ export default function SignupPage() {
       if (!res.ok) throw new Error(data.detail || 'Signup failed');
       localStorage.setItem('token', data.access_token);
       toast.success('Account created successfully!');
-      setTimeout(() => router.push('/dashboard'), 500);
+      const redirectUrl = plan && PLAN_URLS[plan] ? PLAN_URLS[plan] : '/dashboard';
+      setTimeout(() => {
+        if (plan && PLAN_URLS[plan]) {
+          window.location.href = PLAN_URLS[plan];
+        } else {
+          router.push('/dashboard');
+        }
+      }, 800);
     } catch (err: any) {
       toast.error(err.message || 'Signup failed');
     } finally {
@@ -64,6 +79,11 @@ export default function SignupPage() {
             <Activity className="w-8 h-8 text-orange-500" />
             <span className="text-2xl font-bold text-white">TradeFlow AI</span>
           </Link>
+          {plan && PLAN_URLS[plan] && (
+            <div className="mb-4 px-4 py-2 bg-orange-500/10 border border-orange-500/30 rounded-lg text-orange-400 text-sm font-medium">
+              🎯 After signup, you'll be redirected to complete your {plan === 'pro' ? 'Pro ($9.99/mo)' : 'Premium ($19.99/mo)'} subscription
+            </div>
+          )}
           <h1 className="text-3xl font-bold text-white mb-6">Create Account</h1>
           <form onSubmit={handleSignup} className="space-y-5">
             <input
