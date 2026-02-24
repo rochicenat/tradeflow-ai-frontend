@@ -108,18 +108,18 @@ export default function Home() {
                 <span className="text-orange-400 text-xs font-medium">⚡ Scalp Trading</span>
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-4 mb-4">
+            <div className="grid grid-cols-3 gap-2 mb-4">
               <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-4 text-center">
                 <div className="text-green-400 text-xs font-semibold mb-1">SIGNAL</div>
-                <div className="text-white font-black text-xl">UPTREND</div>
+                <div className="text-white font-black text-sm sm:text-xl">UPTREND</div>
               </div>
               <div className="bg-orange-500/10 border border-orange-500/20 rounded-xl p-4 text-center">
                 <div className="text-orange-400 text-xs font-semibold mb-1">ENTRY</div>
-                <div className="text-white font-black text-xl">$97,240</div>
+                <div className="text-white font-black text-sm sm:text-xl">$97,240</div>
               </div>
               <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-center">
                 <div className="text-red-400 text-xs font-semibold mb-1">STOP LOSS</div>
-                <div className="text-white font-black text-xl">$96,890</div>
+                <div className="text-white font-black text-sm sm:text-xl">$96,890</div>
               </div>
             </div>
             <div className="bg-[#111] rounded-xl p-4 flex items-center gap-3">
