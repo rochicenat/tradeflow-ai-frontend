@@ -356,35 +356,7 @@ export default function AnalyticsDashboard() {
             );
           })}
         </nav>
-        <div className="p-4 border-t border-[#252525]">
-          <div className={`${sidebarOpen ? 'flex items-center justify-between' : 'flex flex-col items-center gap-2'}`}>
-            {sidebarOpen ? (
-              <>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white font-bold">
-                    {userData?.name?.charAt(0) || 'U'}
-                  </div>
-                  <div>
-                    <div className="text-white font-medium text-sm">{userData?.name || 'User'}</div>
-                    <div className="text-xs text-slate-400 uppercase">{userData?.plan || 'Free'}</div>
-                  </div>
-                </div>
-                <button onClick={handleLogout} className="p-2 rounded-lg bg-red-500/10 border border-red-500/30 hover:bg-red-500/20 transition">
-                  <LogOut className="w-4 h-4 text-red-400" />
-                </button>
-              </>
-            ) : (
-              <>
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white font-bold">
-                  {userData?.name?.charAt(0) || 'U'}
-                </div>
-                <button onClick={handleLogout} className="p-2 rounded-lg bg-red-500/10 border border-red-500/30 hover:bg-red-500/20 transition">
-                  <LogOut className="w-4 h-4 text-red-400" />
-                </button>
-              </>
-            )}
-          </div>
-        </div>
+
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
           className="p-4 border-t border-[#252525] hover:bg-[#1A1A1A] transition flex items-center justify-center"
@@ -412,22 +384,36 @@ export default function AnalyticsDashboard() {
                 {currentPage === 'settings' && 'Manage your account preferences'}
               </p>
             </div>
-            <div
-              className={`px-4 py-2 rounded-lg border cursor-pointer transition ${
-                userData?.plan === 'premium'
-                  ? 'bg-purple-500/20 border-purple-500/30'
-                  : userData?.plan === 'pro'
-                  ? 'bg-orange-500/20 border-orange-500/30'
-                  : 'bg-red-500/20 border-red-500/30 hover:bg-orange-500/20 hover:border-orange-500/30'
-              }`}
-              onClick={() => userData?.plan === 'free' && setShowUpgradeModal(true)}
-            >
-              <span className={`font-semibold text-sm uppercase ${
-                userData?.plan === 'premium' ? 'text-purple-400' :
-                userData?.plan === 'pro' ? 'text-orange-400' : 'text-red-400'
-              }`}>
-                {userData?.plan || 'Free'} {userData?.plan === 'free' && '— Upgrade'}
-              </span>
+            <div className="flex items-center gap-3">
+              {/* Plan Badge */}
+              <div
+                className={`px-3 py-1.5 rounded-lg border cursor-pointer transition ${
+                  userData?.plan === 'premium'
+                    ? 'bg-purple-500/20 border-purple-500/30'
+                    : userData?.plan === 'pro'
+                    ? 'bg-orange-500/20 border-orange-500/30'
+                    : 'bg-red-500/20 border-red-500/30 hover:bg-orange-500/20 hover:border-orange-500/30'
+                }`}
+                onClick={() => userData?.plan === 'free' && setShowUpgradeModal(true)}
+              >
+                <span className={`font-semibold text-xs uppercase ${
+                  userData?.plan === 'premium' ? 'text-purple-400' :
+                  userData?.plan === 'pro' ? 'text-orange-400' : 'text-red-400'
+                }`}>
+                  {userData?.plan || 'Free'} {userData?.plan === 'free' && '— Upgrade'}
+                </span>
+              </div>
+              {/* Avatar + Name */}
+              <div className="flex items-center gap-2 bg-[#1A1A1A] border border-[#252525] rounded-xl px-3 py-2">
+                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white font-bold text-xs">
+                  {userData?.name?.charAt(0) || 'U'}
+                </div>
+                <span className="text-white text-sm font-medium hidden sm:block">{userData?.name || 'User'}</span>
+              </div>
+              {/* Logout */}
+              <button onClick={handleLogout} className="p-2 rounded-xl bg-red-500/10 border border-red-500/30 hover:bg-red-500/20 transition" title="Logout">
+                <LogOut className="w-4 h-4 text-red-400" />
+              </button>
             </div>
           </div>
         </header>
