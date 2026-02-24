@@ -302,28 +302,28 @@ export default function AnalyticsDashboard() {
 
               {/* Stats row */}
               {userData?.plan !== 'free' && (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
-                    <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Analyses Used</div>
-                    <div className="text-2xl font-black text-white">{userData?.analyses_used || 0}</div>
-                    <div className="text-xs text-slate-500 mt-1">of {userData?.analyses_limit} this month</div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-5">
+                    <div className="text-xs text-slate-500 mb-2 uppercase tracking-wider">Analyses Used</div>
+                    <div className="text-3xl font-black text-white">{userData?.analyses_used || 0}</div>
+                    <div className="text-xs text-slate-500 mt-1.5">of {userData?.analyses_limit} this month</div>
                   </div>
-                  <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
-                    <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Remaining</div>
-                    <div className={`text-2xl font-black ${((userData?.analyses_limit || 0) - (userData?.analyses_used || 0)) <= 5 ? 'text-red-400' : 'text-green-400'}`}>
+                  <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-5">
+                    <div className="text-xs text-slate-500 mb-2 uppercase tracking-wider">Remaining</div>
+                    <div className={`text-3xl font-black ${((userData?.analyses_limit || 0) - (userData?.analyses_used || 0)) <= 5 ? 'text-red-400' : 'text-green-400'}`}>
                       {(userData?.analyses_limit || 0) - (userData?.analyses_used || 0)}
                     </div>
-                    <div className="text-xs text-slate-500 mt-1">analyses left</div>
+                    <div className="text-xs text-slate-500 mt-1.5">analyses left</div>
                   </div>
-                  <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
-                    <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Plan</div>
-                    <div className={`text-2xl font-black uppercase ${userData?.plan === 'premium' ? 'text-purple-400' : 'text-orange-400'}`}>{userData?.plan}</div>
-                    <div className="text-xs text-slate-500 mt-1">current plan</div>
+                  <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-5">
+                    <div className="text-xs text-slate-500 mb-2 uppercase tracking-wider">Plan</div>
+                    <div className={`text-3xl font-black uppercase ${userData?.plan === 'premium' ? 'text-purple-400' : 'text-orange-400'}`}>{userData?.plan}</div>
+                    <div className="text-xs text-slate-500 mt-1.5">current plan</div>
                   </div>
-                  <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
-                    <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Usage</div>
-                    <div className="text-2xl font-black text-white">{usagePercent}%</div>
-                    <div className="h-1 bg-[#1A1A1A] rounded-full mt-2 overflow-hidden">
+                  <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-5">
+                    <div className="text-xs text-slate-500 mb-2 uppercase tracking-wider">Usage</div>
+                    <div className="text-3xl font-black text-white">{usagePercent}%</div>
+                    <div className="h-1.5 bg-[#1A1A1A] rounded-full mt-3 overflow-hidden">
                       <div className={`h-full rounded-full ${usagePercent > 80 ? 'bg-red-500' : 'bg-orange-500'}`} style={{ width: `${usagePercent}%` }} />
                     </div>
                   </div>
@@ -350,7 +350,7 @@ export default function AnalyticsDashboard() {
               {!analysisType && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} onClick={() => setAnalysisType('swing')}
-                    className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-orange-500/30 rounded-xl p-6 text-left transition-all group">
+                    className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-orange-500/30 rounded-xl p-8 text-left transition-all group">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-3">
                         <div className="p-2 rounded-lg bg-orange-500/10 border border-orange-500/20">
@@ -363,24 +363,24 @@ export default function AnalyticsDashboard() {
                       </div>
                       <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-orange-400 transition" />
                     </div>
-                    <div className="grid grid-cols-3 gap-2 text-center">
-                      <div className="bg-[#111] rounded-lg p-2">
-                        <div className="text-xs text-slate-500">Timeframe</div>
-                        <div className="text-xs text-white font-medium mt-0.5">Daily/4H</div>
+                    <div className="grid grid-cols-3 gap-3 text-center">
+                      <div className="bg-[#111] rounded-lg p-3">
+                        <div className="text-xs text-slate-500 mb-1">Timeframe</div>
+                        <div className="text-sm text-white font-semibold">Daily/4H</div>
                       </div>
-                      <div className="bg-[#111] rounded-lg p-2">
-                        <div className="text-xs text-slate-500">Target</div>
-                        <div className="text-xs text-white font-medium mt-0.5">2-8%</div>
+                      <div className="bg-[#111] rounded-lg p-3">
+                        <div className="text-xs text-slate-500 mb-1">Target</div>
+                        <div className="text-sm text-white font-semibold">2-8%</div>
                       </div>
-                      <div className="bg-[#111] rounded-lg p-2">
-                        <div className="text-xs text-slate-500">Risk</div>
-                        <div className="text-xs text-green-400 font-medium mt-0.5">Lower</div>
+                      <div className="bg-[#111] rounded-lg p-3">
+                        <div className="text-xs text-slate-500 mb-1">Risk</div>
+                        <div className="text-sm text-green-400 font-semibold">Lower</div>
                       </div>
                     </div>
                   </motion.button>
 
                   <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} onClick={() => setAnalysisType('scalp')}
-                    className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-blue-500/30 rounded-xl p-6 text-left transition-all group">
+                    className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-blue-500/30 rounded-xl p-8 text-left transition-all group">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-3">
                         <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
@@ -393,18 +393,18 @@ export default function AnalyticsDashboard() {
                       </div>
                       <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-blue-400 transition" />
                     </div>
-                    <div className="grid grid-cols-3 gap-2 text-center">
-                      <div className="bg-[#111] rounded-lg p-2">
-                        <div className="text-xs text-slate-500">Timeframe</div>
-                        <div className="text-xs text-white font-medium mt-0.5">1-15 min</div>
+                    <div className="grid grid-cols-3 gap-3 text-center">
+                      <div className="bg-[#111] rounded-lg p-3">
+                        <div className="text-xs text-slate-500 mb-1">Timeframe</div>
+                        <div className="text-sm text-white font-semibold">1-15 min</div>
                       </div>
-                      <div className="bg-[#111] rounded-lg p-2">
-                        <div className="text-xs text-slate-500">Target</div>
-                        <div className="text-xs text-white font-medium mt-0.5">5-20 pips</div>
+                      <div className="bg-[#111] rounded-lg p-3">
+                        <div className="text-xs text-slate-500 mb-1">Target</div>
+                        <div className="text-sm text-white font-semibold">5-20 pips</div>
                       </div>
-                      <div className="bg-[#111] rounded-lg p-2">
-                        <div className="text-xs text-slate-500">Risk</div>
-                        <div className="text-xs text-yellow-400 font-medium mt-0.5">Higher</div>
+                      <div className="bg-[#111] rounded-lg p-3">
+                        <div className="text-xs text-slate-500 mb-1">Risk</div>
+                        <div className="text-sm text-yellow-400 font-semibold">Higher</div>
                       </div>
                     </div>
                   </motion.button>
