@@ -626,7 +626,7 @@ function NewsPanel() {
   };
 
   return (
-    <div className="w-80 flex-shrink-0 bg-[#0A0A0A] border-l border-[#1A1A1A] flex flex-col h-full overflow-hidden">
+    <div className="w-80 flex-shrink-0 bg-[#0A0A0A] border-l border-[#1A1A1A] flex flex-col overflow-hidden" style={{height: "calc(100vh - 56px)", position: "sticky", top: "56px"}}>
       {/* Header */}
       <div className="px-4 py-3 border-b border-[#1A1A1A] flex items-center justify-between flex-shrink-0">
         <div className="flex items-center gap-2">
