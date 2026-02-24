@@ -246,7 +246,7 @@ export default function AnalyticsDashboard() {
       </div>
 
       {/* MAIN */}
-      <div className="flex-1 overflow-auto flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* HEADER */}
         <header className="h-14 border-b border-[#1A1A1A] bg-[#0A0A0A] flex items-center px-6 gap-4 flex-shrink-0 sticky top-0 z-40">
           {/* Breadcrumb */}
@@ -295,7 +295,8 @@ export default function AnalyticsDashboard() {
         </header>
 
         {/* PAGE CONTENT */}
-        <div className="flex-1 p-6">
+        <div className="flex-1 flex overflow-hidden">
+          <div className="flex-1 p-6 overflow-auto">
           {currentPage === 'dashboard' && (
             <div className="space-y-5 max-w-6xl">
 
@@ -575,7 +576,111 @@ export default function AnalyticsDashboard() {
           {currentPage === 'market' && <MarketAnalysisPage />}
           {currentPage === 'history' && <HistoryPage />}
           {currentPage === 'settings' && <SettingsPage userData={userData} />}
+          </div>
+          <NewsPanel />
         </div>
+      </div>
+    </div>
+  );
+}
+
+function NewsPanel() {
+  const [news, setNews] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await fetch('https://tradeflow-ai-backend-production.up.railway.app/news', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        setNews(data.news || []);
+      } catch (e) {
+        console.error('News fetch error:', e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchNews();
+    const interval = setInterval(fetchNews, 60000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const getTimeAgo = (dateStr: string) => {
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const mins = Math.floor(diff / 60000);
+    const hours = Math.floor(mins / 60);
+    if (hours > 0) return `${hours}h ago`;
+    return `${mins}m ago`;
+  };
+
+  const getVoteSentiment = (votes: any) => {
+    if (!votes) return null;
+    const positive = (votes.positive || 0) + (votes.liked || 0);
+    const negative = (votes.negative || 0) + (votes.disliked || 0);
+    if (positive > negative && positive > 2) return 'bullish';
+    if (negative > positive && negative > 2) return 'bearish';
+    return null;
+  };
+
+  return (
+    <div className="w-80 flex-shrink-0 bg-[#0A0A0A] border-l border-[#1A1A1A] flex flex-col h-full overflow-hidden">
+      {/* Header */}
+      <div className="px-4 py-3 border-b border-[#1A1A1A] flex items-center justify-between flex-shrink-0">
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+          <span className="text-slate-200 text-sm font-semibold">Crypto News</span>
+        </div>
+        <span className="text-slate-600 text-xs">Live Feed</span>
+      </div>
+
+      {/* News list */}
+      <div className="flex-1 overflow-y-auto">
+        {loading ? (
+          <div className="flex items-center justify-center h-32">
+            <div className="w-5 h-5 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : news.length === 0 ? (
+          <div className="text-center text-slate-600 text-sm p-8">No news available</div>
+        ) : (
+          <div className="divide-y divide-[#111]">
+            {news.map((item, i) => {
+              const sentiment = getVoteSentiment(item.votes);
+              return (
+                <a key={i} href={item.url} target="_blank" rel="noopener noreferrer"
+                  className="block px-4 py-3 hover:bg-[#111] transition-colors group">
+                  {/* Currencies + time */}
+                  <div className="flex items-center justify-between mb-1.5">
+                    <div className="flex items-center gap-1.5">
+                      {item.currencies?.slice(0, 3).map((c: string, j: number) => (
+                        <span key={j} className="text-xs bg-orange-500/10 text-orange-400 border border-orange-500/20 px-1.5 py-0.5 rounded font-mono">{c}</span>
+                      ))}
+                      {item.currencies?.length === 0 && (
+                        <span className="text-xs bg-[#1A1A1A] text-slate-500 px-1.5 py-0.5 rounded">CRYPTO</span>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {sentiment === 'bullish' && <span className="text-xs text-green-400 font-medium">▲ Bull</span>}
+                      {sentiment === 'bearish' && <span className="text-xs text-red-400 font-medium">▼ Bear</span>}
+                      <span className="text-xs text-slate-600">{getTimeAgo(item.published_at)}</span>
+                    </div>
+                  </div>
+                  {/* Title */}
+                  <p className="text-slate-300 text-xs leading-relaxed group-hover:text-white transition-colors line-clamp-2">{item.title}</p>
+                  {/* Source */}
+                  <div className="mt-1.5 text-slate-600 text-xs">{item.source}</div>
+                </a>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Footer */}
+      <div className="px-4 py-2 border-t border-[#1A1A1A] flex-shrink-0">
+        <p className="text-slate-700 text-xs text-center">Powered by CryptoPanic</p>
       </div>
     </div>
   );
