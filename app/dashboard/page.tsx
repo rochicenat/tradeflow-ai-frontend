@@ -532,6 +532,38 @@ export default function AnalyticsDashboard() {
                       <p className="text-slate-500 text-sm">Upload a chart to get AI-powered analysis</p>
                     </div>
                   )}
+                  {/* Daily Tips */}
+                  {!analysisType && (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="md:col-span-3">
+                        <div className="text-xs text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-2">
+                          <Zap className="w-3 h-3 text-orange-400" />
+                          <span>Daily Trading Tips</span>
+                        </div>
+                      </div>
+                      {[
+                        { icon: "📈", title: "Trend is Your Friend", tip: "Always trade in the direction of the major trend. Use Daily/4H charts to confirm direction before entering on lower timeframes.", tag: "Swing" },
+                        { icon: "⚡", title: "Scalp with Momentum", tip: "Only take scalp trades when volume is above average and RSI shows momentum. Avoid trading in the first 15 minutes.", tag: "Scalp" },
+                        { icon: "🛡️", title: "Risk Management", tip: "Never risk more than 1-2% of your account on a single trade. Your stop loss should be set before your entry.", tag: "General" },
+                        { icon: "🎯", title: "Key Levels Matter", tip: "Support and resistance zones are where the best risk/reward setups appear. Wait for price to react at these levels.", tag: "Swing" },
+                        { icon: "⏰", title: "Best Scalp Hours", tip: "The highest volume and best scalp opportunities occur during London (08:00-12:00 UTC) and NY (13:00-17:00 UTC) sessions.", tag: "Scalp" },
+                        { icon: "🧠", title: "Patience Pays", tip: "Not every candle needs a trade. The best traders wait for A+ setups and skip low-quality signals. Quality over quantity.", tag: "General" },
+                      ].map((item, i) => (
+                        <div key={i} className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-orange-500/20 rounded-xl p-5 transition-all">
+                          <div className="flex items-center justify-between mb-3">
+                            <span className="text-2xl">{item.icon}</span>
+                            <span className={`text-xs px-2 py-0.5 rounded-full font-medium border ${
+                              item.tag === 'Swing' ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' :
+                              item.tag === 'Scalp' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
+                              'bg-slate-500/10 text-slate-400 border-slate-500/20'
+                            }`}>{item.tag}</span>
+                          </div>
+                          <h4 className="text-white font-semibold text-sm mb-2">{item.title}</h4>
+                          <p className="text-slate-500 text-xs leading-relaxed">{item.tip}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                   {userData?.plan === 'free' && !analysisType && (
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       {[
