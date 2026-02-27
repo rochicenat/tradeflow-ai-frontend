@@ -184,7 +184,6 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
                 <p className="text-xs text-slate-500 mt-1">Email cannot be changed</p>
               </div>
               
-
               <div className="flex items-center gap-3">
                 <button
                   onClick={handleSaveProfile}
