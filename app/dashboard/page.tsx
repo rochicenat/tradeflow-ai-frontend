@@ -84,6 +84,12 @@ export default function AnalyticsDashboard() {
   const [analysisType, setAnalysisType] = useState<'swing' | 'scalp' | 'swing_premium' | 'scalp_premium' | null>(null);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [showMobileNews, setShowMobileNews] = useState(false);
+  const [showTradingParams, setShowTradingParams] = useState(false);
+  const [pendingPremiumType, setPendingPremiumType] = useState<string | null>(null);
+  const [accountSize, setAccountSize] = useState("");
+  const [riskPercent, setRiskPercent] = useState("2");
+  const [leverage, setLeverage] = useState("1");
+  const [orderType, setOrderType] = useState("market");
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -118,6 +124,10 @@ export default function AnalyticsDashboard() {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('analysis_type', analysisType);
+    if (accountSize) formData.append('account_size', accountSize);
+    if (riskPercent) formData.append('risk_percent', riskPercent);
+    if (leverage) formData.append('leverage', leverage);
+    formData.append('order_type', orderType);
     try {
       const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/analyze-image', {
         method: 'POST', headers: { 'Authorization': `Bearer ${token}` }, body: formData
@@ -209,6 +219,65 @@ export default function AnalyticsDashboard() {
   return (
     <div className="min-h-screen bg-[#050505] flex flex-col font-sans">
       <AnimatePresence>{showUpgradeModal && <UpgradeModal onClose={() => setShowUpgradeModal(false)} />}</AnimatePresence>
+      {showTradingParams && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-[#111] border border-[#252525] rounded-2xl p-6 w-full max-w-md">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-white font-bold text-lg">Trading Parameters</h2>
+                <p className="text-slate-400 text-xs mt-1">{pendingPremiumType === 'swing_premium' ? 'Swing Premium' : 'Scalp Premium'} Analysis</p>
+              </div>
+              <button onClick={() => setShowTradingParams(false)} className="text-slate-400 hover:text-white transition text-xl">✕</button>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Account Size ($)</label>
+                <input type="number" value={accountSize} onChange={e => setAccountSize(e.target.value)}
+                  placeholder="e.g. 10000" className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg px-4 py-3 text-white focus:border-orange-500 focus:outline-none transition" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Risk Per Trade (%)</label>
+                <div className="grid grid-cols-4 gap-2">
+                  {['1', '2', '3', '5'].map(r => (
+                    <button key={r} onClick={() => setRiskPercent(r)}
+                      className={`py-2 rounded-lg text-sm font-semibold transition border ${riskPercent === r ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
+                      {r}%
+                    </button>
+                  ))}
+                </div>
+                <input type="number" value={riskPercent} onChange={e => setRiskPercent(e.target.value)}
+                  placeholder="Custom %" className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg px-4 py-2 text-white focus:border-orange-500 focus:outline-none transition mt-2 text-sm" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Leverage</label>
+                <div className="grid grid-cols-5 gap-2">
+                  {['1', '2', '5', '10', '20'].map(l => (
+                    <button key={l} onClick={() => setLeverage(l)}
+                      className={`py-2 rounded-lg text-sm font-semibold transition border ${leverage === l ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
+                      {l}x
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Order Type</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[{v:'market',l:'Market Order'},{v:'limit',l:'Limit Order'}].map(o => (
+                    <button key={o.v} onClick={() => setOrderType(o.v)}
+                      className={`py-2 rounded-lg text-sm font-semibold transition border ${orderType === o.v ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
+                      {o.l}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <button onClick={() => { setAnalysisType(pendingPremiumType as any); setShowTradingParams(false); }}
+              className="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold transition">
+              Start Analysis →
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Mobile News Modal */}
       <AnimatePresence>
@@ -420,7 +489,7 @@ export default function AnalyticsDashboard() {
                       <p className="text-xs text-slate-500 uppercase tracking-wider font-medium mt-2">Premium Analysis</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
-                        onClick={() => userData?.plan === 'premium' ? setAnalysisType('swing_premium' as any) : router.push('/pricing')}
+                        onClick={() => userData?.plan === "premium" ? (setPendingPremiumType("swing_premium"), setShowTradingParams(true)) : router.push("/pricing")}
                         className="bg-[#0D0D0D] border border-purple-500/20 hover:border-purple-500/40 rounded-xl p-12 text-left transition-all group min-h-[220px] relative overflow-hidden">
                         {userData?.plan === 'free' && <div className="absolute top-3 right-3 bg-purple-500/20 border border-purple-500/30 rounded-full px-2 py-0.5 text-xs text-purple-400 font-medium">🔒 Premium</div>}
                         <div className="flex items-center justify-between mb-4">
@@ -442,7 +511,7 @@ export default function AnalyticsDashboard() {
                         </div>
                       </motion.button>
                       <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
-                        onClick={() => userData?.plan === 'premium' ? setAnalysisType('scalp_premium' as any) : router.push('/pricing')}
+                        onClick={() => userData?.plan === "premium" ? (setPendingPremiumType("scalp_premium"), setShowTradingParams(true)) : router.push("/pricing")}
                         className="bg-[#0D0D0D] border border-purple-500/20 hover:border-purple-500/40 rounded-xl p-12 text-left transition-all group min-h-[220px] relative overflow-hidden">
                         {userData?.plan === 'free' && <div className="absolute top-3 right-3 bg-purple-500/20 border border-purple-500/30 rounded-full px-2 py-0.5 text-xs text-purple-400 font-medium">🔒 Premium</div>}
                         <div className="flex items-center justify-between mb-4">
