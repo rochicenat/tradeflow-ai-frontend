@@ -334,12 +334,12 @@ export default function AnalyticsDashboard() {
                       <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
                         <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Used</div>
                         <div className="text-2xl sm:text-3xl font-black text-white">{userData?.analyses_used || 0}</div>
-                        <div className="text-xs text-slate-500 mt-1">of {userData?.analyses_limit}</div>
+                        <div className="text-xs text-slate-500 mt-1">of {userData?.plan === 'premium' ? '∞' : userData?.analyses_limit}</div>
                       </div>
                       <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
                         <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Left</div>
-                        <div className={`text-2xl sm:text-3xl font-black ${((userData?.analyses_limit || 0) - (userData?.analyses_used || 0)) <= 5 ? 'text-red-400' : 'text-green-400'}`}>
-                          {(userData?.analyses_limit || 0) - (userData?.analyses_used || 0)}
+                        <div className={`text-2xl sm:text-3xl font-black ${userData?.plan === 'premium' ? 'text-green-400' : ((userData?.analyses_limit || 0) - (userData?.analyses_used || 0)) <= 5 ? 'text-red-400' : 'text-green-400'}`}>
+                          {userData?.plan === 'premium' ? '∞' : (userData?.analyses_limit || 0) - (userData?.analyses_used || 0)}
                         </div>
                         <div className="text-xs text-slate-500 mt-1">remaining</div>
                       </div>
@@ -347,6 +347,7 @@ export default function AnalyticsDashboard() {
                         <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Plan</div>
                         <div className={`text-2xl sm:text-3xl font-black uppercase ${userData?.plan === 'premium' ? 'text-purple-400' : 'text-orange-400'}`}>{userData?.plan}</div>
                       </div>
+                      {userData?.plan !== 'premium' && (
                       <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
                         <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Usage</div>
                         <div className="text-2xl sm:text-3xl font-black text-white">{usagePercent}%</div>
@@ -354,6 +355,7 @@ export default function AnalyticsDashboard() {
                           <div className={`h-full rounded-full ${usagePercent > 80 ? 'bg-red-500' : 'bg-orange-500'}`} style={{ width: `${usagePercent}%` }} />
                         </div>
                       </div>
+                      )}
                     </div>
                   )}
                   {userData?.plan === 'free' && (
