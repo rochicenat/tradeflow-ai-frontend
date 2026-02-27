@@ -1,16 +1,20 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Activity, Mail, Lock, ArrowRight } from 'lucide-react';
 
-export default function LoginPage() {
+function LoginPageContent() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [verified, setVerified] = useState(false);
+  const searchParams = useSearchParams();
+  useEffect(() => { if (searchParams.get('verified') === 'true') setVerified(true); }, [searchParams]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,6 +48,7 @@ export default function LoginPage() {
           <h1 className="text-4xl font-bold text-white mb-2">Welcome Back</h1>
           <p className="text-slate-400 mb-8">Sign in to access your dashboard</p>
           {error && <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm">{error}</div>}
+          {verified && <div className="mb-6 p-4 bg-green-500/10 border border-green-500/50 rounded-lg text-green-400 text-sm">✓ Email verified! You can now log in.</div>}
 
           {/* Google Login */}
           <button
@@ -110,4 +115,8 @@ export default function LoginPage() {
       </div>
     </div>
   );
+}
+
+export default function LoginPage() {
+  return <Suspense><LoginPageContent /></Suspense>;
 }
