@@ -39,13 +39,9 @@ function SignupContent() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || 'Signup failed');
-      localStorage.setItem('token', data.access_token);
-      toast.success('Account created successfully!');
-      setTimeout(() => {
-        if (plan && PLAN_URLS[plan]) { window.location.href = PLAN_URLS[plan]; }
-        else { router.push('/dashboard'); }
-      }, 800);
-    } catch (err: any) {
+      // email verification required
+      toast.success('Account created! Please check your email to verify.');
+      router.push("/login");
       toast.error(err.message || 'Signup failed');
     } finally {
       setLoading(false);
