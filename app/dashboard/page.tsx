@@ -128,6 +128,8 @@ export default function AnalyticsDashboard() {
     if (riskPercent) formData.append('risk_percent', riskPercent);
     if (leverage) formData.append('leverage', leverage);
     formData.append('order_type', orderType);
+    const lang = localStorage.getItem('analysisLanguage') || 'en';
+    formData.append('language', lang);
     try {
       const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/analyze-image', {
         method: 'POST', headers: { 'Authorization': `Bearer ${token}` }, body: formData
