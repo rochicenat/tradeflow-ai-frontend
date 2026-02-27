@@ -363,7 +363,7 @@ export default function AnalyticsDashboard() {
                   )}
                   {!analysisType && (
                     <div className="space-y-3">
-                      <p className="text-xs text-slate-500 uppercase tracking-wider font-medium">Free Analysis</p>
+                      <p className="text-xs text-slate-500 uppercase tracking-wider font-medium">Pro Analysis</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} onClick={() => setAnalysisType('swing')}
                         className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-orange-500/30 rounded-xl p-12 text-left transition-all group min-h-[220px]">
