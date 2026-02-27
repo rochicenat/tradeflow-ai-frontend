@@ -427,6 +427,23 @@ export default function AnalyticsDashboard() {
                       )}
                     </div>
                   )}
+                  {userData?.plan === 'free' && !analysisType && (
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      {[
+                        { num: '01', title: 'Choose Type', desc: 'Select Swing or Scalp' },
+                        { num: '02', title: 'Upload Chart', desc: 'Drop any trading chart screenshot' },
+                        { num: '03', title: 'Get Analysis', desc: 'Receive instant AI-powered insights' },
+                      ].map((step, i) => (
+                        <div key={i} className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4 flex items-center gap-4">
+                          <div className="text-2xl font-black text-orange-500/30">{step.num}</div>
+                          <div>
+                            <div className="text-white text-sm font-semibold">{step.title}</div>
+                            <div className="text-slate-500 text-xs mt-0.5">{step.desc}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                   {userData?.plan === 'free' && (
                     <div className="bg-gradient-to-r from-orange-500/10 to-orange-600/5 border border-orange-500/20 rounded-xl p-4 flex items-center justify-between gap-3">
                       <div className="flex items-center gap-3 min-w-0">
@@ -738,23 +755,7 @@ export default function AnalyticsDashboard() {
                       ))}
                     </div>
                   )}
-                  {userData?.plan === 'free' && !analysisType && (
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                      {[
-                        { num: '01', title: 'Choose Type', desc: 'Select Swing or Scalp' },
-                        { num: '02', title: 'Upload Chart', desc: 'Drop any trading chart screenshot' },
-                        { num: '03', title: 'Get Analysis', desc: 'Receive instant AI-powered insights' },
-                      ].map((step, i) => (
-                        <div key={i} className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4 flex items-center gap-4">
-                          <div className="text-2xl font-black text-orange-500/30">{step.num}</div>
-                          <div>
-                            <div className="text-white text-sm font-semibold">{step.title}</div>
-                            <div className="text-slate-500 text-xs mt-0.5">{step.desc}</div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+
                 </div>
               )}
               {currentPage === 'market' && <MarketAnalysisPage />}
