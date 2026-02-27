@@ -16,7 +16,7 @@ import MarketAnalysisPage from '../components/MarketAnalysisPage';
 
 interface AnalysisResult { analysis: string; trend: string; confidence: string; }
 interface UserData { email: string; name: string; plan: string; analyses_used: number; analyses_limit: number; subscription_status: string; }
-interface ParsedAnalysis { signal: string; confidence: string; entry: string; stopLoss: string; takeProfit: string; keyLevels: string[]; signalReason: string[]; riskAssessment: string[]; }
+interface ParsedAnalysis { signal: string; confidence: string; entry: string; stopLoss: string; takeProfit: string; keyLevels: string[]; signalReason: string[]; riskAssessment: string[]; breakoutRetest: string[]; indicators: string[]; fibonacci: string[]; psychologyPlan: string[]; }
 
 function UpgradeModal({ onClose }: { onClose: () => void }) {
   return (
@@ -148,6 +148,7 @@ export default function AnalyticsDashboard() {
     if (signal === 'SIDEWAYS') signal = 'NEUTRAL';
     let entry = '', stopLoss = '', takeProfit = '';
     let keyLevels: string[] = [], signalReason: string[] = [], riskAssessment: string[] = [];
+    let breakoutRetest: string[] = [], indicators: string[] = [], fibonacci: string[] = [], psychologyPlan: string[] = [];
     let currentSection = '';
     for (const line of lines) {
       if (line.match(/^(BUY|SELL|HOLD|UPTREND|DOWNTREND|NEUTRAL)$/i)) {
@@ -158,16 +159,24 @@ export default function AnalyticsDashboard() {
       else if (line.includes('**Key Levels:**')) { currentSection = 'levels'; }
       else if (line.includes('**Pattern Analysis:**') || line.includes('**Signal Reason:**')) { currentSection = 'reason'; }
       else if (line.includes('**Risk')) { currentSection = 'risk'; }
+      else if (line.includes('**Breakout')) { currentSection = 'breakout'; }
+      else if (line.includes('**Indicators')) { currentSection = 'indicators'; }
+      else if (line.includes('**Fibonacci')) { currentSection = 'fibonacci'; }
+      else if (line.includes('**Psychology')) { currentSection = 'psychology'; }
       else if (line.startsWith('*') || line.startsWith('•')) {
         const clean = line.replace(/^[*•]\s*/, '').replace(/\*\*/g, '').trim();
         if (clean) {
           if (currentSection === 'levels') keyLevels.push(clean);
           else if (currentSection === 'reason') signalReason.push(clean);
           else if (currentSection === 'risk') riskAssessment.push(clean);
+          else if (currentSection === 'breakout') breakoutRetest.push(clean);
+          else if (currentSection === 'indicators') indicators.push(clean);
+          else if (currentSection === 'fibonacci') fibonacci.push(clean);
+          else if (currentSection === 'psychology') psychologyPlan.push(clean);
         }
       }
     }
-    return { signal, confidence, entry, stopLoss, takeProfit, keyLevels, signalReason, riskAssessment };
+    return { signal, confidence, entry, stopLoss, takeProfit, keyLevels, signalReason, riskAssessment, breakoutRetest, indicators, fibonacci, psychologyPlan };
   };
 
   const getSignalIcon = (signal: string) => {
@@ -568,6 +577,50 @@ export default function AnalyticsDashboard() {
                               </div>
                             )}
                           </div>
+                          {(parsed.breakoutRetest?.length > 0 || parsed.indicators?.length > 0 || parsed.fibonacci?.length > 0 || parsed.psychologyPlan?.length > 0) && (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                              {parsed.breakoutRetest?.length > 0 && (
+                                <div className="bg-[#0D0D0D] border border-purple-500/20 rounded-xl p-6">
+                                  <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
+                                    <TrendingUp className="w-4 h-4 text-purple-400" />
+                                    <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Breakout & Retest</span>
+                                    <span className="ml-auto text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded-full">Premium</span>
+                                  </div>
+                                  <div className="space-y-1.5">{parsed.breakoutRetest.map((item, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-purple-400 mt-0.5">▸</span>{item}</div>)}</div>
+                                </div>
+                              )}
+                              {parsed.indicators?.length > 0 && (
+                                <div className="bg-[#0D0D0D] border border-blue-500/20 rounded-xl p-6">
+                                  <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
+                                    <Activity className="w-4 h-4 text-blue-400" />
+                                    <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Indicators (RSI & MA)</span>
+                                    <span className="ml-auto text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded-full">Premium</span>
+                                  </div>
+                                  <div className="space-y-1.5">{parsed.indicators.map((item, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-blue-400 mt-0.5">▸</span>{item}</div>)}</div>
+                                </div>
+                              )}
+                              {parsed.fibonacci?.length > 0 && (
+                                <div className="bg-[#0D0D0D] border border-yellow-500/20 rounded-xl p-6">
+                                  <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
+                                    <BarChart3 className="w-4 h-4 text-yellow-400" />
+                                    <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Fibonacci</span>
+                                    <span className="ml-auto text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded-full">Premium</span>
+                                  </div>
+                                  <div className="space-y-1.5">{parsed.fibonacci.map((item, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-yellow-400 mt-0.5">▸</span>{item}</div>)}</div>
+                                </div>
+                              )}
+                              {parsed.psychologyPlan?.length > 0 && (
+                                <div className="bg-[#0D0D0D] border border-green-500/20 rounded-xl p-6">
+                                  <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
+                                    <Shield className="w-4 h-4 text-green-400" />
+                                    <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Psychology & Trade Plan</span>
+                                    <span className="ml-auto text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded-full">Premium</span>
+                                  </div>
+                                  <div className="space-y-1.5">{parsed.psychologyPlan.map((item, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-green-400 mt-0.5">▸</span>{item}</div>)}</div>
+                                </div>
+                              )}
+                            </div>
+                          )}
                           <div className="bg-yellow-500/5 border border-yellow-500/20 rounded-xl p-4 flex items-start gap-3">
                             <AlertTriangle className="w-4 h-4 text-yellow-500 flex-shrink-0 mt-0.5" />
                             <p className="text-slate-400 text-xs">Educational analysis only. Not financial advice. Always do your own research before trading.</p>
