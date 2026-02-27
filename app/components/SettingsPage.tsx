@@ -283,7 +283,7 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
           <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-6">
             <h3 className="text-xl font-semibold text-red-400 mb-2">Delete Account</h3>
             <p className="text-slate-400 text-sm mb-4">All your data will be permanently deleted.</p>
-            <button className="bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 text-red-400 px-6 py-2 rounded-lg font-semibold transition">
+            <button onClick={handleDeleteAccount} className="bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 text-red-400 px-6 py-2 rounded-lg font-semibold transition">
               Delete Account
             </button>
           </div>
