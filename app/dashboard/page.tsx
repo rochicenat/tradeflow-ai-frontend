@@ -81,7 +81,7 @@ export default function AnalyticsDashboard() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('dashboard');
-  const [analysisType, setAnalysisType] = useState<'swing' | 'scalp' | null>(null);
+  const [analysisType, setAnalysisType] = useState<'swing' | 'scalp' | 'swing_premium' | 'scalp_premium' | null>(null);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [showMobileNews, setShowMobileNews] = useState(false);
 
@@ -362,6 +362,8 @@ export default function AnalyticsDashboard() {
                     </div>
                   )}
                   {!analysisType && (
+                    <div className="space-y-3">
+                      <p className="text-xs text-slate-500 uppercase tracking-wider font-medium">Free Analysis</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} onClick={() => setAnalysisType('swing')}
                         className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-orange-500/30 rounded-xl p-12 text-left transition-all group min-h-[220px]">
@@ -403,6 +405,54 @@ export default function AnalyticsDashboard() {
                           <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Risk</div><div className="text-xs sm:text-sm text-yellow-400 font-semibold">Higher</div></div>
                         </div>
                       </motion.button>
+                    </div>
+                      <p className="text-xs text-slate-500 uppercase tracking-wider font-medium mt-2">Premium Analysis</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
+                        onClick={() => userData?.plan !== 'free' ? setAnalysisType('swing_premium' as any) : window.location.href='/pricing'}
+                        className="bg-[#0D0D0D] border border-purple-500/20 hover:border-purple-500/40 rounded-xl p-12 text-left transition-all group min-h-[220px] relative overflow-hidden">
+                        {userData?.plan === 'free' && <div className="absolute top-3 right-3 bg-purple-500/20 border border-purple-500/30 rounded-full px-2 py-0.5 text-xs text-purple-400 font-medium">🔒 Premium</div>}
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center gap-3">
+                            <div className="p-2 rounded-lg bg-purple-500/10 border border-purple-500/20">
+                              <TrendingUp className="w-5 h-5 text-purple-400" />
+                            </div>
+                            <div>
+                              <h3 className="text-white font-bold">Swing Premium</h3>
+                              <p className="text-xs text-slate-500">RSI, MA, Fibonacci & more</p>
+                            </div>
+                          </div>
+                          <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-purple-400 transition" />
+                        </div>
+                        <div className="grid grid-cols-3 gap-2 text-center">
+                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">RSI</div><div className="text-xs sm:text-sm text-purple-400 font-semibold">✓</div></div>
+                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Fibonacci</div><div className="text-xs sm:text-sm text-purple-400 font-semibold">✓</div></div>
+                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Trade Plan</div><div className="text-xs sm:text-sm text-purple-400 font-semibold">✓</div></div>
+                        </div>
+                      </motion.button>
+                      <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
+                        onClick={() => userData?.plan !== 'free' ? setAnalysisType('scalp_premium' as any) : window.location.href='/pricing'}
+                        className="bg-[#0D0D0D] border border-purple-500/20 hover:border-purple-500/40 rounded-xl p-12 text-left transition-all group min-h-[220px] relative overflow-hidden">
+                        {userData?.plan === 'free' && <div className="absolute top-3 right-3 bg-purple-500/20 border border-purple-500/30 rounded-full px-2 py-0.5 text-xs text-purple-400 font-medium">🔒 Premium</div>}
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center gap-3">
+                            <div className="p-2 rounded-lg bg-purple-500/10 border border-purple-500/20">
+                              <Timer className="w-5 h-5 text-purple-400" />
+                            </div>
+                            <div>
+                              <h3 className="text-white font-bold">Scalp Premium</h3>
+                              <p className="text-xs text-slate-500">RSI, MA, Fibonacci & more</p>
+                            </div>
+                          </div>
+                          <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-purple-400 transition" />
+                        </div>
+                        <div className="grid grid-cols-3 gap-2 text-center">
+                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">RSI</div><div className="text-xs sm:text-sm text-purple-400 font-semibold">✓</div></div>
+                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Fibonacci</div><div className="text-xs sm:text-sm text-purple-400 font-semibold">✓</div></div>
+                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Trade Plan</div><div className="text-xs sm:text-sm text-purple-400 font-semibold">✓</div></div>
+                        </div>
+                      </motion.button>
+                    </div>
                     </div>
                   )}
                   {analysisType && (
