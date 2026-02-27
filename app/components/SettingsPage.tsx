@@ -81,8 +81,9 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
       return;
     }
 
-    if (newPassword.length < 6) {
-      alert('New password must be at least 6 characters');
+    const passwordValid = newPassword.length >= 8 && /[A-Z]/.test(newPassword) && /[0-9]/.test(newPassword);
+    if (!passwordValid) {
+      alert('Password must be at least 8 characters, include 1 uppercase letter and 1 number');
       return;
     }
 
@@ -261,7 +262,10 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
                   className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg px-4 py-3 text-white focus:border-orange-500 focus:outline-none transition"
                   placeholder="••••••••"
                 />
-                <p className="text-xs text-slate-500 mt-1">Minimum 6 characters</p>
+                <p className="text-xs text-slate-500 mt-1">Min 8 chars, 1 uppercase, 1 number</p>
+                {newPassword.length > 0 && !(newPassword.length >= 8 && /[A-Z]/.test(newPassword) && /[0-9]/.test(newPassword)) && (
+                  <p className="text-red-500 text-xs mt-1">Min 8 chars, 1 uppercase, 1 number</p>
+                )}
               </div>
               
               <div className="flex items-center gap-3">
