@@ -478,16 +478,16 @@ export default function AnalyticsDashboard() {
                       <div {...getRootProps()} className={`relative overflow-hidden rounded-xl border-2 border-dashed transition-all cursor-pointer
                         ${isDragActive ? 'border-orange-500 bg-orange-500/5' : 'border-[#1A1A1A] bg-[#0D0D0D] hover:border-[#2A2A2A]'}`}>
                         <input {...getInputProps()} />
-                        <div className="p-16 sm:p-24 text-center">
+                        <div className={imagePreview ? "p-4 text-center" : "p-16 sm:p-24 text-center"}>
                           {imagePreview ? (
-                            <img src={imagePreview} alt="Preview" className="max-w-full max-h-96 w-full object-contain rounded-lg mb-4 mx-auto border border-[#1A1A1A]" />
+                            <img src={imagePreview} alt="Preview" className="max-w-full w-full object-contain rounded-lg mx-auto" />
                           ) : (
                             <div className="w-12 h-12 bg-[#141414] border border-[#1A1A1A] rounded-xl flex items-center justify-center mx-auto mb-4">
                               <Upload className="w-5 h-5 text-slate-500" />
                             </div>
                           )}
-                          <p className="text-slate-300 font-semibold mb-1">{uploading ? 'Analyzing...' : 'Upload Chart'}</p>
-                          <p className="text-slate-600 text-sm">{uploading ? 'AI is processing...' : 'Drop your chart here or tap to browse'}</p>
+                          {!imagePreview && <p className="text-slate-300 font-semibold mb-1">Upload Chart</p>}
+                          {!imagePreview && <p className="text-slate-600 text-sm">Drop your chart here or tap to browse</p>}
                         </div>
                         {uploading && (
                           <div className="absolute inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center">
