@@ -480,7 +480,7 @@ export default function AnalyticsDashboard() {
                         <input {...getInputProps()} />
                         <div className="p-16 sm:p-24 text-center">
                           {imagePreview ? (
-                            <img src={imagePreview} alt="Preview" className="max-w-full max-h-40 rounded-lg mb-4 mx-auto border border-[#1A1A1A]" />
+                            <img src={imagePreview} alt="Preview" className="max-w-full max-h-96 w-full object-contain rounded-lg mb-4 mx-auto border border-[#1A1A1A]" />
                           ) : (
                             <div className="w-12 h-12 bg-[#141414] border border-[#1A1A1A] rounded-xl flex items-center justify-center mx-auto mb-4">
                               <Upload className="w-5 h-5 text-slate-500" />
