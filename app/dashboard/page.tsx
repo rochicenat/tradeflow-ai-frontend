@@ -84,6 +84,7 @@ export default function AnalyticsDashboard() {
   const [analysisType, setAnalysisType] = useState<'swing' | 'scalp' | 'swing_premium' | 'scalp_premium' | null>(null);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [showMobileNews, setShowMobileNews] = useState(false);
+  const [lang, setLang] = useState<'en' | 'tr'>(() => (typeof window !== 'undefined' ? (localStorage.getItem('siteLang') as 'en' | 'tr') : null) || 'en');
   const [showTradingParams, setShowTradingParams] = useState(false);
   const [pendingPremiumType, setPendingPremiumType] = useState<string | null>(null);
   const [accountSize, setAccountSize] = useState("");
@@ -202,12 +203,12 @@ export default function AnalyticsDashboard() {
   const getConfidenceColor = (value: number) => value >= 70 ? 'bg-gradient-to-r from-green-500 to-emerald-600' : value >= 40 ? 'bg-gradient-to-r from-yellow-500 to-orange-500' : 'bg-gradient-to-r from-red-500 to-rose-600';
 
   const menuItems = [
-    { id: 'dashboard', name: 'Dashboard', icon: Home },
-    { id: 'swing', name: 'Swing Trading', icon: TrendingUp },
-    { id: 'scalp', name: 'Scalp Trading', icon: Timer },
-    { id: 'market', name: 'Market Analysis', icon: BarChart3 },
-    { id: 'history', name: 'History', icon: History },
-    { id: 'settings', name: 'Settings', icon: SettingsIcon },
+    { id: 'dashboard', name: t.dashboard, icon: Home },
+    { id: 'swing', name: t.swingTrading, icon: TrendingUp },
+    { id: 'scalp', name: t.scalpTrading, icon: Timer },
+    { id: 'market', name: t.marketAnalysis, icon: BarChart3 },
+    { id: 'history', name: t.history, icon: History },
+    { id: 'settings', name: t.settings, icon: SettingsIcon },
   ];
 
   const handleMenuClick = (id: string) => {
@@ -216,6 +217,23 @@ export default function AnalyticsDashboard() {
     else { setCurrentPage(id); }
   };
 
+  const t = lang === 'tr' ? {
+    dashboard: 'Panel', swingTrading: 'Swing İşlem', scalpTrading: 'Scalp İşlem',
+    marketAnalysis: 'Piyasa Analizi', history: 'Geçmiş', settings: 'Ayarlar',
+    uploadChart: 'Grafik Yükle', dropChart: 'Grafiği buraya bırak veya seç',
+    analyzing: 'Analiz ediliyor...', proAnalysis: 'Pro Analiz',
+    premiumAnalysis: 'Premium Analiz', startAnalysis: 'Analizi Başlat →',
+    used: 'Kullanılan', left: 'Kalan', plan: 'Plan', usage: 'Kullanım',
+    logout: 'Çıkış'
+  } : {
+    dashboard: 'Dashboard', swingTrading: 'Swing Trading', scalpTrading: 'Scalp Trading',
+    marketAnalysis: 'Market Analysis', history: 'History', settings: 'Settings',
+    uploadChart: 'Upload Chart', dropChart: 'Drop your chart here or tap to browse',
+    analyzing: 'Analyzing...', proAnalysis: 'Pro Analysis',
+    premiumAnalysis: 'Premium Analysis', startAnalysis: '{t.startAnalysis}',
+    used: 'Used', left: 'Left', plan: 'Plan', usage: 'Usage',
+    logout: 'Logout'
+  };
   const usagePercent = userData ? Math.round((userData.analyses_used / userData.analyses_limit) * 100) : 0;
 
   return (
@@ -275,7 +293,7 @@ export default function AnalyticsDashboard() {
             </div>
             <button onClick={() => { setAnalysisType(pendingPremiumType as any); setShowTradingParams(false); }}
               className="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold transition">
-              Start Analysis →
+              {t.startAnalysis}
             </button>
           </div>
         </div>
@@ -342,7 +360,11 @@ export default function AnalyticsDashboard() {
             </div>
             <span className="text-slate-300 text-sm font-medium hidden sm:block">{userData?.name || 'User'}</span>
           </div>
-          <button onClick={handleLogout} className="p-1.5 rounded-md hover:bg-red-500/10 text-slate-500 hover:text-red-400 transition" title="Logout">
+          <button onClick={() => { const newLang = lang === 'en' ? 'tr' : 'en'; setLang(newLang); localStorage.setItem('siteLang', newLang); }}
+            className="p-1.5 rounded-md bg-[#141414] border border-[#1A1A1A] text-slate-400 hover:text-white transition text-xs font-bold">
+            {lang === 'en' ? '🇹🇷' : '🇬🇧'}
+          </button>
+          <button onClick={handleLogout} className="p-1.5 rounded-md hover:bg-red-500/10 text-slate-500 hover:text-red-400 transition" title={t.logout}>
             <LogOut className="w-4 h-4" />
           </button>
         </div>
@@ -403,24 +425,24 @@ export default function AnalyticsDashboard() {
                   {userData?.plan !== 'free' && (
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
-                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Used</div>
+                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">{t.used}</div>
                         <div className="text-2xl sm:text-3xl font-black text-white">{userData?.analyses_used || 0}</div>
                         <div className="text-xs text-slate-500 mt-1">of {userData?.plan === 'premium' ? '∞' : userData?.analyses_limit}</div>
                       </div>
                       <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
-                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Left</div>
+                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">{t.left}</div>
                         <div className={`text-2xl sm:text-3xl font-black ${userData?.plan === 'premium' ? 'text-green-400' : ((userData?.analyses_limit || 0) - (userData?.analyses_used || 0)) <= 5 ? 'text-red-400' : 'text-green-400'}`}>
                           {userData?.plan === 'premium' ? '∞' : (userData?.analyses_limit || 0) - (userData?.analyses_used || 0)}
                         </div>
                         <div className="text-xs text-slate-500 mt-1">remaining</div>
                       </div>
                       <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
-                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Plan</div>
+                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">{t.plan}</div>
                         <div className={`text-2xl sm:text-3xl font-black uppercase ${userData?.plan === 'premium' ? 'text-purple-400' : 'text-orange-400'}`}>{userData?.plan}</div>
                       </div>
                       {userData?.plan !== 'premium' && (
                       <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
-                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Usage</div>
+                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">{t.usage}</div>
                         <div className="text-2xl sm:text-3xl font-black text-white">{usagePercent}%</div>
                         <div className="h-1.5 bg-[#1A1A1A] rounded-full mt-2 overflow-hidden">
                           <div className={`h-full rounded-full ${usagePercent > 80 ? 'bg-red-500' : 'bg-orange-500'}`} style={{ width: `${usagePercent}%` }} />
@@ -445,7 +467,7 @@ export default function AnalyticsDashboard() {
                   )}
                   {!analysisType && (
                     <div className="space-y-3">
-                      <p className="text-xs text-slate-500 uppercase tracking-wider font-medium">Pro Analysis</p>
+                      <p className="text-xs text-slate-500 uppercase tracking-wider font-medium">{t.proAnalysis}</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} onClick={() => setAnalysisType('swing')}
                         className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-orange-500/30 rounded-xl p-12 text-left transition-all group min-h-[220px]">
@@ -488,7 +510,7 @@ export default function AnalyticsDashboard() {
                         </div>
                       </motion.button>
                     </div>
-                      <p className="text-xs text-slate-500 uppercase tracking-wider font-medium mt-2">Premium Analysis</p>
+                      <p className="text-xs text-slate-500 uppercase tracking-wider font-medium mt-2">{t.premiumAnalysis}</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
                         onClick={() => userData?.plan === "premium" ? (setPendingPremiumType("swing_premium"), setShowTradingParams(true)) : router.push("/pricing")}
@@ -559,8 +581,8 @@ export default function AnalyticsDashboard() {
                               <Upload className="w-5 h-5 text-slate-500" />
                             </div>
                           )}
-                          {!imagePreview && <p className="text-slate-300 font-semibold mb-1">Upload Chart</p>}
-                          {!imagePreview && <p className="text-slate-600 text-sm">Drop your chart here or tap to browse</p>}
+                          {!imagePreview && <p className="text-slate-300 font-semibold mb-1">{t.uploadChart}</p>}
+                          {!imagePreview && <p className="text-slate-600 text-sm">{t.dropChart}</p>}
                         </div>
                         {uploading && (
                           <div className="absolute inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center">

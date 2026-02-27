@@ -21,7 +21,6 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [saving, setSaving] = useState(false);
-  const [language, setLanguage] = useState(() => localStorage.getItem('analysisLanguage') || 'en');
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [passwordUpdating, setPasswordUpdating] = useState(false);
   const [passwordSuccess, setPasswordSuccess] = useState(false);
@@ -185,18 +184,7 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
                 <p className="text-xs text-slate-500 mt-1">Email cannot be changed</p>
               </div>
               
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Analysis Language</label>
-                <div className="grid grid-cols-2 gap-2">
-                  {[{v:'en',l:'🇬🇧 English'},{v:'tr',l:'🇹🇷 Türkçe'}].map(lang => (
-                    <button key={lang.v} onClick={() => { setLanguage(lang.v); localStorage.setItem('analysisLanguage', lang.v); }}
-                      className={`py-2 rounded-lg text-sm font-semibold transition border ${language === lang.v ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
-                      {lang.l}
-                    </button>
-                  ))}
-                </div>
-                <p className="text-xs text-slate-500 mt-1">Default language is always English on first login</p>
-              </div>
+
               <div className="flex items-center gap-3">
                 <button
                   onClick={handleSaveProfile}
