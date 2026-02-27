@@ -320,7 +320,7 @@ export default function AnalyticsDashboard() {
             <div className="flex-1 p-3 sm:p-6 overflow-auto pb-20 lg:pb-6">
               {currentPage === 'dashboard' && (
                 <div className="space-y-6 max-w-6xl">
-                  {userData?.plan === 'premium' && (
+                  {userData?.plan !== 'free' && (
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
                         <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Used</div>
