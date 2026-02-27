@@ -202,21 +202,6 @@ export default function AnalyticsDashboard() {
   const getConfidenceValue = (confidence: string) => confidence.toLowerCase() === 'high' ? 85 : confidence.toLowerCase() === 'medium' ? 65 : 35;
   const getConfidenceColor = (value: number) => value >= 70 ? 'bg-gradient-to-r from-green-500 to-emerald-600' : value >= 40 ? 'bg-gradient-to-r from-yellow-500 to-orange-500' : 'bg-gradient-to-r from-red-500 to-rose-600';
 
-  const menuItems = [
-    { id: 'dashboard', name: t.dashboard, icon: Home },
-    { id: 'swing', name: t.swingTrading, icon: TrendingUp },
-    { id: 'scalp', name: t.scalpTrading, icon: Timer },
-    { id: 'market', name: t.marketAnalysis, icon: BarChart3 },
-    { id: 'history', name: t.history, icon: History },
-    { id: 'settings', name: t.settings, icon: SettingsIcon },
-  ];
-
-  const handleMenuClick = (id: string) => {
-    if (id === 'swing') { setAnalysisType('swing'); setCurrentPage('dashboard'); setResult(null); }
-    else if (id === 'scalp') { setAnalysisType('scalp'); setCurrentPage('dashboard'); setResult(null); }
-    else { setCurrentPage(id); }
-  };
-
   const t = lang === 'tr' ? {
     dashboard: 'Panel', swingTrading: 'Swing İşlem', scalpTrading: 'Scalp İşlem',
     marketAnalysis: 'Piyasa Analizi', history: 'Geçmiş', settings: 'Ayarlar',
@@ -234,6 +219,15 @@ export default function AnalyticsDashboard() {
     used: 'Used', left: 'Left', plan: 'Plan', usage: 'Usage',
     logout: 'Logout'
   };
+  const menuItems = [
+    { id: 'dashboard', name: t.dashboard, icon: Home },
+    { id: 'swing', name: t.swingTrading, icon: TrendingUp },
+    { id: 'scalp', name: t.scalpTrading, icon: Timer },
+    { id: 'market', name: t.marketAnalysis, icon: BarChart3 },
+    { id: 'history', name: t.history, icon: History },
+    { id: 'settings', name: t.settings, icon: SettingsIcon },
+  ];
+
   const usagePercent = userData ? Math.round((userData.analyses_used / userData.analyses_limit) * 100) : 0;
 
   return (
