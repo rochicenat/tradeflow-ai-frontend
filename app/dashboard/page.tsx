@@ -297,7 +297,7 @@ export default function AnalyticsDashboard() {
               );
             })}
           </nav>
-          {sidebarOpen && userData?.plan !== 'free' && (
+          {sidebarOpen && userData?.plan === 'premium' && (
             <div className="px-3 py-3 border-t border-[#1A1A1A]">
               <div className="flex justify-between text-xs text-slate-500 mb-1.5">
                 <span>Usage</span>
@@ -320,7 +320,7 @@ export default function AnalyticsDashboard() {
             <div className="flex-1 p-3 sm:p-6 overflow-auto pb-20 lg:pb-6">
               {currentPage === 'dashboard' && (
                 <div className="space-y-6 max-w-6xl">
-                  {userData?.plan !== 'free' && (
+                  {userData?.plan === 'premium' && (
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
                         <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Used</div>
@@ -409,7 +409,7 @@ export default function AnalyticsDashboard() {
                       <p className="text-xs text-slate-500 uppercase tracking-wider font-medium mt-2">Premium Analysis</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
-                        onClick={() => userData?.plan !== 'free' ? setAnalysisType('swing_premium' as any) : window.location.href='/pricing'}
+                        onClick={() => userData?.plan === 'premium' ? setAnalysisType('swing_premium' as any) : router.push('/pricing')}
                         className="bg-[#0D0D0D] border border-purple-500/20 hover:border-purple-500/40 rounded-xl p-12 text-left transition-all group min-h-[220px] relative overflow-hidden">
                         {userData?.plan === 'free' && <div className="absolute top-3 right-3 bg-purple-500/20 border border-purple-500/30 rounded-full px-2 py-0.5 text-xs text-purple-400 font-medium">🔒 Premium</div>}
                         <div className="flex items-center justify-between mb-4">
@@ -431,7 +431,7 @@ export default function AnalyticsDashboard() {
                         </div>
                       </motion.button>
                       <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
-                        onClick={() => userData?.plan !== 'free' ? setAnalysisType('scalp_premium' as any) : window.location.href='/pricing'}
+                        onClick={() => userData?.plan === 'premium' ? setAnalysisType('scalp_premium' as any) : router.push('/pricing')}
                         className="bg-[#0D0D0D] border border-purple-500/20 hover:border-purple-500/40 rounded-xl p-12 text-left transition-all group min-h-[220px] relative overflow-hidden">
                         {userData?.plan === 'free' && <div className="absolute top-3 right-3 bg-purple-500/20 border border-purple-500/30 rounded-full px-2 py-0.5 text-xs text-purple-400 font-medium">🔒 Premium</div>}
                         <div className="flex items-center justify-between mb-4">
