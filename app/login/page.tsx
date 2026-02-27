@@ -77,7 +77,7 @@ export default function LoginPage() {
                 <input type="password" value={password} onChange={e => setPassword(e.target.value)} required
                   onKeyDown={(e) => e.key === "Enter" && handleLogin()}
                   placeholder="••••••••"
-                  className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg px-4 py-3 text-white focus:border-orange-500 focus:outline-none transition"
+                  className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg pl-12 pr-4 py-3 text-white focus:border-orange-500 focus:outline-none transition"
                 />
                 <div className="text-right mt-1">
                   <a href="/forgot-password" className="text-orange-500 hover:underline text-sm">Forgot Password?</a>
