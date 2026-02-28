@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Activity, ArrowRight } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/app/contexts/LanguageContext';
 
 function LanguageToggle() {
   const { lang, toggleLang } = useLanguage();

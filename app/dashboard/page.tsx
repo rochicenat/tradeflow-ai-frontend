@@ -13,7 +13,7 @@ import toast from 'react-hot-toast';
 import SettingsPage from '../components/SettingsPage';
 import HistoryPage from '../components/HistoryPage';
 import MarketAnalysisPage from '../components/MarketAnalysisPage';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/app/contexts/LanguageContext';
 
 interface AnalysisResult { analysis: string; trend: string; confidence: string; }
 interface UserData { email: string; name: string; plan: string; analyses_used: number; analyses_limit: number; subscription_status: string; }
