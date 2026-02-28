@@ -127,7 +127,7 @@ export default function AnalyticsDashboard() {
   useEffect(() => { fetchUserData(); }, []);
 
   const fetchUserData = async () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (!token) { router.push('/login'); return; }
     try {
       const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/me', { headers: { 'Authorization': `Bearer ${token}` } });
@@ -142,7 +142,7 @@ export default function AnalyticsDashboard() {
       setShowUpgradeModal(true); return;
     }
     const file = acceptedFiles[0];
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (!token) { toast.error(lang === 'tr' ? 'Lütfen giriş yapın' : 'Please login first'); router.push('/login'); return; }
     const reader = new FileReader();
     reader.onloadend = () => setImagePreview(reader.result as string);
@@ -872,7 +872,7 @@ function NewsPanel() {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
         const res = await fetch('https://tradeflow-ai-backend-production.up.railway.app/news', {
           headers: { 'Authorization': `Bearer ${token}` }
         });

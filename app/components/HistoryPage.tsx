@@ -29,7 +29,7 @@ export default function HistoryPage() {
   useEffect(() => { fetchHistory(); }, []);
 
   const fetchHistory = async () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (!token) return;
     try {
       const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/analysis-history', {
@@ -44,7 +44,7 @@ export default function HistoryPage() {
   };
 
   const deleteAnalysis = async (id: number) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (!token) return;
     setDeleting(id);
     try {

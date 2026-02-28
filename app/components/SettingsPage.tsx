@@ -29,7 +29,7 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
 
   const handleDeleteAccount = async () => {
     if (!window.confirm(lang === 'tr' ? 'Emin misiniz? Bu işlem geri alınamaz.' : 'Are you sure? This action cannot be undone.')) return;
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     try {
       const res = await fetch('https://tradeflow-ai-backend-production.up.railway.app/delete-account', {
         method: 'DELETE',
@@ -49,7 +49,7 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
   const handleSaveProfile = async () => {
     setSaving(true);
     setSaveSuccess(false);
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (!token) return;
     try {
       const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/update-profile', {
@@ -82,7 +82,7 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
     }
     setPasswordUpdating(true);
     setPasswordSuccess(false);
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (!token) return;
     try {
       const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/change-password', {

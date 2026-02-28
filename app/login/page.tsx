@@ -10,10 +10,8 @@ import { useLanguage } from '@/app/contexts/LanguageContext';
 function LanguageToggle() {
   const { lang, toggleLang } = useLanguage();
   return (
-    <button
-      onClick={toggleLang}
-      className="absolute top-6 right-6 flex items-center gap-1 bg-[#1A1A1A] border border-[#333] text-white text-sm px-3 py-1.5 rounded-lg hover:border-orange-500 transition"
-    >
+    <button onClick={toggleLang}
+      className="absolute top-6 right-6 flex items-center gap-1 bg-[#1A1A1A] border border-[#333] text-white text-sm px-3 py-1.5 rounded-lg hover:border-orange-500 transition">
       <span className={lang === 'en' ? 'text-orange-500 font-bold' : 'text-slate-400'}>EN</span>
       <span className="text-slate-600">/</span>
       <span className={lang === 'tr' ? 'text-orange-500 font-bold' : 'text-slate-400'}>TR</span>
@@ -26,11 +24,21 @@ function LoginPageContent() {
   const { t, lang } = useLanguage();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [verified, setVerified] = useState(false);
   const searchParams = useSearchParams();
-  useEffect(() => { if (searchParams.get('verified') === 'true') setVerified(true); }, [searchParams]);
+
+  useEffect(() => {
+    if (searchParams.get('verified') === 'true') setVerified(true);
+    // Kayıtlı email varsa doldur
+    const savedEmail = localStorage.getItem('rememberedEmail');
+    if (savedEmail) {
+      setEmail(savedEmail);
+      setRememberMe(true);
+    }
+  }, [searchParams]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,7 +52,16 @@ function LoginPageContent() {
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.detail || 'Invalid credentials');
-      localStorage.setItem('token', data.access_token);
+
+      if (rememberMe) {
+        localStorage.setItem('token', data.access_token);
+        localStorage.setItem('rememberedEmail', email);
+      } else {
+        sessionStorage.setItem('token', data.access_token);
+        localStorage.removeItem('rememberedEmail');
+        localStorage.removeItem('token');
+      }
+
       router.push('/dashboard');
     } catch (error: any) {
       setError(error.message || 'Login failed.');
@@ -73,9 +90,8 @@ function LoginPageContent() {
           )}
 
           <button
-            onClick={() => window.location.href="https://tradeflow-ai-backend-production.up.railway.app/auth/google"}
-            className="w-full flex items-center justify-center gap-3 bg-[#1A1A1A] hover:bg-[#222] border border-[#333] text-white py-3 rounded-lg transition font-medium mb-4"
-          >
+            onClick={() => window.location.href = "https://tradeflow-ai-backend-production.up.railway.app/auth/google"}
+            className="w-full flex items-center justify-center gap-3 bg-[#1A1A1A] hover:bg-[#222] border border-[#333] text-white py-3 rounded-lg transition font-medium mb-4">
             <img src="https://www.google.com/favicon.ico" className="w-5 h-5" alt="Google" />
             {lang === 'tr' ? 'Google ile devam et' : 'Continue with Google'}
           </button>
@@ -101,7 +117,6 @@ function LoginPageContent() {
               <div className="relative">
                 <Lock className="absolute left-4 top-3.5 w-5 h-5 text-slate-500" />
                 <input type="password" value={password} onChange={e => setPassword(e.target.value)} required
-                  onKeyDown={(e) => e.key === "Enter" && handleLogin()}
                   placeholder="••••••••"
                   className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg pl-12 pr-4 py-3 text-white focus:border-orange-500 focus:outline-none transition"
                 />
@@ -110,6 +125,20 @@ function LoginPageContent() {
                 </div>
               </div>
             </div>
+
+            {/* Beni Hatırla */}
+            <label className="flex items-center gap-3 cursor-pointer group">
+              <div className="relative">
+                <input type="checkbox" checked={rememberMe} onChange={e => setRememberMe(e.target.checked)} className="sr-only peer" />
+                <div className="w-5 h-5 bg-[#1A1A1A] border border-[#333] rounded peer-checked:bg-orange-500 peer-checked:border-orange-500 transition flex items-center justify-center">
+                  {rememberMe && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>}
+                </div>
+              </div>
+              <span className="text-sm text-slate-400 group-hover:text-slate-300 transition">
+                {lang === 'tr' ? 'Beni hatırla' : 'Remember me'}
+              </span>
+            </label>
+
             <button type="submit" disabled={loading}
               className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition flex items-center justify-center gap-2 disabled:opacity-50">
               {loading ? (lang === 'tr' ? 'Giriş yapılıyor...' : 'Signing in...') : t('login.button')}
