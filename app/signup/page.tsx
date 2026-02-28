@@ -58,7 +58,7 @@ function SignupContent() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || 'Signup failed');
-      toast.success(lang === 'tr' ? 'Hesap oluşturuldu! E-postanızı doğrulayın.' : 'Account created! Please check your email to verify.');
+      toast.success(lang === 'tr' ? 'Hesap oluşturuldu! E-postadaki linki bu cihazda açın.' : 'Account created! Open the verification link on this device.');
       router.push('/login');
     } catch (err: any) {
       toast.error(err.message || 'Signup failed');
