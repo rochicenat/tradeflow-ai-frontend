@@ -43,20 +43,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (response.ok) {
         const userData = await response.json();
         setUser(userData);
-        
-        // ✅ FIX: user_email ve user_id'yi localStorage'a kaydet
         localStorage.setItem('user_email', userData.email);
-        localStorage.setItem('user_id', userData.email); // Backend'de user_id yok, email kullanıyoruz
-      } else {
+        localStorage.setItem('user_id', userData.email);
+      } else if (response.status === 401) {
+        // Sadece 401 (token geçersiz) olunca sil
         localStorage.removeItem('token');
         localStorage.removeItem('user_email');
         localStorage.removeItem('user_id');
       }
+      // 500, network hatası vs. olunca token'a dokunma
     } catch (error) {
       console.error('Error fetching user:', error);
-      localStorage.removeItem('token');
-      localStorage.removeItem('user_email');
-      localStorage.removeItem('user_id');
+      // Network hatası — token'ı silme, belki geçicidir
     }
     setLoading(false);
   };
