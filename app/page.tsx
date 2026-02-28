@@ -132,7 +132,7 @@ const translations = {
 
 export default function Home() {
   const [lang, setLang] = useState<'en' | 'tr'>(() => {
-    if (typeof window !== 'undefined') return (localStorage.getItem('siteLang') as 'en' | 'tr') || 'en'
+    if (typeof window !== 'undefined') return (localStorage.getItem('lang') as 'en' | 'tr') || 'en'
     return 'en'
   })
   const t = translations[lang]
@@ -140,7 +140,7 @@ export default function Home() {
   const toggleLang = () => {
     const newLang = lang === 'en' ? 'tr' : 'en'
     setLang(newLang)
-    localStorage.setItem('siteLang', newLang)
+    localStorage.setItem('lang', newLang)
   }
 
   return (
