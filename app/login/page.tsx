@@ -33,6 +33,8 @@ function LoginPageContent() {
 
   useEffect(() => {
     if (searchParams.get('verified') === 'true') setVerified(true);
+    const existingToken = localStorage.getItem('token') || sessionStorage.getItem('token');
+    if (existingToken) { router.push('/dashboard'); return; }
     const savedEmail = localStorage.getItem('rememberedEmail');
     if (savedEmail) {
       setEmail(savedEmail);
