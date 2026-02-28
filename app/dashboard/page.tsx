@@ -13,12 +13,28 @@ import toast from 'react-hot-toast';
 import SettingsPage from '../components/SettingsPage';
 import HistoryPage from '../components/HistoryPage';
 import MarketAnalysisPage from '../components/MarketAnalysisPage';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface AnalysisResult { analysis: string; trend: string; confidence: string; }
 interface UserData { email: string; name: string; plan: string; analyses_used: number; analyses_limit: number; subscription_status: string; }
 interface ParsedAnalysis { signal: string; confidence: string; entry: string; stopLoss: string; takeProfit: string; keyLevels: string[]; signalReason: string[]; riskAssessment: string[]; breakoutRetest: string[]; indicators: string[]; fibonacci: string[]; psychologyPlan: string[]; }
 
+function LanguageToggle() {
+  const { lang, toggleLang } = useLanguage();
+  return (
+    <button
+      onClick={toggleLang}
+      className="flex items-center gap-1 bg-[#141414] border border-[#1A1A1A] text-white text-xs px-2.5 py-1.5 rounded-md hover:border-orange-500/50 transition"
+    >
+      <span className={lang === 'en' ? 'text-orange-500 font-bold' : 'text-slate-500'}>EN</span>
+      <span className="text-slate-700">/</span>
+      <span className={lang === 'tr' ? 'text-orange-500 font-bold' : 'text-slate-500'}>TR</span>
+    </button>
+  );
+}
+
 function UpgradeModal({ onClose }: { onClose: () => void }) {
+  const { lang } = useLanguage();
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
       <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}
@@ -28,31 +44,41 @@ function UpgradeModal({ onClose }: { onClose: () => void }) {
           <div className="w-16 h-16 rounded-full bg-orange-500/20 border border-orange-500/30 flex items-center justify-center mx-auto mb-4">
             <Crown className="w-8 h-8 text-orange-500" />
           </div>
-          <h2 className="text-2xl font-bold text-white mb-2">Upgrade Your Plan</h2>
-          <p className="text-slate-400">You've reached your analysis limit.</p>
+          <h2 className="text-2xl font-bold text-white mb-2">{lang === 'tr' ? 'Planını Yükselt' : 'Upgrade Your Plan'}</h2>
+          <p className="text-slate-400">{lang === 'tr' ? 'Analiz limitine ulaştın.' : "You've reached your analysis limit."}</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
           <div className="bg-[#1A1A1A] border border-orange-500/30 rounded-xl p-5 flex flex-col">
             <div className="flex items-center gap-2 mb-3"><Star className="w-5 h-5 text-orange-400" /><span className="text-white font-bold">Pro</span></div>
             <div className="text-3xl font-black text-white mb-1">$9.99<span className="text-sm font-normal text-slate-400">/mo</span></div>
             <ul className="text-slate-400 text-sm space-y-1 mb-5 flex-1">
-              <li>✓ 50 analyses/month</li><li>✓ Swing & Scalp Trading</li><li>✓ Full history access</li>
+              <li>✓ {lang === 'tr' ? '50 analiz/ay' : '50 analyses/month'}</li>
+              <li>✓ {lang === 'tr' ? 'Swing & Scalp Trading' : 'Swing & Scalp Trading'}</li>
+              <li>✓ {lang === 'tr' ? 'Tam geçmiş erişimi' : 'Full history access'}</li>
             </ul>
             <a href="https://tradeflowai.lemonsqueezy.com/checkout/buy/60423ba8-053a-4d04-a924-69b6aaae30e3" target="_blank" rel="noopener noreferrer"
-              className="w-full py-2.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-semibold text-center transition text-sm">Get Pro</a>
+              className="w-full py-2.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-semibold text-center transition text-sm">
+              {lang === 'tr' ? 'Pro Al' : 'Get Pro'}
+            </a>
           </div>
           <div className="bg-[#1A1A1A] border border-purple-500/30 rounded-xl p-5 flex flex-col relative overflow-hidden">
             <div className="absolute top-2 right-2 bg-purple-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">BEST</div>
             <div className="flex items-center gap-2 mb-3"><Crown className="w-5 h-5 text-purple-400" /><span className="text-white font-bold">Premium</span></div>
             <div className="text-3xl font-black text-white mb-1">$19.99<span className="text-sm font-normal text-slate-400">/mo</span></div>
             <ul className="text-slate-400 text-sm space-y-1 mb-5 flex-1">
-              <li>✓ Unlimited analyses</li><li>✓ Priority AI processing</li><li>✓ Advanced insights</li>
+              <li>✓ {lang === 'tr' ? 'Sınırsız analiz' : 'Unlimited analyses'}</li>
+              <li>✓ {lang === 'tr' ? 'Öncelikli AI işleme' : 'Priority AI processing'}</li>
+              <li>✓ {lang === 'tr' ? 'Gelişmiş içgörüler' : 'Advanced insights'}</li>
             </ul>
             <a href="https://tradeflowai.lemonsqueezy.com/checkout/buy/47621ebf-7c5e-4b6e-bbc9-d6bee626b2d4" target="_blank" rel="noopener noreferrer"
-              className="w-full py-2.5 rounded-lg bg-purple-500 hover:bg-purple-600 text-white font-semibold text-center transition text-sm">Get Premium</a>
+              className="w-full py-2.5 rounded-lg bg-purple-500 hover:bg-purple-600 text-white font-semibold text-center transition text-sm">
+              {lang === 'tr' ? 'Premium Al' : 'Get Premium'}
+            </a>
           </div>
         </div>
-        <button onClick={onClose} className="w-full py-2 text-slate-500 hover:text-slate-300 text-sm transition">Maybe later</button>
+        <button onClick={onClose} className="w-full py-2 text-slate-500 hover:text-slate-300 text-sm transition">
+          {lang === 'tr' ? 'Belki sonra' : 'Maybe later'}
+        </button>
       </motion.div>
     </div>
   );
@@ -74,6 +100,7 @@ function LiveClock() {
 
 export default function AnalyticsDashboard() {
   const router = useRouter();
+  const { lang, t } = useLanguage();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [loading, setLoading] = useState(false);
@@ -110,13 +137,13 @@ export default function AnalyticsDashboard() {
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     if (acceptedFiles.length === 0) return;
-    if (!analysisType) { toast.error('Please select Swing or Scalp Trading first'); return; }
+    if (!analysisType) { toast.error(lang === 'tr' ? 'Önce Swing veya Scalp seçin' : 'Please select Swing or Scalp Trading first'); return; }
     if (userData && (userData.plan === 'free' || userData.subscription_status !== 'active' || userData.analyses_used >= userData.analyses_limit)) {
       setShowUpgradeModal(true); return;
     }
     const file = acceptedFiles[0];
     const token = localStorage.getItem('token');
-    if (!token) { toast.error('Please login first'); router.push('/login'); return; }
+    if (!token) { toast.error(lang === 'tr' ? 'Lütfen giriş yapın' : 'Please login first'); router.push('/login'); return; }
     const reader = new FileReader();
     reader.onloadend = () => setImagePreview(reader.result as string);
     reader.readAsDataURL(file);
@@ -138,17 +165,18 @@ export default function AnalyticsDashboard() {
         throw new Error(error.detail || 'Analysis failed');
       }
       const data = await response.json();
-      setResult(data); fetchUserData(); toast.success('Analysis complete!');
+      setResult(data); fetchUserData();
+      toast.success(lang === 'tr' ? 'Analiz tamamlandı!' : 'Analysis complete!');
     } catch (error: any) {
       if (!error.message?.includes('limit')) toast.error(error.message || 'Failed to analyze chart');
     } finally { setUploading(false); setLoading(false); }
-  }, [router, analysisType, userData]);
+  }, [router, analysisType, userData, lang]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop, accept: { 'image/*': ['.png', '.jpg', '.jpeg', '.webp'] }, maxFiles: 1, disabled: uploading || !analysisType
   });
 
-  const handleLogout = () => { localStorage.removeItem('token'); toast.success('Logged out'); router.push('/'); };
+  const handleLogout = () => { localStorage.removeItem('token'); toast.success(lang === 'tr' ? 'Çıkış yapıldı' : 'Logged out'); router.push('/'); };
 
   const parseNewFormat = (analysis: string, trend: string, confidence: string): ParsedAnalysis => {
     const lines = analysis.split('\n').map(l => l.trim()).filter(l => l);
@@ -200,12 +228,12 @@ export default function AnalyticsDashboard() {
   const getConfidenceColor = (value: number) => value >= 70 ? 'bg-gradient-to-r from-green-500 to-emerald-600' : value >= 40 ? 'bg-gradient-to-r from-yellow-500 to-orange-500' : 'bg-gradient-to-r from-red-500 to-rose-600';
 
   const menuItems = [
-    { id: 'dashboard', name: 'Dashboard', icon: Home },
-    { id: 'swing', name: 'Swing Trading', icon: TrendingUp },
-    { id: 'scalp', name: 'Scalp Trading', icon: Timer },
-    { id: 'market', name: 'Market Analysis', icon: BarChart3 },
-    { id: 'history', name: 'History', icon: History },
-    { id: 'settings', name: 'Settings', icon: SettingsIcon },
+    { id: 'dashboard', name: t('dash.sidebar.dashboard'), icon: Home },
+    { id: 'swing', name: lang === 'tr' ? 'Swing Trading' : 'Swing Trading', icon: TrendingUp },
+    { id: 'scalp', name: lang === 'tr' ? 'Scalp Trading' : 'Scalp Trading', icon: Timer },
+    { id: 'market', name: lang === 'tr' ? 'Piyasa Analizi' : 'Market Analysis', icon: BarChart3 },
+    { id: 'history', name: t('dash.sidebar.history'), icon: History },
+    { id: 'settings', name: t('dash.sidebar.settings'), icon: SettingsIcon },
   ];
 
   const handleMenuClick = (id: string) => {
@@ -224,19 +252,19 @@ export default function AnalyticsDashboard() {
           <div className="bg-[#111] border border-[#252525] rounded-2xl p-6 w-full max-w-md">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="text-white font-bold text-lg">Trading Parameters</h2>
-                <p className="text-slate-400 text-xs mt-1">{pendingPremiumType === 'swing_premium' ? 'Swing Premium' : 'Scalp Premium'} Analysis</p>
+                <h2 className="text-white font-bold text-lg">{lang === 'tr' ? 'İşlem Parametreleri' : 'Trading Parameters'}</h2>
+                <p className="text-slate-400 text-xs mt-1">{pendingPremiumType === 'swing_premium' ? 'Swing Premium' : 'Scalp Premium'} {lang === 'tr' ? 'Analizi' : 'Analysis'}</p>
               </div>
               <button onClick={() => setShowTradingParams(false)} className="text-slate-400 hover:text-white transition text-xl">✕</button>
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Account Size ($)</label>
+                <label className="block text-sm font-medium text-slate-300 mb-2">{lang === 'tr' ? 'Hesap Büyüklüğü ($)' : 'Account Size ($)'}</label>
                 <input type="number" value={accountSize} onChange={e => setAccountSize(e.target.value)}
                   placeholder="e.g. 10000" className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg px-4 py-3 text-white focus:border-orange-500 focus:outline-none transition" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Risk Per Trade (%)</label>
+                <label className="block text-sm font-medium text-slate-300 mb-2">{lang === 'tr' ? 'İşlem Başına Risk (%)' : 'Risk Per Trade (%)'}</label>
                 <div className="grid grid-cols-4 gap-2">
                   {['1', '2', '3', '5'].map(r => (
                     <button key={r} onClick={() => setRiskPercent(r)}
@@ -246,10 +274,10 @@ export default function AnalyticsDashboard() {
                   ))}
                 </div>
                 <input type="number" value={riskPercent} onChange={e => setRiskPercent(e.target.value)}
-                  placeholder="Custom %" className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg px-4 py-2 text-white focus:border-orange-500 focus:outline-none transition mt-2 text-sm" />
+                  placeholder={lang === 'tr' ? 'Özel %' : 'Custom %'} className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg px-4 py-2 text-white focus:border-orange-500 focus:outline-none transition mt-2 text-sm" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Leverage</label>
+                <label className="block text-sm font-medium text-slate-300 mb-2">{lang === 'tr' ? 'Kaldıraç' : 'Leverage'}</label>
                 <div className="grid grid-cols-5 gap-2">
                   {['1', '2', '5', '10', '20'].map(l => (
                     <button key={l} onClick={() => setLeverage(l)}
@@ -260,9 +288,12 @@ export default function AnalyticsDashboard() {
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Order Type</label>
+                <label className="block text-sm font-medium text-slate-300 mb-2">{lang === 'tr' ? 'Emir Türü' : 'Order Type'}</label>
                 <div className="grid grid-cols-2 gap-2">
-                  {[{v:'market',l:'Market Order'},{v:'limit',l:'Limit Order'}].map(o => (
+                  {[
+                    {v:'market', l: lang === 'tr' ? 'Piyasa Emri' : 'Market Order'},
+                    {v:'limit',  l: lang === 'tr' ? 'Limit Emir' : 'Limit Order'}
+                  ].map(o => (
                     <button key={o.v} onClick={() => setOrderType(o.v)}
                       className={`py-2 rounded-lg text-sm font-semibold transition border ${orderType === o.v ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
                       {o.l}
@@ -273,13 +304,12 @@ export default function AnalyticsDashboard() {
             </div>
             <button onClick={() => { setAnalysisType(pendingPremiumType as any); setShowTradingParams(false); }}
               className="w-full mt-6 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold transition">
-              Start Analysis →
+              {lang === 'tr' ? 'Analizi Başlat →' : 'Start Analysis →'}
             </button>
           </div>
         </div>
       )}
 
-      {/* Mobile News Modal */}
       <AnimatePresence>
         {showMobileNews && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
@@ -287,7 +317,7 @@ export default function AnalyticsDashboard() {
             <div className="flex items-center justify-between px-4 py-3 border-b border-[#1A1A1A]">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-white font-semibold">Crypto News</span>
+                <span className="text-white font-semibold">{lang === 'tr' ? 'Kripto Haberleri' : 'Crypto News'}</span>
               </div>
               <button onClick={() => setShowMobileNews(false)} className="text-slate-400 hover:text-white">
                 <X className="w-5 h-5" />
@@ -313,7 +343,7 @@ export default function AnalyticsDashboard() {
           <span className="text-slate-200 font-medium truncate">
             {currentPage === 'dashboard' && analysisType === 'swing' ? 'Swing Trading' :
              currentPage === 'dashboard' && analysisType === 'scalp' ? 'Scalp Trading' :
-             menuItems.find(i => i.id === currentPage)?.name || 'Dashboard'}
+             menuItems.find(i => i.id === currentPage)?.name || t('dash.sidebar.dashboard')}
           </span>
           {analysisType && currentPage === 'dashboard' && (
             <span className={`text-xs font-medium px-1.5 py-0.5 rounded-full flex-shrink-0 ${analysisType === 'swing' ? 'bg-orange-500/15 text-orange-400' : 'bg-blue-500/15 text-blue-400'}`}>
@@ -323,6 +353,7 @@ export default function AnalyticsDashboard() {
         </div>
         <div className="flex items-center gap-1.5 sm:gap-3">
           <LiveClock />
+          <LanguageToggle />
           <button onClick={() => setShowMobileNews(true)}
             className="lg:hidden p-1.5 rounded-md bg-[#141414] border border-[#1A1A1A] text-slate-400 hover:text-white transition">
             <Newspaper className="w-4 h-4" />
@@ -340,7 +371,7 @@ export default function AnalyticsDashboard() {
             </div>
             <span className="text-slate-300 text-sm font-medium hidden sm:block">{userData?.name || 'User'}</span>
           </div>
-          <button onClick={handleLogout} className="p-1.5 rounded-md hover:bg-red-500/10 text-slate-500 hover:text-red-400 transition" title="Logout">
+          <button onClick={handleLogout} className="p-1.5 rounded-md hover:bg-red-500/10 text-slate-500 hover:text-red-400 transition" title={t('dash.logout')}>
             <LogOut className="w-4 h-4" />
           </button>
         </div>
@@ -348,7 +379,7 @@ export default function AnalyticsDashboard() {
 
       {/* BODY */}
       <div className="flex flex-1 overflow-hidden">
-        {/* SIDEBAR - desktop only */}
+        {/* SIDEBAR */}
         <div className={`hidden lg:flex flex-col ${sidebarOpen ? 'w-56' : 'w-14'} bg-[#0A0A0A] border-r border-[#1A1A1A] transition-all duration-300 flex-shrink-0`}>
           <div className="h-14 border-b border-[#1A1A1A] flex items-center px-3 gap-2">
             <div className="w-7 h-7 bg-orange-500 rounded-md flex items-center justify-center flex-shrink-0">
@@ -378,7 +409,7 @@ export default function AnalyticsDashboard() {
           {sidebarOpen && userData?.plan === 'premium' && (
             <div className="px-3 py-3 border-t border-[#1A1A1A]">
               <div className="flex justify-between text-xs text-slate-500 mb-1.5">
-                <span>Usage</span>
+                <span>{lang === 'tr' ? 'Kullanım' : 'Usage'}</span>
                 <span className="text-slate-400">{userData?.analyses_used}/{userData?.analyses_limit}</span>
               </div>
               <div className="h-1 bg-[#1A1A1A] rounded-full overflow-hidden">
@@ -401,38 +432,38 @@ export default function AnalyticsDashboard() {
                   {userData?.plan !== 'free' && (
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
-                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Used</div>
+                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">{lang === 'tr' ? 'Kullanılan' : 'Used'}</div>
                         <div className="text-2xl sm:text-3xl font-black text-white">{userData?.analyses_used || 0}</div>
-                        <div className="text-xs text-slate-500 mt-1">of {userData?.plan === 'premium' ? '∞' : userData?.analyses_limit}</div>
+                        <div className="text-xs text-slate-500 mt-1">{lang === 'tr' ? 'toplam' : 'of'} {userData?.plan === 'premium' ? '∞' : userData?.analyses_limit}</div>
                       </div>
                       <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
-                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Left</div>
+                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">{lang === 'tr' ? 'Kalan' : 'Left'}</div>
                         <div className={`text-2xl sm:text-3xl font-black ${userData?.plan === 'premium' ? 'text-green-400' : ((userData?.analyses_limit || 0) - (userData?.analyses_used || 0)) <= 5 ? 'text-red-400' : 'text-green-400'}`}>
                           {userData?.plan === 'premium' ? '∞' : (userData?.analyses_limit || 0) - (userData?.analyses_used || 0)}
                         </div>
-                        <div className="text-xs text-slate-500 mt-1">remaining</div>
+                        <div className="text-xs text-slate-500 mt-1">{lang === 'tr' ? 'kaldı' : 'remaining'}</div>
                       </div>
                       <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
-                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Plan</div>
+                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">{t('dash.plan')}</div>
                         <div className={`text-2xl sm:text-3xl font-black uppercase ${userData?.plan === 'premium' ? 'text-purple-400' : 'text-orange-400'}`}>{userData?.plan}</div>
                       </div>
                       {userData?.plan !== 'premium' && (
-                      <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
-                        <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Usage</div>
-                        <div className="text-2xl sm:text-3xl font-black text-white">{usagePercent}%</div>
-                        <div className="h-1.5 bg-[#1A1A1A] rounded-full mt-2 overflow-hidden">
-                          <div className={`h-full rounded-full ${usagePercent > 80 ? 'bg-red-500' : 'bg-orange-500'}`} style={{ width: `${usagePercent}%` }} />
+                        <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
+                          <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">{lang === 'tr' ? 'Kullanım' : 'Usage'}</div>
+                          <div className="text-2xl sm:text-3xl font-black text-white">{usagePercent}%</div>
+                          <div className="h-1.5 bg-[#1A1A1A] rounded-full mt-2 overflow-hidden">
+                            <div className={`h-full rounded-full ${usagePercent > 80 ? 'bg-red-500' : 'bg-orange-500'}`} style={{ width: `${usagePercent}%` }} />
+                          </div>
                         </div>
-                      </div>
                       )}
                     </div>
                   )}
                   {userData?.plan === 'free' && !analysisType && (
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       {[
-                        { num: '01', title: 'Choose Type', desc: 'Select Swing or Scalp' },
-                        { num: '02', title: 'Upload Chart', desc: 'Drop any trading chart screenshot' },
-                        { num: '03', title: 'Get Analysis', desc: 'Receive instant AI-powered insights' },
+                        { num: '01', title: lang === 'tr' ? 'Tür Seç' : 'Choose Type', desc: lang === 'tr' ? 'Swing veya Scalp seçin' : 'Select Swing or Scalp' },
+                        { num: '02', title: lang === 'tr' ? 'Grafik Yükle' : 'Upload Chart', desc: lang === 'tr' ? 'Grafik ekran görüntüsü yükleyin' : 'Drop any trading chart screenshot' },
+                        { num: '03', title: lang === 'tr' ? 'Analiz Al' : 'Get Analysis', desc: lang === 'tr' ? 'Anında AI destekli analiz alın' : 'Receive instant AI-powered insights' },
                       ].map((step, i) => (
                         <div key={i} className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4 flex items-center gap-4">
                           <div className="text-2xl font-black text-orange-500/30">{step.num}</div>
@@ -449,114 +480,116 @@ export default function AnalyticsDashboard() {
                       <div className="flex items-center gap-3 min-w-0">
                         <Crown className="w-5 h-5 text-orange-400 flex-shrink-0" />
                         <div className="min-w-0">
-                          <div className="text-white text-sm font-semibold">Upgrade to Pro or Premium</div>
-                          <div className="text-slate-400 text-xs">Starting at $9.99/mo</div>
+                          <div className="text-white text-sm font-semibold">{t('dash.upgrade')}</div>
+                          <div className="text-slate-400 text-xs">{lang === 'tr' ? 'Aylık $9.99\'dan başlayan fiyatlarla' : 'Starting at $9.99/mo'}</div>
                         </div>
                       </div>
                       <button onClick={() => setShowUpgradeModal(true)} className="px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-lg transition flex-shrink-0">
-                        Upgrade
+                        {lang === 'tr' ? 'Yükselt' : 'Upgrade'}
                       </button>
                     </div>
                   )}
                   {!analysisType && (
                     <div className="space-y-3">
-                      <p className="text-xs text-slate-500 uppercase tracking-wider font-medium">Pro Analysis</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} onClick={() => setAnalysisType('swing')}
-                        className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-orange-500/30 rounded-xl p-12 text-left transition-all group min-h-[220px]">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-lg bg-orange-500/10 border border-orange-500/20">
-                              <TrendingUp className="w-5 h-5 text-orange-500" />
+                      <p className="text-xs text-slate-500 uppercase tracking-wider font-medium">{lang === 'tr' ? 'Pro Analiz' : 'Pro Analysis'}</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} onClick={() => setAnalysisType('swing')}
+                          className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-orange-500/30 rounded-xl p-12 text-left transition-all group min-h-[220px]">
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center gap-3">
+                              <div className="p-2 rounded-lg bg-orange-500/10 border border-orange-500/20">
+                                <TrendingUp className="w-5 h-5 text-orange-500" />
+                              </div>
+                              <div>
+                                <h3 className="text-white font-bold">Swing Trading</h3>
+                                <p className="text-xs text-slate-500">{lang === 'tr' ? '2-10 günlük pozisyonlar' : '2-10 day positions'}</p>
+                              </div>
                             </div>
-                            <div>
-                              <h3 className="text-white font-bold">Swing Trading</h3>
-                              <p className="text-xs text-slate-500">2-10 day positions</p>
-                            </div>
+                            <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-orange-400 transition" />
                           </div>
-                          <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-orange-400 transition" />
-                        </div>
-                        <div className="grid grid-cols-3 gap-2 text-center">
-                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Timeframe</div><div className="text-xs sm:text-sm text-white font-semibold">Daily/4H</div></div>
-                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Target</div><div className="text-xs sm:text-sm text-white font-semibold">2-8%</div></div>
-                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Risk</div><div className="text-xs sm:text-sm text-green-400 font-semibold">Lower</div></div>
-                        </div>
-                      </motion.button>
-                      <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} onClick={() => setAnalysisType('scalp')}
-                        className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-blue-500/30 rounded-xl p-12 text-left transition-all group min-h-[220px]">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                              <Timer className="w-5 h-5 text-blue-400" />
-                            </div>
-                            <div>
-                              <h3 className="text-white font-bold">Scalp Trading</h3>
-                              <p className="text-xs text-slate-500">1-30 minute trades</p>
-                            </div>
+                          <div className="grid grid-cols-3 gap-2 text-center">
+                            <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">{lang === 'tr' ? 'Zaman' : 'Timeframe'}</div><div className="text-xs sm:text-sm text-white font-semibold">Daily/4H</div></div>
+                            <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">{lang === 'tr' ? 'Hedef' : 'Target'}</div><div className="text-xs sm:text-sm text-white font-semibold">2-8%</div></div>
+                            <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">{lang === 'tr' ? 'Risk' : 'Risk'}</div><div className="text-xs sm:text-sm text-green-400 font-semibold">{lang === 'tr' ? 'Düşük' : 'Lower'}</div></div>
                           </div>
-                          <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-blue-400 transition" />
-                        </div>
-                        <div className="grid grid-cols-3 gap-2 text-center">
-                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Timeframe</div><div className="text-xs sm:text-sm text-white font-semibold">1-15 min</div></div>
-                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Target</div><div className="text-xs sm:text-sm text-white font-semibold">5-20 pips</div></div>
-                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Risk</div><div className="text-xs sm:text-sm text-yellow-400 font-semibold">Higher</div></div>
-                        </div>
-                      </motion.button>
-                    </div>
-                      <p className="text-xs text-slate-500 uppercase tracking-wider font-medium mt-2">Premium Analysis</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
-                        onClick={() => userData?.plan === "premium" ? (setPendingPremiumType("swing_premium"), setShowTradingParams(true)) : router.push("/pricing")}
-                        className="bg-[#0D0D0D] border border-purple-500/20 hover:border-purple-500/40 rounded-xl p-12 text-left transition-all group min-h-[220px] relative overflow-hidden">
-                        {userData?.plan === 'free' && <div className="absolute top-3 right-3 bg-purple-500/20 border border-purple-500/30 rounded-full px-2 py-0.5 text-xs text-purple-400 font-medium">🔒 Premium</div>}
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-lg bg-purple-500/10 border border-purple-500/20">
-                              <TrendingUp className="w-5 h-5 text-purple-400" />
+                        </motion.button>
+                        <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} onClick={() => setAnalysisType('scalp')}
+                          className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-blue-500/30 rounded-xl p-12 text-left transition-all group min-h-[220px]">
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center gap-3">
+                              <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                                <Timer className="w-5 h-5 text-blue-400" />
+                              </div>
+                              <div>
+                                <h3 className="text-white font-bold">Scalp Trading</h3>
+                                <p className="text-xs text-slate-500">{lang === 'tr' ? '1-30 dakikalık işlemler' : '1-30 minute trades'}</p>
+                              </div>
                             </div>
-                            <div>
-                              <h3 className="text-white font-bold">Swing Premium</h3>
-                              <p className="text-xs text-slate-500">RSI, MA, Fibonacci & more</p>
-                            </div>
+                            <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-blue-400 transition" />
                           </div>
-                          <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-purple-400 transition" />
-                        </div>
-                        <div className="grid grid-cols-3 gap-2 text-center">
-                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">RSI</div><div className="text-xs sm:text-sm text-purple-400 font-semibold">✓</div></div>
-                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Fibonacci</div><div className="text-xs sm:text-sm text-purple-400 font-semibold">✓</div></div>
-                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Trade Plan</div><div className="text-xs sm:text-sm text-purple-400 font-semibold">✓</div></div>
-                        </div>
-                      </motion.button>
-                      <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
-                        onClick={() => userData?.plan === "premium" ? (setPendingPremiumType("scalp_premium"), setShowTradingParams(true)) : router.push("/pricing")}
-                        className="bg-[#0D0D0D] border border-purple-500/20 hover:border-purple-500/40 rounded-xl p-12 text-left transition-all group min-h-[220px] relative overflow-hidden">
-                        {userData?.plan === 'free' && <div className="absolute top-3 right-3 bg-purple-500/20 border border-purple-500/30 rounded-full px-2 py-0.5 text-xs text-purple-400 font-medium">🔒 Premium</div>}
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-lg bg-purple-500/10 border border-purple-500/20">
-                              <Timer className="w-5 h-5 text-purple-400" />
-                            </div>
-                            <div>
-                              <h3 className="text-white font-bold">Scalp Premium</h3>
-                              <p className="text-xs text-slate-500">RSI, MA, Fibonacci & more</p>
-                            </div>
+                          <div className="grid grid-cols-3 gap-2 text-center">
+                            <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">{lang === 'tr' ? 'Zaman' : 'Timeframe'}</div><div className="text-xs sm:text-sm text-white font-semibold">1-15 min</div></div>
+                            <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">{lang === 'tr' ? 'Hedef' : 'Target'}</div><div className="text-xs sm:text-sm text-white font-semibold">5-20 pips</div></div>
+                            <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">{lang === 'tr' ? 'Risk' : 'Risk'}</div><div className="text-xs sm:text-sm text-yellow-400 font-semibold">{lang === 'tr' ? 'Yüksek' : 'Higher'}</div></div>
                           </div>
-                          <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-purple-400 transition" />
-                        </div>
-                        <div className="grid grid-cols-3 gap-2 text-center">
-                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">RSI</div><div className="text-xs sm:text-sm text-purple-400 font-semibold">✓</div></div>
-                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Fibonacci</div><div className="text-xs sm:text-sm text-purple-400 font-semibold">✓</div></div>
-                          <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Trade Plan</div><div className="text-xs sm:text-sm text-purple-400 font-semibold">✓</div></div>
-                        </div>
-                      </motion.button>
-                    </div>
+                        </motion.button>
+                      </div>
+                      <p className="text-xs text-slate-500 uppercase tracking-wider font-medium mt-2">{lang === 'tr' ? 'Premium Analiz' : 'Premium Analysis'}</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
+                          onClick={() => userData?.plan === "premium" ? (setPendingPremiumType("swing_premium"), setShowTradingParams(true)) : router.push("/pricing")}
+                          className="bg-[#0D0D0D] border border-purple-500/20 hover:border-purple-500/40 rounded-xl p-12 text-left transition-all group min-h-[220px] relative overflow-hidden">
+                          {userData?.plan === 'free' && <div className="absolute top-3 right-3 bg-purple-500/20 border border-purple-500/30 rounded-full px-2 py-0.5 text-xs text-purple-400 font-medium">🔒 Premium</div>}
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center gap-3">
+                              <div className="p-2 rounded-lg bg-purple-500/10 border border-purple-500/20">
+                                <TrendingUp className="w-5 h-5 text-purple-400" />
+                              </div>
+                              <div>
+                                <h3 className="text-white font-bold">Swing Premium</h3>
+                                <p className="text-xs text-slate-500">RSI, MA, Fibonacci & more</p>
+                              </div>
+                            </div>
+                            <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-purple-400 transition" />
+                          </div>
+                          <div className="grid grid-cols-3 gap-2 text-center">
+                            <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">RSI</div><div className="text-xs sm:text-sm text-purple-400 font-semibold">✓</div></div>
+                            <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Fibonacci</div><div className="text-xs sm:text-sm text-purple-400 font-semibold">✓</div></div>
+                            <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">{lang === 'tr' ? 'Trade Planı' : 'Trade Plan'}</div><div className="text-xs sm:text-sm text-purple-400 font-semibold">✓</div></div>
+                          </div>
+                        </motion.button>
+                        <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}
+                          onClick={() => userData?.plan === "premium" ? (setPendingPremiumType("scalp_premium"), setShowTradingParams(true)) : router.push("/pricing")}
+                          className="bg-[#0D0D0D] border border-purple-500/20 hover:border-purple-500/40 rounded-xl p-12 text-left transition-all group min-h-[220px] relative overflow-hidden">
+                          {userData?.plan === 'free' && <div className="absolute top-3 right-3 bg-purple-500/20 border border-purple-500/30 rounded-full px-2 py-0.5 text-xs text-purple-400 font-medium">🔒 Premium</div>}
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center gap-3">
+                              <div className="p-2 rounded-lg bg-purple-500/10 border border-purple-500/20">
+                                <Timer className="w-5 h-5 text-purple-400" />
+                              </div>
+                              <div>
+                                <h3 className="text-white font-bold">Scalp Premium</h3>
+                                <p className="text-xs text-slate-500">RSI, MA, Fibonacci & more</p>
+                              </div>
+                            </div>
+                            <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-purple-400 transition" />
+                          </div>
+                          <div className="grid grid-cols-3 gap-2 text-center">
+                            <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">RSI</div><div className="text-xs sm:text-sm text-purple-400 font-semibold">✓</div></div>
+                            <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">Fibonacci</div><div className="text-xs sm:text-sm text-purple-400 font-semibold">✓</div></div>
+                            <div className="bg-[#111] rounded-lg p-2.5"><div className="text-xs text-slate-500 mb-1">{lang === 'tr' ? 'Trade Planı' : 'Trade Plan'}</div><div className="text-xs sm:text-sm text-purple-400 font-semibold">✓</div></div>
+                          </div>
+                        </motion.button>
+                      </div>
                     </div>
                   )}
                   {analysisType && (
                     <>
                       <div className="flex items-center gap-3">
                         <button onClick={() => { setAnalysisType(null); setResult(null); setImagePreview(null); }}
-                          className="text-slate-500 hover:text-slate-300 text-xs flex items-center gap-1 transition">← Back</button>
+                          className="text-slate-500 hover:text-slate-300 text-xs flex items-center gap-1 transition">
+                          ← {lang === 'tr' ? 'Geri' : 'Back'}
+                        </button>
                         <div className={`px-2.5 py-1 rounded-full text-xs font-semibold border ${
                           analysisType === 'swing' ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
                         }`}>
@@ -574,14 +607,14 @@ export default function AnalyticsDashboard() {
                               <Upload className="w-5 h-5 text-slate-500" />
                             </div>
                           )}
-                          {!imagePreview && <p className="text-slate-300 font-semibold mb-1">Upload Chart</p>}
-                          {!imagePreview && <p className="text-slate-600 text-sm">Drop your chart here or tap to browse</p>}
+                          {!imagePreview && <p className="text-slate-300 font-semibold mb-1">{t('dash.upload')}</p>}
+                          {!imagePreview && <p className="text-slate-600 text-sm">{lang === 'tr' ? 'Grafiği buraya bırakın veya tıklayın' : 'Drop your chart here or tap to browse'}</p>}
                         </div>
                         {uploading && (
                           <div className="absolute inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center">
                             <div className="text-center">
                               <div className="w-10 h-10 border-2 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
-                              <p className="text-orange-400 text-sm font-medium">Analyzing Chart...</p>
+                              <p className="text-orange-400 text-sm font-medium">{lang === 'tr' ? 'Grafik Analiz Ediliyor...' : 'Analyzing Chart...'}</p>
                             </div>
                           </div>
                         )}
@@ -600,15 +633,19 @@ export default function AnalyticsDashboard() {
                                   {getSignalIcon(parsed.signal)}
                                 </div>
                                 <div>
-                                  <div className="text-xs text-slate-400 uppercase tracking-wider mb-1">Signal</div>
+                                  <div className="text-xs text-slate-400 uppercase tracking-wider mb-1">{lang === 'tr' ? 'Sinyal' : 'Signal'}</div>
                                   <h2 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight">{parsed.signal}</h2>
                                   <p className="text-slate-400 text-xs sm:text-sm mt-1">
-                                    {parsed.signal === 'UPTREND' ? 'Bullish momentum detected' : parsed.signal === 'DOWNTREND' ? 'Bearish momentum detected' : 'Neutral / Consolidation'}
+                                    {parsed.signal === 'UPTREND'
+                                      ? (lang === 'tr' ? 'Yükseliş momentumu tespit edildi' : 'Bullish momentum detected')
+                                      : parsed.signal === 'DOWNTREND'
+                                      ? (lang === 'tr' ? 'Düşüş momentumu tespit edildi' : 'Bearish momentum detected')
+                                      : (lang === 'tr' ? 'Nötr / Konsolidasyon' : 'Neutral / Consolidation')}
                                   </p>
                                 </div>
                               </div>
                               <div className="text-left sm:text-right w-full sm:w-auto">
-                                <div className="text-xs text-slate-400 uppercase tracking-wider mb-2">Confidence</div>
+                                <div className="text-xs text-slate-400 uppercase tracking-wider mb-2">{lang === 'tr' ? 'Güven' : 'Confidence'}</div>
                                 <div className="text-2xl sm:text-3xl font-black text-white mb-2">{getConfidenceValue(parsed.confidence)}%</div>
                                 <div className="w-full sm:w-40 h-2 bg-[#1A1A1A] rounded-full overflow-hidden">
                                   <div className={`h-full ${getConfidenceColor(getConfidenceValue(parsed.confidence))}`} style={{ width: `${getConfidenceValue(parsed.confidence)}%` }} />
@@ -619,19 +656,19 @@ export default function AnalyticsDashboard() {
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             {parsed.entry && (
                               <div className="bg-[#0D0D0D] border border-orange-500/20 rounded-xl p-4">
-                                <div className="flex items-center gap-2 mb-2"><DollarSign className="w-4 h-4 text-orange-500" /><span className="text-orange-400 text-xs font-bold uppercase">Entry</span></div>
+                                <div className="flex items-center gap-2 mb-2"><DollarSign className="w-4 h-4 text-orange-500" /><span className="text-orange-400 text-xs font-bold uppercase">{lang === 'tr' ? 'Giriş' : 'Entry'}</span></div>
                                 <div className="text-xl font-black text-white">{parsed.entry}</div>
                               </div>
                             )}
                             {parsed.stopLoss && (
                               <div className="bg-[#0D0D0D] border border-red-500/20 rounded-xl p-4">
-                                <div className="flex items-center gap-2 mb-2"><Shield className="w-4 h-4 text-red-400" /><span className="text-red-400 text-xs font-bold uppercase">Stop Loss</span></div>
+                                <div className="flex items-center gap-2 mb-2"><Shield className="w-4 h-4 text-red-400" /><span className="text-red-400 text-xs font-bold uppercase">{lang === 'tr' ? 'Zarar Durdur' : 'Stop Loss'}</span></div>
                                 <div className="text-xl font-black text-white">{parsed.stopLoss}</div>
                               </div>
                             )}
                             {parsed.takeProfit && (
                               <div className="bg-[#0D0D0D] border border-green-500/20 rounded-xl p-4">
-                                <div className="flex items-center gap-2 mb-2"><Target className="w-4 h-4 text-green-400" /><span className="text-green-400 text-xs font-bold uppercase">Take Profit</span></div>
+                                <div className="flex items-center gap-2 mb-2"><Target className="w-4 h-4 text-green-400" /><span className="text-green-400 text-xs font-bold uppercase">{lang === 'tr' ? 'Kar Al' : 'Take Profit'}</span></div>
                                 <div className="text-xl font-black text-white">{parsed.takeProfit}</div>
                               </div>
                             )}
@@ -641,7 +678,7 @@ export default function AnalyticsDashboard() {
                               <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
                                 <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
                                   <Target className="w-4 h-4 text-purple-400" />
-                                  <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Key Levels</span>
+                                  <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">{lang === 'tr' ? 'Önemli Seviyeler' : 'Key Levels'}</span>
                                 </div>
                                 <div className="space-y-1.5">{parsed.keyLevels.map((level, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-purple-400 mt-0.5">▸</span>{level}</div>)}</div>
                               </div>
@@ -650,7 +687,7 @@ export default function AnalyticsDashboard() {
                               <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
                                 <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
                                   <Activity className="w-4 h-4 text-orange-400" />
-                                  <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Pattern Analysis</span>
+                                  <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">{lang === 'tr' ? 'Patern Analizi' : 'Pattern Analysis'}</span>
                                 </div>
                                 <div className="space-y-1.5">{parsed.signalReason.map((reason, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-orange-400 mt-0.5">▸</span>{reason}</div>)}</div>
                               </div>
@@ -659,7 +696,7 @@ export default function AnalyticsDashboard() {
                               <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
                                 <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
                                   <AlertTriangle className="w-4 h-4 text-yellow-400" />
-                                  <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Risk Assessment</span>
+                                  <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">{lang === 'tr' ? 'Risk Değerlendirmesi' : 'Risk Assessment'}</span>
                                 </div>
                                 <div className="space-y-1.5">{parsed.riskAssessment.map((risk, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-yellow-400 mt-0.5">▸</span>{risk}</div>)}</div>
                               </div>
@@ -671,7 +708,7 @@ export default function AnalyticsDashboard() {
                                 <div className="bg-[#0D0D0D] border border-purple-500/20 rounded-xl p-6">
                                   <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
                                     <TrendingUp className="w-4 h-4 text-purple-400" />
-                                    <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Breakout & Retest</span>
+                                    <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">{lang === 'tr' ? 'Kırılım & Retest' : 'Breakout & Retest'}</span>
                                     <span className="ml-auto text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded-full">Premium</span>
                                   </div>
                                   <div className="space-y-1.5">{parsed.breakoutRetest.map((item, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-purple-400 mt-0.5">▸</span>{item}</div>)}</div>
@@ -701,7 +738,7 @@ export default function AnalyticsDashboard() {
                                 <div className="bg-[#0D0D0D] border border-green-500/20 rounded-xl p-6">
                                   <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
                                     <Shield className="w-4 h-4 text-green-400" />
-                                    <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Psychology & Trade Plan</span>
+                                    <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">{lang === 'tr' ? 'Psikoloji & Trade Planı' : 'Psychology & Trade Plan'}</span>
                                     <span className="ml-auto text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded-full">Premium</span>
                                   </div>
                                   <div className="space-y-1.5">{parsed.psychologyPlan.map((item, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-green-400 mt-0.5">▸</span>{item}</div>)}</div>
@@ -711,7 +748,11 @@ export default function AnalyticsDashboard() {
                           )}
                           <div className="bg-yellow-500/5 border border-yellow-500/20 rounded-xl p-4 flex items-start gap-3">
                             <AlertTriangle className="w-4 h-4 text-yellow-500 flex-shrink-0 mt-0.5" />
-                            <p className="text-slate-400 text-xs">Educational analysis only. Not financial advice. Always do your own research before trading.</p>
+                            <p className="text-slate-400 text-xs">
+                              {lang === 'tr'
+                                ? 'Bu analiz yalnızca eğitim amaçlıdır. Finansal tavsiye değildir. İşlem yapmadan önce kendi araştırmanızı yapın.'
+                                : 'Educational analysis only. Not financial advice. Always do your own research before trading.'}
+                            </p>
                           </div>
                         </motion.div>
                       );
@@ -720,25 +761,54 @@ export default function AnalyticsDashboard() {
                   {!result && !loading && analysisType && (
                     <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-20 text-center">
                       <BarChart3 className="w-10 h-10 text-slate-700 mx-auto mb-3" />
-                      <p className="text-slate-500 text-sm">Upload a chart to get AI-powered analysis</p>
+                      <p className="text-slate-500 text-sm">{lang === 'tr' ? 'AI analizi için grafik yükleyin' : 'Upload a chart to get AI-powered analysis'}</p>
                     </div>
                   )}
-                  {/* Daily Tips */}
                   {!analysisType && (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div className="md:col-span-3">
                         <div className="text-xs text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-2">
                           <Zap className="w-3 h-3 text-orange-400" />
-                          <span>Daily Trading Tips</span>
+                          <span>{lang === 'tr' ? 'Günlük Trading İpuçları' : 'Daily Trading Tips'}</span>
                         </div>
                       </div>
                       {[
-                        { icon: "📈", title: "Trend is Your Friend", tip: "Always trade in the direction of the major trend. Use Daily/4H charts to confirm direction before entering on lower timeframes.", tag: "Swing" },
-                        { icon: "⚡", title: "Scalp with Momentum", tip: "Only take scalp trades when volume is above average and RSI shows momentum. Avoid trading in the first 15 minutes.", tag: "Scalp" },
-                        { icon: "🛡️", title: "Risk Management", tip: "Never risk more than 1-2% of your account on a single trade. Your stop loss should be set before your entry.", tag: "General" },
-                        { icon: "🎯", title: "Key Levels Matter", tip: "Support and resistance zones are where the best risk/reward setups appear. Wait for price to react at these levels.", tag: "Swing" },
-                        { icon: "⏰", title: "Best Scalp Hours", tip: "The highest volume and best scalp opportunities occur during London (08:00-12:00 UTC) and NY (13:00-17:00 UTC) sessions.", tag: "Scalp" },
-                        { icon: "🧠", title: "Patience Pays", tip: "Not every candle needs a trade. The best traders wait for A+ setups and skip low-quality signals. Quality over quantity.", tag: "General" },
+                        {
+                          icon: "📈",
+                          title: lang === 'tr' ? 'Trend Arkadaşındır' : 'Trend is Your Friend',
+                          tip: lang === 'tr' ? 'Her zaman ana trend yönünde işlem yapın. Düşük zaman dilimlerine girmeden önce yönü Daily/4H grafiklerde onaylayın.' : 'Always trade in the direction of the major trend. Use Daily/4H charts to confirm direction before entering on lower timeframes.',
+                          tag: "Swing"
+                        },
+                        {
+                          icon: "⚡",
+                          title: lang === 'tr' ? 'Momentumla Scalp Yap' : 'Scalp with Momentum',
+                          tip: lang === 'tr' ? 'Yalnızca hacim ortalamanın üzerindeyken ve RSI momentum gösterirken scalp alın. İlk 15 dakikada işlem yapmaktan kaçının.' : 'Only take scalp trades when volume is above average and RSI shows momentum. Avoid trading in the first 15 minutes.',
+                          tag: "Scalp"
+                        },
+                        {
+                          icon: "🛡️",
+                          title: lang === 'tr' ? 'Risk Yönetimi' : 'Risk Management',
+                          tip: lang === 'tr' ? 'Tek bir işlemde hesabınızın %1-2\'sinden fazlasını riske atmayın. Stop loss\'unuzu girişten önce belirleyin.' : 'Never risk more than 1-2% of your account on a single trade. Your stop loss should be set before your entry.',
+                          tag: lang === 'tr' ? 'Genel' : 'General'
+                        },
+                        {
+                          icon: "🎯",
+                          title: lang === 'tr' ? 'Önemli Seviyeler' : 'Key Levels Matter',
+                          tip: lang === 'tr' ? 'Destek ve direnç bölgeleri en iyi risk/ödül kurulumlarının göründüğü yerlerdir. Fiyatın bu seviyelere tepkisini bekleyin.' : 'Support and resistance zones are where the best risk/reward setups appear. Wait for price to react at these levels.',
+                          tag: "Swing"
+                        },
+                        {
+                          icon: "⏰",
+                          title: lang === 'tr' ? 'En İyi Scalp Saatleri' : 'Best Scalp Hours',
+                          tip: lang === 'tr' ? 'En yüksek hacim ve en iyi scalp fırsatları Londra (08:00-12:00 UTC) ve NY (13:00-17:00 UTC) seanslarında gerçekleşir.' : 'The highest volume and best scalp opportunities occur during London (08:00-12:00 UTC) and NY (13:00-17:00 UTC) sessions.',
+                          tag: "Scalp"
+                        },
+                        {
+                          icon: "🧠",
+                          title: lang === 'tr' ? 'Sabır Kazandırır' : 'Patience Pays',
+                          tip: lang === 'tr' ? 'Her mum bir işlem gerektirmez. En iyi traderlar A+ kurulumları bekler ve düşük kaliteli sinyalleri atlar. Nitelik, nicelikten önemlidir.' : 'Not every candle needs a trade. The best traders wait for A+ setups and skip low-quality signals. Quality over quantity.',
+                          tag: lang === 'tr' ? 'Genel' : 'General'
+                        },
                       ].map((item, i) => (
                         <div key={i} className="bg-[#0D0D0D] border border-[#1A1A1A] hover:border-orange-500/20 rounded-xl p-5 transition-all">
                           <div className="flex items-center justify-between mb-3">
@@ -755,14 +825,12 @@ export default function AnalyticsDashboard() {
                       ))}
                     </div>
                   )}
-
                 </div>
               )}
               {currentPage === 'market' && <MarketAnalysisPage />}
               {currentPage === 'history' && <HistoryPage />}
               {currentPage === 'settings' && <SettingsPage userData={userData} />}
             </div>
-            {/* NEWS PANEL - desktop only */}
             <div className="hidden lg:flex w-80 flex-shrink-0 bg-[#0A0A0A] border-l border-[#1A1A1A] flex-col overflow-hidden" style={{height: "calc(100vh - 56px)", position: "sticky", top: "56px"}}>
               <NewsPanel />
             </div>
@@ -796,6 +864,7 @@ export default function AnalyticsDashboard() {
 }
 
 function NewsPanel() {
+  const { lang } = useLanguage();
   const [news, setNews] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -823,8 +892,8 @@ function NewsPanel() {
     const diff = Date.now() - new Date(dateStr).getTime();
     const mins = Math.floor(diff / 60000);
     const hours = Math.floor(mins / 60);
-    if (hours > 0) return `${hours}h ago`;
-    return `${mins}m ago`;
+    if (hours > 0) return lang === 'tr' ? `${hours}s önce` : `${hours}h ago`;
+    return lang === 'tr' ? `${mins}d önce` : `${mins}m ago`;
   };
 
   const getVoteSentiment = (votes: any) => {
@@ -841,9 +910,9 @@ function NewsPanel() {
       <div className="px-4 py-3 border-b border-[#1A1A1A] flex items-center justify-between flex-shrink-0">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-          <span className="text-slate-200 text-sm font-semibold">Crypto News</span>
+          <span className="text-slate-200 text-sm font-semibold">{lang === 'tr' ? 'Kripto Haberleri' : 'Crypto News'}</span>
         </div>
-        <span className="text-slate-600 text-xs">Live Feed</span>
+        <span className="text-slate-600 text-xs">{lang === 'tr' ? 'Canlı' : 'Live Feed'}</span>
       </div>
       <div className="flex-1 overflow-y-auto">
         {loading ? (
@@ -851,7 +920,7 @@ function NewsPanel() {
             <div className="w-5 h-5 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
           </div>
         ) : news.length === 0 ? (
-          <div className="text-center text-slate-600 text-sm p-8">No news available</div>
+          <div className="text-center text-slate-600 text-sm p-8">{lang === 'tr' ? 'Haber bulunamadı' : 'No news available'}</div>
         ) : (
           <div className="divide-y divide-[#111]">
             {news.map((item, i) => {
@@ -869,8 +938,8 @@ function NewsPanel() {
                       )}
                     </div>
                     <div className="flex items-center gap-2">
-                      {sentiment === 'bullish' && <span className="text-xs text-green-400 font-medium">▲ Bull</span>}
-                      {sentiment === 'bearish' && <span className="text-xs text-red-400 font-medium">▼ Bear</span>}
+                      {sentiment === 'bullish' && <span className="text-xs text-green-400 font-medium">▲ {lang === 'tr' ? 'Boğa' : 'Bull'}</span>}
+                      {sentiment === 'bearish' && <span className="text-xs text-red-400 font-medium">▼ {lang === 'tr' ? 'Ayı' : 'Bear'}</span>}
                       <span className="text-xs text-slate-600">{getTimeAgo(item.published_at)}</span>
                     </div>
                   </div>
