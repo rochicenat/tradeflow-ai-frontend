@@ -31,7 +31,7 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
     if (!window.confirm(lang === 'tr' ? 'Emin misiniz? Bu işlem geri alınamaz.' : 'Are you sure? This action cannot be undone.')) return;
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     try {
-      const res = await fetch('https://tradeflow-ai-backend-production.up.railway.app/delete-account', {
+      const res = await fetch('${process.env.NEXT_PUBLIC_API_URL}/delete-account', {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -52,7 +52,7 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (!token) return;
     try {
-      const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/update-profile', {
+      const response = await fetch('${process.env.NEXT_PUBLIC_API_URL}/update-profile', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ name })
@@ -85,7 +85,7 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (!token) return;
     try {
-      const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/change-password', {
+      const response = await fetch('${process.env.NEXT_PUBLIC_API_URL}/change-password', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ current_password: currentPassword, new_password: newPassword })

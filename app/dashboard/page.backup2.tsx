@@ -71,7 +71,7 @@ export default function TradingDashboard() {
     }
 
     try {
-      const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/me', {
+      const response = await fetch('${process.env.NEXT_PUBLIC_API_URL}/me', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
 
@@ -106,7 +106,7 @@ export default function TradingDashboard() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/analyze-image', {
+      const response = await fetch('${process.env.NEXT_PUBLIC_API_URL}/analyze-image', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData

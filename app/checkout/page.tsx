@@ -75,7 +75,7 @@ function CheckoutContent() {
       const userInfo = getUserInfo();
       if (!userInfo) return;
       
-      const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/api/payment/create-checkout', {
+      const response = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/payment/create-checkout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

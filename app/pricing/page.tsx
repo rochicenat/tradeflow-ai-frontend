@@ -15,7 +15,7 @@ export default function PricingPage() {
     const token = localStorage.getItem('token');
     if (token) {
       setIsLoggedIn(true);
-      fetch('https://tradeflow-ai-backend-production.up.railway.app/me', {
+      fetch('${process.env.NEXT_PUBLIC_API_URL}/me', {
         headers: { 'Authorization': `Bearer ${token}` }
       }).then(r => r.json()).then(d => setUserPlan(d.plan || 'free')).catch(() => {});
     }

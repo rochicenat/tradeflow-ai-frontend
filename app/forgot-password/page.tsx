@@ -15,7 +15,7 @@ export default function ForgotPasswordPage() {
     try {
       const formData = new FormData();
       formData.append('email', email);
-      const res = await fetch('https://tradeflow-ai-backend-production.up.railway.app/forgot-password', {
+      const res = await fetch('${process.env.NEXT_PUBLIC_API_URL}/forgot-password', {
         method: 'POST',
         body: formData
       });

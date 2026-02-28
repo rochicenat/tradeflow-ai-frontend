@@ -51,7 +51,7 @@ function SignupContent() {
     }
     setLoading(true);
     try {
-      const res = await fetch('https://tradeflow-ai-backend-production.up.railway.app/register', {
+      const res = await fetch('${process.env.NEXT_PUBLIC_API_URL}/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({ name, email, password }),
@@ -101,7 +101,7 @@ function SignupContent() {
           <h1 className="text-3xl font-bold text-white mb-6">{t('signup.title')}</h1>
 
           <button
-            onClick={() => window.location.href="https://tradeflow-ai-backend-production.up.railway.app/auth/google"}
+            onClick={() => window.location.href="${process.env.NEXT_PUBLIC_API_URL}/auth/google"}
             className="w-full flex items-center justify-center gap-3 bg-[#1A1A1A] hover:bg-[#222] border border-[#333] text-white py-3 rounded-lg transition font-medium mb-4"
           >
             <img src="https://www.google.com/favicon.ico" className="w-5 h-5" alt="G" />
