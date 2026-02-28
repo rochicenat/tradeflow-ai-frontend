@@ -32,7 +32,7 @@ export default function HistoryPage() {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (!token) return;
     try {
-      const response = await fetch('${process.env.NEXT_PUBLIC_API_URL}/analysis-history', {
+      const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/analysis-history', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (response.ok) setHistory(await response.json());
@@ -48,7 +48,7 @@ export default function HistoryPage() {
     if (!token) return;
     setDeleting(id);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/delete-analysis/${id}`, {
+      const response = await fetch(`https://tradeflow-ai-backend-production.up.railway.app/delete-analysis/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });

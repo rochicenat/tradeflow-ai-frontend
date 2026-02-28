@@ -60,7 +60,7 @@ export default function Dashboard() {
     }
 
     try {
-      const response = await fetch('${process.env.NEXT_PUBLIC_API_URL}/me', {
+      const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/me', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
 
@@ -132,7 +132,7 @@ export default function Dashboard() {
       const formData = new FormData();
       formData.append('file', blob, 'chart.png');
 
-      const response = await fetch('${process.env.NEXT_PUBLIC_API_URL}/analyze-image', {
+      const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/analyze-image', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData,
