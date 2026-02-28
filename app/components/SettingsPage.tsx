@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { User, CreditCard, Shield, Bell } from 'lucide-react';
 import { useLanguage } from '@/app/contexts/LanguageContext';
+import { getToken, removeToken } from '@/app/lib/auth';
 
 interface UserData {
   email: string;
@@ -29,15 +30,15 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
 
   const handleDeleteAccount = async () => {
     if (!window.confirm(lang === 'tr' ? 'Emin misiniz? Bu işlem geri alınamaz.' : 'Are you sure? This action cannot be undone.')) return;
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const token = getToken();
     try {
       const res = await fetch('https://tradeflow-ai-backend-production.up.railway.app/delete-account', {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
-        localStorage.removeItem('token');
-        window.location.href = '/';
+        removeToken();
+        window.location.href = '/login';
       } else {
         alert(lang === 'tr' ? 'Hesap silinemedi' : 'Failed to delete account');
       }
@@ -49,7 +50,7 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
   const handleSaveProfile = async () => {
     setSaving(true);
     setSaveSuccess(false);
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const token = getToken();
     if (!token) return;
     try {
       const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/update-profile', {
@@ -82,7 +83,7 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
     }
     setPasswordUpdating(true);
     setPasswordSuccess(false);
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const token = getToken();
     if (!token) return;
     try {
       const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/change-password', {

@@ -1,4 +1,5 @@
 'use client';
+import { getToken } from '@/app/lib/auth';
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -12,7 +13,7 @@ export default function PricingPage() {
   const [userPlan, setUserPlan] = useState<string>('free');
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = getToken();
     if (token) {
       setIsLoggedIn(true);
       fetch('https://tradeflow-ai-backend-production.up.railway.app/me', {

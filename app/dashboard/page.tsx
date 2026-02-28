@@ -14,6 +14,7 @@ import SettingsPage from '../components/SettingsPage';
 import HistoryPage from '../components/HistoryPage';
 import MarketAnalysisPage from '../components/MarketAnalysisPage';
 import { useLanguage } from '@/app/contexts/LanguageContext';
+import { getToken, removeToken } from '@/app/lib/auth';
 
 interface AnalysisResult { analysis: string; trend: string; confidence: string; }
 interface UserData { email: string; name: string; plan: string; analyses_used: number; analyses_limit: number; subscription_status: string; }
@@ -127,7 +128,7 @@ export default function AnalyticsDashboard() {
   useEffect(() => { fetchUserData(); }, []);
 
   const fetchUserData = async () => {
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const token = getToken();
     if (!token) { router.push('/login'); return; }
     try {
       const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/me', { headers: { 'Authorization': `Bearer ${token}` } });
@@ -142,7 +143,7 @@ export default function AnalyticsDashboard() {
       setShowUpgradeModal(true); return;
     }
     const file = acceptedFiles[0];
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const token = getToken();
     if (!token) { toast.error(lang === 'tr' ? 'Lütfen giriş yapın' : 'Please login first'); router.push('/login'); return; }
     const reader = new FileReader();
     reader.onloadend = () => setImagePreview(reader.result as string);
@@ -177,7 +178,7 @@ export default function AnalyticsDashboard() {
     onDrop, accept: { 'image/*': ['.png', '.jpg', '.jpeg', '.webp'] }, maxFiles: 1, disabled: uploading || !analysisType
   });
 
-  const handleLogout = () => { localStorage.removeItem('token'); toast.success(lang === 'tr' ? 'Çıkış yapıldı' : 'Logged out'); router.push('/'); };
+  const handleLogout = () => { removeToken(); toast.success(lang === 'tr' ? 'Çıkış yapıldı' : 'Logged out'); router.push('/login'); };
 
   const parseNewFormat = (analysis: string, trend: string, confidence: string): ParsedAnalysis => {
     const lines = analysis.split('\n').map(l => l.trim()).filter(l => l);
@@ -872,7 +873,7 @@ function NewsPanel() {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        const token = getToken();
         const res = await fetch('https://tradeflow-ai-backend-production.up.railway.app/news', {
           headers: { 'Authorization': `Bearer ${token}` }
         });

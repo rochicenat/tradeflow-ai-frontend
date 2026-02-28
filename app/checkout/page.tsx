@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'react-hot-toast';
+import { getToken } from '@/app/lib/auth';
 
 interface Plan {
   id: 'pro' | 'premium';
@@ -55,7 +56,7 @@ function CheckoutContent() {
   }, [searchParams]);
 
   const getUserInfo = () => {
-    const token = localStorage.getItem('token');
+    const token = getToken();
     const userEmail = localStorage.getItem('user_email');
     const userId = localStorage.getItem('user_id');
     

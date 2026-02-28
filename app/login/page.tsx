@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Activity, Mail, Lock, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/app/contexts/LanguageContext';
+import { saveToken } from '@/app/lib/auth';
 
 function LanguageToggle() {
   const { lang, toggleLang } = useLanguage();
@@ -32,7 +33,6 @@ function LoginPageContent() {
 
   useEffect(() => {
     if (searchParams.get('verified') === 'true') setVerified(true);
-    // Kayıtlı email varsa doldur
     const savedEmail = localStorage.getItem('rememberedEmail');
     if (savedEmail) {
       setEmail(savedEmail);
@@ -53,13 +53,13 @@ function LoginPageContent() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.detail || 'Invalid credentials');
 
+      // ✅ Düzeltildi — saveToken her ikisini temizleyip doğru yere kaydeder
+      saveToken(data.access_token, rememberMe);
+
       if (rememberMe) {
-        localStorage.setItem('token', data.access_token);
         localStorage.setItem('rememberedEmail', email);
       } else {
-        sessionStorage.setItem('token', data.access_token);
         localStorage.removeItem('rememberedEmail');
-        localStorage.removeItem('token');
       }
 
       router.push('/dashboard');
@@ -126,7 +126,6 @@ function LoginPageContent() {
               </div>
             </div>
 
-            {/* Beni Hatırla */}
             <label className="flex items-center gap-3 cursor-pointer group">
               <div className="relative">
                 <input type="checkbox" checked={rememberMe} onChange={e => setRememberMe(e.target.checked)} className="sr-only peer" />

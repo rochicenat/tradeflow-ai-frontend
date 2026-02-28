@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, TrendingUp, TrendingDown, Minus, AlertCircle, Trash2, DollarSign, Shield, Target, Activity } from 'lucide-react';
+import { getToken } from '@/app/lib/auth';
 
 interface HistoryItem {
   id: number;
@@ -29,7 +30,7 @@ export default function HistoryPage() {
   useEffect(() => { fetchHistory(); }, []);
 
   const fetchHistory = async () => {
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const token = getToken();
     if (!token) return;
     try {
       const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/analysis-history', {
@@ -44,7 +45,7 @@ export default function HistoryPage() {
   };
 
   const deleteAnalysis = async (id: number) => {
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const token = getToken();
     if (!token) return;
     setDeleting(id);
     try {
