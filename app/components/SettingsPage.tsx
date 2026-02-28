@@ -166,7 +166,7 @@ export default function SettingsPage({ userData }: SettingsPageProps) {
                 <div className="text-3xl font-bold text-white mb-1 uppercase">{userData?.plan || 'Free'}</div>
                 {userData?.plan !== 'free' && (
                   <div className="text-slate-400">
-                    {userData?.analyses_used || 0} / {userData?.analyses_limit || 3} {lang === 'tr' ? 'analiz kullanıldı' : 'analyses used'}
+                    {userData?.analyses_used || 0} / {userData?.plan === "premium" ? "∞" : userData?.analyses_limit || 3} {lang === "tr" ? "analiz kullanıldı" : "analyses used"}
                   </div>
                 )}
               </div>
