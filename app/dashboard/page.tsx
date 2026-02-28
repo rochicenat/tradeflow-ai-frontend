@@ -340,7 +340,7 @@ export default function AnalyticsDashboard() {
           </div>
         </div>
         <div className="flex-1 flex items-center gap-1.5 text-sm min-w-0">
-          <span className="text-slate-500 hidden sm:inline">TradeFlow</span>
+          <a href="/" className="text-slate-500 hidden sm:inline hover:text-orange-400 transition">TradeFlow</a>
           <span className="text-slate-600 hidden sm:inline">/</span>
           <span className="text-slate-200 font-medium truncate">
             {currentPage === 'dashboard' && analysisType === 'swing' ? 'Swing Trading' :
