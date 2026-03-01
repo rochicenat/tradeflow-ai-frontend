@@ -20,6 +20,7 @@ export default function BotWidget() {
   const [killConfirm, setKillConfirm] = useState(false);
 
   const headers: Record<string, string> = {
+    'X-Internal-Token': process.env.NEXT_PUBLIC_BOT_TOKEN || 'internal-token-changethis',
     'Content-Type': 'application/json',
   };
 
