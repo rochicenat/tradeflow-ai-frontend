@@ -831,7 +831,7 @@ export default function AnalyticsDashboard() {
                   )}
                 </div>
               )}
-              {currentPage === 'bot' && <div className="p-4 max-w-lg"><BotWidget userEmail={userData?.email} /></div>}
+              {currentPage === 'bot' && <div className="p-6 max-w-2xl mx-auto w-full"><BotWidget userEmail={userData?.email} /></div>}
               {currentPage === 'market' && <MarketAnalysisPage />}
               {currentPage === 'history' && <HistoryPage />}
               {currentPage === 'settings' && <SettingsPage userData={userData} />}
