@@ -176,7 +176,7 @@ export default function BotWidget() {
         body: JSON.stringify(payload),
       });
       const json = await res.json();
-      if (!res.ok) throw new Error(json.detail || 'Bot oluşturulamadı');
+      if (!res.ok) { const errMsg = Array.isArray(json.detail) ? json.detail.map((x: any) => (x.loc?.slice(-1)[0] + ': ' + x.msg)).join(', ') : (typeof json.detail === 'string' ? json.detail : 'Bot oluşturulamadı'); throw new Error(errMsg); }
 
       setCreateSuccess(`✅ Bot oluşturuldu! ID: ${json.bot_id || json.id || '—'}`);
       setCreateForm(f => ({ ...f, name: '' }));
