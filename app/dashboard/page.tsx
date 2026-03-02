@@ -234,6 +234,7 @@ export default function AnalyticsDashboard() {
     { id: 'dashboard', name: t('dash.sidebar.dashboard'), icon: Home },
     { id: 'swing', name: lang === 'tr' ? 'Swing Trading' : 'Swing Trading', icon: TrendingUp },
     { id: 'scalp', name: lang === 'tr' ? 'Scalp Trading' : 'Scalp Trading', icon: Timer },
+    { id: 'bot', name: lang === 'tr' ? 'Trading Bot' : 'Trading Bot', icon: Zap },
     { id: 'market', name: lang === 'tr' ? 'Piyasa Analizi' : 'Market Analysis', icon: BarChart3 },
     { id: 'history', name: t('dash.sidebar.history'), icon: History },
     { id: 'settings', name: t('dash.sidebar.settings'), icon: SettingsIcon },
@@ -461,8 +462,6 @@ export default function AnalyticsDashboard() {
                       )}
                     </div>
                   )}
-                  {/* Trading Bot Widget */}
-                  <BotWidget userEmail={userData?.email} />
                   {userData?.plan === 'free' && !analysisType && (
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       {[
@@ -832,6 +831,7 @@ export default function AnalyticsDashboard() {
                   )}
                 </div>
               )}
+              {currentPage === 'bot' && <div className="p-4 max-w-lg"><BotWidget userEmail={userData?.email} /></div>}
               {currentPage === 'market' && <MarketAnalysisPage />}
               {currentPage === 'history' && <HistoryPage />}
               {currentPage === 'settings' && <SettingsPage userData={userData} />}
