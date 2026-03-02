@@ -462,7 +462,7 @@ export default function AnalyticsDashboard() {
                     </div>
                   )}
                   {/* Trading Bot Widget */}
-                  <BotWidget />
+                  <BotWidget userEmail={userData?.email} />
                   {userData?.plan === 'free' && !analysisType && (
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       {[
