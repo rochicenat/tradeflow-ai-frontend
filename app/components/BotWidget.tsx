@@ -22,6 +22,7 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
   const [killConfirm, setKillConfirm] = useState(false);
   const [activeTab, setActiveTab] = useState<Tab>('overview');
   const [expandedBot, setExpandedBot] = useState<string | null>(null);
+  const [botOrders, setBotOrders] = useState<Record<string, any[]>>({});
   const [botSummaries, setBotSummaries] = useState<Record<string, any>>({});
 
   const [form, setForm] = useState({ strategy: '', symbol: 'BTCUSDT', name: '' });
@@ -86,6 +87,17 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
   useEffect(() => {
     bots.forEach(id => fetchBotSummary(id));
   }, [bots]);
+
+  // ── fetch bot orders ───────────────────────────────────────────────────────
+  const fetchBotOrders = async (botId: string) => {
+    try {
+      const res = await fetch(`${API_URL}/api/v1/bots/${botId}/orders?limit=10`, { headers: HEADERS });
+      if (res.ok) {
+        const json = await res.json();
+        setBotOrders(prev => ({ ...prev, [botId]: json.orders || [] }));
+      }
+    } catch (e) { console.error(e); }
+  };
 
   // ── kill switch ─────────────────────────────────────────────────────────────
   const handleKill = async () => {
@@ -264,7 +276,7 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
                       className="p-1.5 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition">
                       <Square className="w-3 h-3" />
                     </button>
-                    <button onClick={() => { setExpandedBot(isExpanded ? null : botId); if (!isExpanded) fetchBotSummary(botId); }}
+                    <button onClick={() => { setExpandedBot(isExpanded ? null : botId); if (!isExpanded) { fetchBotSummary(botId); fetchBotOrders(botId); } }}
                       className="p-1.5 rounded-lg text-slate-500 hover:text-slate-300 transition">
                       {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                     </button>
@@ -286,7 +298,28 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
                     ) : (
                       <div className="text-slate-600 text-xs mt-2">Özet yükleniyor...</div>
                     )}
-                    <div className="text-slate-600 text-xs mt-2 font-mono">{botId}</div>
+                    <div className="text-slate-600 text-xs mt-1 font-mono truncate">{botId}</div>
+                    {botOrders[botId]?.length > 0 && (
+                      <div className="mt-3">
+                        <div className="text-slate-400 text-xs font-semibold mb-2">Son İşlemler</div>
+                        <div className="space-y-1.5">
+                          {botOrders[botId].map((order: any) => (
+                            <div key={order.id} className="flex items-center justify-between bg-[#0F0F0F] rounded-lg px-2 py-1.5">
+                              <div className="flex items-center gap-2">
+                                <span className={`text-xs font-bold ${order.side === 'BUY' ? 'text-green-400' : 'text-red-400'}`}>
+                                  {order.side}
+                                </span>
+                                <span className="text-slate-400 text-xs">{order.symbol}</span>
+                              </div>
+                              <div className="text-right">
+                                <div className="text-white text-xs">${order.fill_price?.toLocaleString()}</div>
+                                <div className="text-slate-600 text-xs">{new Date(order.timestamp).toLocaleTimeString('tr-TR')}</div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
