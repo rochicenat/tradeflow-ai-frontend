@@ -1,4 +1,5 @@
 'use client';
+import BotWidget from '../components/BotWidget';
 import { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useRouter } from 'next/navigation';
@@ -460,6 +461,8 @@ export default function AnalyticsDashboard() {
                       )}
                     </div>
                   )}
+                  {/* Trading Bot Widget */}
+                  <BotWidget />
                   {userData?.plan === 'free' && !analysisType && (
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       {[
