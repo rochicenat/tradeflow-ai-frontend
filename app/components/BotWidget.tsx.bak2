@@ -65,8 +65,8 @@ export default function BotWidget() {
   const fetchData = async () => {
     try {
       const [btcRes, ethRes, killRes, posRes, stratRes] = await Promise.allSettled([
-        fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT').then(r => r.json()),
-        fetch('https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT').then(r => r.json()),
+        fetch(`${API_URL}/api/v1/binance/price/BTCUSDT`, { headers: HEADERS }).then(r => r.json()),
+        fetch(`${API_URL}/api/v1/binance/price/ETHUSDT`, { headers: HEADERS }).then(r => r.json()),
         fetch(`${API_URL}/api/v1/kill-switch/status`, { headers: HEADERS }).then(r => r.json()),
         fetch(`${API_URL}/api/v1/positions/summary`, { headers: HEADERS }).then(r => r.json()),
         fetch(`${API_URL}/api/v1/strategies/list`, { headers: HEADERS }).then(r => r.json()),
@@ -77,8 +77,8 @@ export default function BotWidget() {
         : [];
 
       setData({
-        btc: btcRes.status === 'fulfilled' ? parseFloat(btcRes.value.price) : 0,
-        eth: ethRes.status === 'fulfilled' ? parseFloat(ethRes.value.price) : 0,
+        btc: btcRes.status === 'fulfilled' ? btcRes.value.price : 0,
+        eth: ethRes.status === 'fulfilled' ? ethRes.value.price : 0,
         killStatus: killRes.status === 'fulfilled' ? killRes.value.global_state : 'UNKNOWN',
         tradingAllowed: killRes.status === 'fulfilled' ? killRes.value.trading_allowed : false,
         strategies,
@@ -103,7 +103,7 @@ export default function BotWidget() {
     try {
       const res = await fetch(`${API_URL}/api/v1/bots/list`, { headers: HEADERS });
       const json = await res.json();
-      setBots(Array.isArray(json.active_bots) ? json.active_bots : []);
+      setBots(json.bots || json || []);
     } catch (e) {
       console.error('Bot list error:', e);
     } finally {
