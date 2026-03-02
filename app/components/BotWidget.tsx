@@ -293,7 +293,7 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
                             ${(summary.total_pnl || 0).toFixed(2)}
                           </div>
                         </div>
-                        <div><div className="text-slate-500 text-xs">İşlemler</div><div className="text-white text-xs">{summary.trade_count ?? summary.total_trades ?? '—'}</div></div>
+                        <div><div className="text-slate-500 text-xs">İşlemler</div><div className="text-white text-xs">{summary.trade_count ?? summary.total_trades ?? summary.total_orders ?? '—'}</div></div>
                       </div>
                     ) : (
                       <div className="text-slate-600 text-xs mt-2">Özet yükleniyor...</div>
