@@ -2,7 +2,8 @@
 import { useState, useEffect } from 'react';
 import { Activity, TrendingUp, Shield, Zap, DollarSign } from 'lucide-react';
 
-const API_URL = process.env.NEXT_PUBLIC_BOT_API_URL || 'https://thorough-wonder-production-4037.up.railway.app';
+const API_URL = 'https://thorough-wonder-production-4037.up.railway.app';
+const BOT_TOKEN = 'internal-token-changethis';
 
 interface BotData {
   btc: number;
@@ -19,12 +20,11 @@ export default function BotWidget() {
   const [loading, setLoading] = useState(true);
   const [killConfirm, setKillConfirm] = useState(false);
 
-  const headers: Record<string, string> = {
-    'X-Internal-Token': process.env.NEXT_PUBLIC_BOT_TOKEN || 'internal-token-changethis',
-    'Content-Type': 'application/json',
-  };
-
   const fetchData = async () => {
+    const headers = {
+      'X-Internal-Token': BOT_TOKEN,
+      'Content-Type': 'application/json',
+    };
     try {
       const [btcRes, ethRes, killRes, posRes, stratRes] = await Promise.allSettled([
         fetch(`${API_URL}/api/v1/binance/price/BTCUSDT`, { headers }).then(r => r.json()),
@@ -57,12 +57,13 @@ export default function BotWidget() {
   }, []);
 
   const handleKillSwitch = async () => {
+    const headers = {
+      'X-Internal-Token': BOT_TOKEN,
+      'Content-Type': 'application/json',
+    };
     if (!killConfirm) { setKillConfirm(true); return; }
     try {
-      await fetch(`${API_URL}/api/v1/kill-switch/trigger`, {
-        method: 'POST',
-        headers,
-      });
+      await fetch(`${API_URL}/api/v1/kill-switch/trigger`, { method: 'POST', headers });
       setKillConfirm(false);
       fetchData();
     } catch (e) {
