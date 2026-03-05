@@ -25,7 +25,23 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
   const [botOrders, setBotOrders] = useState<Record<string, any[]>>({});
   const [botSummaries, setBotSummaries] = useState<Record<string, any>>({});
 
-  const [form, setForm] = useState({ strategy: '', symbol: 'BTCUSDT', name: '' });
+  const [form, setForm] = useState({
+    strategy: '',
+    symbol: 'BTCUSDT',
+    name: '',
+    timeframe: '1h',
+    // EMA params
+    shortPeriod: 9,
+    longPeriod: 21,
+    // RSI params
+    rsiPeriod: 14,
+    oversold: 30,
+    overbought: 70,
+    // Risk
+    positionSizePct: 10,
+    stopLossPct: 2,
+    takeProfitPct: 4,
+  });
   const [creating, setCreating]   = useState(false);
   const [createMsg, setCreateMsg] = useState<{ type: 'error' | 'success'; text: string } | null>(null);
 
@@ -122,6 +138,10 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
     try {
       const botId = crypto.randomUUID();
       const userId = userEmail || `user_${Date.now()}`;
+      const strategyParams = form.strategy === 'ema_crossover'
+        ? { short_period: form.shortPeriod, long_period: form.longPeriod }
+        : { rsi_period: form.rsiPeriod, oversold: form.oversold, overbought: form.overbought };
+
       const payload = {
         bot_id: botId,
         user_id: userId,
@@ -129,6 +149,12 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
         symbol: form.symbol.toUpperCase(),
         mode: 'paper',
         initial_balance: 10000.0,
+        timeframe: form.timeframe,
+        strategy_params: strategyParams,
+        quantity: 0.001,
+        stop_loss_pct: form.stopLossPct,
+        take_profit_pct: form.takeProfitPct,
+        position_size_pct: form.positionSizePct,
         ...(form.name ? { name: form.name } : {}),
       };
       const res = await fetch(`${API_URL}/api/v1/bots/create`, {
@@ -306,6 +332,37 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
                       <div className="text-slate-600 text-xs mt-2">Özet yükleniyor...</div>
                     )}
                     <div className="text-slate-600 text-xs mt-1 font-mono truncate">{botId}</div>
+
+                    {/* Analiz Kartları */}
+                    {botOrders[botId] && (() => {
+                      const orders = botOrders[botId];
+                      const closed = orders.filter((o: any) => o.side === 'SELL');
+                      const wins = closed.filter((o: any) => (o.pnl || 0) > 0).length;
+                      const winRate = closed.length > 0 ? ((wins / closed.length) * 100).toFixed(1) : '—';
+                      const pnls = closed.map((o: any) => o.pnl || 0);
+                      let peak = 0, maxDD = 0, cumPnl = 0;
+                      pnls.forEach(p => { cumPnl += p; if (cumPnl > peak) peak = cumPnl; const dd = peak - cumPnl; if (dd > maxDD) maxDD = dd; });
+                      const avgWin = wins > 0 ? pnls.filter(p => p > 0).reduce((a,b) => a+b, 0) / wins : 0;
+                      const losses = closed.length - wins;
+                      const avgLoss = losses > 0 ? Math.abs(pnls.filter(p => p < 0).reduce((a,b) => a+b, 0) / losses) : 0;
+                      const rr = avgLoss > 0 ? (avgWin / avgLoss).toFixed(2) : '—';
+                      return (
+                        <div className="grid grid-cols-3 gap-2 mt-3">
+                          <div className="bg-[#0F0F0F] rounded-xl p-2 text-center">
+                            <div className="text-slate-500 text-xs">Win Rate</div>
+                            <div className="text-green-400 text-sm font-bold">{winRate}{winRate !== '—' ? '%' : ''}</div>
+                          </div>
+                          <div className="bg-[#0F0F0F] rounded-xl p-2 text-center">
+                            <div className="text-slate-500 text-xs">Max DD</div>
+                            <div className="text-red-400 text-sm font-bold">${maxDD.toFixed(2)}</div>
+                          </div>
+                          <div className="bg-[#0F0F0F] rounded-xl p-2 text-center">
+                            <div className="text-slate-500 text-xs">R/R Oran</div>
+                            <div className="text-orange-400 text-sm font-bold">{rr}</div>
+                          </div>
+                        </div>
+                      );
+                    })()}
                     <div className="mt-3">
                       <div className="text-slate-400 text-xs font-semibold mb-2">BTC Grafiği</div>
                       <div className="rounded-xl overflow-hidden" style={{height: '220px'}}>
@@ -396,6 +453,89 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
               onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
               placeholder="Örn: BTC EMA Bot #1"
               className="w-full bg-[#141414] border border-[#2A2A2A] text-white text-sm rounded-xl px-3 py-2 outline-none focus:border-orange-500/50 transition placeholder-slate-600" />
+          </div>
+
+          {/* Zaman Dilimi */}
+          <div className="space-y-1">
+            <label className="text-slate-400 text-xs">Zaman Dilimi</label>
+            <select value={form.timeframe} onChange={e => setForm(f => ({ ...f, timeframe: e.target.value }))}
+              className="w-full bg-[#141414] border border-[#2A2A2A] text-white text-sm rounded-xl px-3 py-2 outline-none focus:border-orange-500/50 transition">
+              {['1m','5m','15m','1h','4h','1d'].map(tf => (
+                <option key={tf} value={tf}>{tf}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Strateji Parametreleri */}
+          {form.strategy === 'ema_crossover' && (
+            <div className="space-y-2 bg-[#141414] rounded-xl p-3 border border-[#2A2A2A]">
+              <div className="text-orange-400 text-xs font-semibold">EMA Parametreleri</div>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="space-y-1">
+                  <label className="text-slate-400 text-xs">Hızlı EMA</label>
+                  <input type="number" value={form.shortPeriod} min={1} max={50}
+                    onChange={e => setForm(f => ({ ...f, shortPeriod: Number(e.target.value) }))}
+                    className="w-full bg-[#0F0F0F] border border-[#2A2A2A] text-white text-sm rounded-xl px-3 py-2 outline-none focus:border-orange-500/50 transition" />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-slate-400 text-xs">Yavaş EMA</label>
+                  <input type="number" value={form.longPeriod} min={1} max={200}
+                    onChange={e => setForm(f => ({ ...f, longPeriod: Number(e.target.value) }))}
+                    className="w-full bg-[#0F0F0F] border border-[#2A2A2A] text-white text-sm rounded-xl px-3 py-2 outline-none focus:border-orange-500/50 transition" />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {form.strategy === 'rsi_mean_revert' && (
+            <div className="space-y-2 bg-[#141414] rounded-xl p-3 border border-[#2A2A2A]">
+              <div className="text-orange-400 text-xs font-semibold">RSI Parametreleri</div>
+              <div className="grid grid-cols-3 gap-2">
+                <div className="space-y-1">
+                  <label className="text-slate-400 text-xs">Periyot</label>
+                  <input type="number" value={form.rsiPeriod} min={2} max={50}
+                    onChange={e => setForm(f => ({ ...f, rsiPeriod: Number(e.target.value) }))}
+                    className="w-full bg-[#0F0F0F] border border-[#2A2A2A] text-white text-sm rounded-xl px-3 py-2 outline-none focus:border-orange-500/50 transition" />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-slate-400 text-xs">Aşırı Satım</label>
+                  <input type="number" value={form.oversold} min={1} max={49}
+                    onChange={e => setForm(f => ({ ...f, oversold: Number(e.target.value) }))}
+                    className="w-full bg-[#0F0F0F] border border-[#2A2A2A] text-white text-sm rounded-xl px-3 py-2 outline-none focus:border-orange-500/50 transition" />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-slate-400 text-xs">Aşırı Alım</label>
+                  <input type="number" value={form.overbought} min={51} max={99}
+                    onChange={e => setForm(f => ({ ...f, overbought: Number(e.target.value) }))}
+                    className="w-full bg-[#0F0F0F] border border-[#2A2A2A] text-white text-sm rounded-xl px-3 py-2 outline-none focus:border-orange-500/50 transition" />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Risk Yönetimi */}
+          <div className="space-y-2 bg-[#141414] rounded-xl p-3 border border-[#2A2A2A]">
+            <div className="text-orange-400 text-xs font-semibold">Risk Yönetimi</div>
+            <div className="grid grid-cols-3 gap-2">
+              <div className="space-y-1">
+                <label className="text-slate-400 text-xs">Kasa (%)</label>
+                <input type="number" value={form.positionSizePct} min={1} max={100}
+                  onChange={e => setForm(f => ({ ...f, positionSizePct: Number(e.target.value) }))}
+                  className="w-full bg-[#0F0F0F] border border-[#2A2A2A] text-white text-sm rounded-xl px-3 py-2 outline-none focus:border-orange-500/50 transition" />
+              </div>
+              <div className="space-y-1">
+                <label className="text-slate-400 text-xs">Stop-Loss (%)</label>
+                <input type="number" value={form.stopLossPct} min={0.1} max={50} step={0.1}
+                  onChange={e => setForm(f => ({ ...f, stopLossPct: Number(e.target.value) }))}
+                  className="w-full bg-[#0F0F0F] border border-[#2A2A2A] text-white text-sm rounded-xl px-3 py-2 outline-none focus:border-orange-500/50 transition" />
+              </div>
+              <div className="space-y-1">
+                <label className="text-slate-400 text-xs">Take-Profit (%)</label>
+                <input type="number" value={form.takeProfitPct} min={0.1} max={100} step={0.1}
+                  onChange={e => setForm(f => ({ ...f, takeProfitPct: Number(e.target.value) }))}
+                  className="w-full bg-[#0F0F0F] border border-[#2A2A2A] text-white text-sm rounded-xl px-3 py-2 outline-none focus:border-orange-500/50 transition" />
+              </div>
+            </div>
           </div>
 
           {userEmail && (
