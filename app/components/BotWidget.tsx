@@ -300,6 +300,16 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
                     )}
                     <div className="text-slate-600 text-xs mt-1 font-mono truncate">{botId}</div>
                     <div className="mt-3">
+                      <div className="text-slate-400 text-xs font-semibold mb-2">BTC Grafiği</div>
+                      <div className="rounded-xl overflow-hidden" style={{height: '220px'}}>
+                        <iframe
+                          src="https://s.tradingview.com/widgetembed/?symbol=BINANCE:BTCUSDT&interval=60&theme=dark&style=1&locale=tr&toolbar_bg=%23141414&hide_top_toolbar=1&hide_legend=1&save_image=0&backgroundColor=%230F0F0F"
+                          style={{width:'100%',height:'100%',border:'none'}}
+                          allowTransparency={true}
+                        />
+                      </div>
+                    </div>
+                    <div className="mt-3">
                         <div className="text-slate-400 text-xs font-semibold mb-2">Son İşlemler</div>
                         {(!botOrders[botId] || botOrders[botId].length === 0) ? (
                           <div className="text-slate-600 text-xs text-center py-2">Henüz işlem yok</div>
