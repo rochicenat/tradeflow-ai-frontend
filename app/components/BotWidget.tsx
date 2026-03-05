@@ -270,6 +270,13 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
                       <div className="text-white text-xs font-semibold font-mono truncate">{botId.slice(0, 8)}…</div>
                       <div className="text-green-400 text-xs">● aktif</div>
                     </div>
+                    {botSummaries[botId]?.last_signal && (
+                      <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+                        botSummaries[botId].last_signal === 'BUY' ? 'bg-green-500/20 text-green-400' :
+                        botSummaries[botId].last_signal === 'SELL' ? 'bg-red-500/20 text-red-400' :
+                        'bg-slate-500/20 text-slate-400'
+                      }`}>{botSummaries[botId].last_signal}</span>
+                    )}
                   </div>
                   <div className="flex items-center gap-1 flex-shrink-0">
                     <button onClick={() => handleStop(botId)} title="Durdur"
