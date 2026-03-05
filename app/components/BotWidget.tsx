@@ -299,9 +299,11 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
                       <div className="text-slate-600 text-xs mt-2">Özet yükleniyor...</div>
                     )}
                     <div className="text-slate-600 text-xs mt-1 font-mono truncate">{botId}</div>
-                    {botOrders[botId]?.length > 0 && (
-                      <div className="mt-3">
+                    <div className="mt-3">
                         <div className="text-slate-400 text-xs font-semibold mb-2">Son İşlemler</div>
+                        {(!botOrders[botId] || botOrders[botId].length === 0) ? (
+                          <div className="text-slate-600 text-xs text-center py-2">Henüz işlem yok</div>
+                        ) : (
                         <div className="space-y-1.5">
                           {botOrders[botId].map((order: any) => (
                             <div key={order.id} className="flex items-center justify-between bg-[#0F0F0F] rounded-lg px-2 py-1.5">
@@ -318,8 +320,8 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
                             </div>
                           ))}
                         </div>
+                        )}
                       </div>
-                    )}
                   </div>
                 )}
               </div>
