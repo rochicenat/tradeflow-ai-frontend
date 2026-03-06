@@ -138,10 +138,10 @@ export default function Home() {
             <h2 className="text-4xl font-bold">Why Choose <span className="text-orange-500">TradeFlow AI?</span></h2>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <FeatureCard icon={<TrendingUp className="w-8 h-8 text-orange-500" />} title=Swing Trading description=Multi-day trend analysis with major support/resistance zones and pattern detection />
-            <FeatureCard icon={<Timer className="w-8 h-8 text-orange-500" />} title=Scalp Trading description=1-15 minute chart precision analysis with tight entry/exit points and momentum signals />
-            <FeatureCard icon={<Zap className="w-8 h-8 text-orange-500" />} title=Instant Results description=Upload and get complete AI analysis in under 3 seconds with entry, SL and TP levels />
-            <FeatureCard icon={<Shield className="w-8 h-8 text-orange-500" />} title=Any Market description=Stocks, forex, crypto, commodities — works with charts from any platform />
+            <FeatureCard icon={<TrendingUp className="w-8 h-8 text-orange-500" />} title="Swing Trading" description="Multi-day trend analysis with major support/resistance zones and pattern detection" />
+            <FeatureCard icon={<Timer className="w-8 h-8 text-orange-500" />} title="Scalp Trading" description="1-15 minute chart precision analysis with tight entry/exit points and momentum signals" />
+            <FeatureCard icon={<Zap className="w-8 h-8 text-orange-500" />} title="Instant Results" description="Upload and get complete AI analysis in under 3 seconds with entry, SL and TP levels" />
+            <FeatureCard icon={<Shield className="w-8 h-8 text-orange-500" />} title="Any Market" description="Stocks, forex, crypto, commodities — works with charts from any platform" />
           </div>
         </div>
       </section>
