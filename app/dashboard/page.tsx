@@ -406,15 +406,6 @@ export default function AnalyticsDashboard() {
                         <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">Your Plan</div>
                         <div className={`text-2xl sm:text-3xl font-black uppercase ${userData?.plan === 'premium' ? 'text-purple-400' : 'text-orange-400'}`}>{userData?.plan}</div>
                       </div>
-                      {userData?.plan !== 'premium' && (
-                        <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
-                          <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">{'Usage'}</div>
-                          <div className="text-2xl sm:text-3xl font-black text-white">{usagePercent}%</div>
-                          <div className="h-1.5 bg-[#1A1A1A] rounded-full mt-2 overflow-hidden">
-                            <div className={`h-full rounded-full ${usagePercent > 80 ? 'bg-red-500' : 'bg-orange-500'}`} style={{ width: `${usagePercent}%` }} />
-                          </div>
-                        </div>
-                      )}
                     </div>
                   )}
                   {userData?.plan === 'free' && !analysisType && (
