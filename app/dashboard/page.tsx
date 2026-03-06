@@ -398,7 +398,7 @@ export default function AnalyticsDashboard() {
                       <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
                         <div className="text-xs text-slate-500 mb-1 uppercase tracking-wider">{'Left'}</div>
                         <div className={`text-2xl sm:text-3xl font-black ${userData?.plan === 'premium' ? 'text-green-400' : ((userData?.analyses_limit || 0) - (userData?.analyses_used || 0)) <= 5 ? 'text-red-400' : 'text-green-400'}`}>
-                          '∞'
+                          ∞
                         </div>
                         <div className="text-xs text-slate-500 mt-1">{'remaining'}</div>
                       </div>
