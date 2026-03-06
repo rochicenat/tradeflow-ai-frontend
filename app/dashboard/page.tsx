@@ -298,15 +298,7 @@ export default function AnalyticsDashboard() {
       )}
 
       <AnimatePresence>
-        {showMobileNews && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/90 flex flex-col lg:hidden">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-[#1A1A1A]">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-white font-semibold">{'Crypto News'}</span>
-              </div>
-              <button onClick={() => setShowMobileNews(false)} className="text-slate-400 hover:text-white">
+className="text-slate-400 hover:text-white">
                 <X className="w-5 h-5" />
               </button>
             </div>
