@@ -380,10 +380,6 @@ export default function AnalyticsDashboard() {
               </div>
             ))}
           </nav>
-<button onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="h-10 border-t border-[#1A1A1A] hover:bg-[#141414] transition flex items-center justify-center text-slate-500 hover:text-slate-300">
-            <Menu className="w-4 h-4" />
-          </button>
         </div>
 
         {/* MAIN CONTENT */}
