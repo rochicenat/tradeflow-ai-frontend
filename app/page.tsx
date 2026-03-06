@@ -155,9 +155,9 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { num: '01', icon: <Upload className="w-10 h-10 text-orange-500" />, title: t.s1t, desc: t.s1d },
-              { num: '02', icon: <Brain className="w-10 h-10 text-orange-500" />, title: t.s2t, desc: t.s2d },
-              { num: '03', icon: <LineChart className="w-10 h-10 text-orange-500" />, title: t.s3t, desc: t.s3d },
+              { num: '01', icon: <Upload className="w-10 h-10 text-orange-500" />, title: 'Upload Chart', desc: 'Drag & drop any chart screenshot from TradingView, MT4, Binance or any platform' },
+              { num: '02', icon: <Brain className="w-10 h-10 text-orange-500" />, title: 'AI Analyzes', desc: 'Our AI identifies patterns, key levels, momentum signals and trade setup quality' },
+              { num: '03', icon: <LineChart className="w-10 h-10 text-orange-500" />, title: 'Get Insights', desc: 'Receive entry price, stop loss, take profit, pattern analysis and risk assessment' },
             ].map((step, i) => (
               <div key={i} className="relative bg-[#0A0A0A] border border-[#252525] hover:border-orange-500/40 rounded-2xl p-8 transition-all group">
                 <div className="text-6xl font-black text-orange-500/10 group-hover:text-orange-500/20 transition-all absolute top-4 right-6">{step.num}</div>
