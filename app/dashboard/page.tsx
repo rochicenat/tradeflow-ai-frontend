@@ -156,7 +156,7 @@ export default function AnalyticsDashboard() {
     } catch (error: any) {
       if (!error.message?.includes('limit')) toast.error(error.message || 'Failed to analyze chart');
     } finally { setUploading(false); setLoading(false); }
-  }, [router, analysisType, userData, lang]);
+  }, [router, analysisType, userData]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop, accept: { 'image/*': ['.png', '.jpg', '.jpeg', '.webp'] }, maxFiles: 1, disabled: uploading || !analysisType
