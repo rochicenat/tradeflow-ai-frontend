@@ -24,14 +24,7 @@ interface ParsedAnalysis { signal: string; confidence: string; entry: string; st
 function LanguageToggle() {
   const { lang, toggleLang } = useLanguage();
   return (
-    <button
-      onClick={toggleLang}
-      className="flex items-center gap-1 bg-[#141414] border border-[#1A1A1A] text-white text-xs px-2.5 py-1.5 rounded-md hover:border-orange-500/50 transition"
-    >
-      <span className={lang === 'en' ? 'text-orange-500 font-bold' : 'text-slate-500'}>EN</span>
-      <span className="text-slate-700">/</span>
-      <span className={lang === 'tr' ? 'text-orange-500 font-bold' : 'text-slate-500'}>TR</span>
-    </button>
+    
   );
 }
 

@@ -11,12 +11,7 @@ import { saveToken } from '@/app/lib/auth';
 function LanguageToggle() {
   const { lang, toggleLang } = useLanguage();
   return (
-    <button onClick={toggleLang}
-      className="absolute top-6 right-6 flex items-center gap-1 bg-[#1A1A1A] border border-[#333] text-white text-sm px-3 py-1.5 rounded-lg hover:border-orange-500 transition">
-      <span className={lang === 'en' ? 'text-orange-500 font-bold' : 'text-slate-400'}>EN</span>
-      <span className="text-slate-600">/</span>
-      <span className={lang === 'tr' ? 'text-orange-500 font-bold' : 'text-slate-400'}>TR</span>
-    </button>
+    
   );
 }
 
