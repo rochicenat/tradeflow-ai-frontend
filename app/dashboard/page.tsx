@@ -219,6 +219,7 @@ export default function AnalyticsDashboard() {
     { id: 'scalp', name: 'Scalp Trading', icon: Timer },
     { id: 'bot', name: 'Trading Bot', icon: Zap },
     { id: 'market', name: 'Market Analysis', icon: BarChart3 },
+    { id: 'news', name: 'Crypto News', icon: Newspaper },
     { id: 'history', name: 'History', icon: History },
     { id: 'settings', name: 'Settings', icon: SettingsIcon },
   ];
@@ -813,6 +814,7 @@ export default function AnalyticsDashboard() {
               )}
               {currentPage === 'bot' && <div className="p-6 w-full h-full"><BotWidget userEmail={userData?.email} /></div>}
               {currentPage === 'market' && <MarketAnalysisPage />}
+              {currentPage === 'news' && <div className="w-full h-full flex flex-col"><NewsPanel /></div>}
               {currentPage === 'history' && <HistoryPage />}
               {currentPage === 'settings' && <SettingsPage userData={userData} />}
             </div>
