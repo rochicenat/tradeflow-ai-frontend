@@ -57,7 +57,7 @@ function UpgradeModal({ onClose }: { onClose: () => void }) {
               <li>✓ Swing & Scalp Trading</li>
               <li>✓ Full history access</li>
             </ul>
-            <a href="https://tradeflowai.lemonsqueezy.com/checkout/buy/2ebc9f3f-ed0e-4e0e-8138-eab308fded60" target="_blank" rel="noopener noreferrer"
+            <a href="https://tradeflowai.lemonsqueezy.com/checkout/buy/60423ba8-053a-4d04-a924-69b6aaae30e3" target="_blank" rel="noopener noreferrer"
               className="w-full py-2.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-semibold text-center transition text-sm">
               Get Yearly
             </a>

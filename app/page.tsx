@@ -77,7 +77,7 @@ function PricingCard() {
         <ul className="space-y-3 mb-8">
           {features.map((f, i) => (<li key={i} className="flex items-center gap-2 text-gray-300 text-sm"><span className="text-green-400 font-bold">✓</span> {f}</li>))}
         </ul>
-        <a href="https://tradeflowai.lemonsqueezy.com/checkout/buy/2ebc9f3f-ed0e-4e0e-8138-eab308fded60" className="block w-full py-3 rounded-xl font-bold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg">
+        <a href="https://tradeflowai.lemonsqueezy.com/checkout/buy/60423ba8-053a-4d04-a924-69b6aaae30e3" className="block w-full py-3 rounded-xl font-bold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg">
           Get Pro — $9.99/mo
         </a>
       </div>
