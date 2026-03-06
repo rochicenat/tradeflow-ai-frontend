@@ -297,17 +297,7 @@ export default function AnalyticsDashboard() {
         </div>
       )}
 
-      <AnimatePresence>
-className="text-slate-400 hover:text-white">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="flex-1 overflow-y-auto">
-              <NewsPanel />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
 
       {/* HEADER */}
       <header className="h-14 border-b border-[#1A1A1A] bg-[#0A0A0A] flex items-center px-3 sm:px-6 gap-2 flex-shrink-0 sticky top-0 z-40">
