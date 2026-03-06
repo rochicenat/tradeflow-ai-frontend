@@ -6,18 +6,9 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Activity, ArrowRight } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
-import { useLanguage } from '@/app/contexts/LanguageContext';
-
-function LanguageToggle() {
-  const { lang, toggleLang } = useLanguage();
-  return (
-    
-  );
-}
 
 function SignupContent() {
   const router = useRouter();
-  const { t, lang } = useLanguage();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -39,7 +30,7 @@ function SignupContent() {
     e.preventDefault();
     if (!passwordValid || password !== confirmPassword) return;
     if (!agreed) {
-      toast.error(lang === 'tr' ? 'Şartları ve Gizlilik Politikasını kabul etmelisiniz' : 'You must accept Terms & Privacy Policy');
+      toast.error('You must accept Terms & Privacy Policy');
       return;
     }
     setLoading(true);
@@ -51,7 +42,7 @@ function SignupContent() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || 'Signup failed');
-      toast.success(lang === 'tr' ? 'Hesap oluşturuldu! E-postadaki linki bu cihazda açın.' : 'Account created! Open the verification link on this device.');
+      toast.success('Account created! Open the verification link on this device.');
       router.push('/login');
     } catch (err: any) {
       toast.error(err.message || 'Signup failed');
@@ -63,16 +54,11 @@ function SignupContent() {
   return (
     <div className="min-h-screen bg-black flex relative">
       <Toaster position="top-right" />
-      <LanguageToggle />
       <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-orange-500 to-orange-600 items-center justify-center p-12">
         <div className="text-white text-center">
           <Activity className="w-24 h-24 mx-auto mb-6" />
-          <h2 className="text-4xl font-bold mb-4">
-            {lang === 'tr' ? 'Analize Başla' : 'Start Analysis'}
-          </h2>
-          <p className="opacity-90">
-            {lang === 'tr' ? 'Saniyeler içinde yapay zeka destekli grafik analizi' : 'AI-powered chart analysis in seconds'}
-          </p>
+          <h2 className="text-4xl font-bold mb-4">Start Analysis</h2>
+          <p className="opacity-90">AI-powered chart analysis in seconds</p>
         </div>
       </div>
 
@@ -85,72 +71,64 @@ function SignupContent() {
 
           {plan && PLAN_URLS[plan] && (
             <div className="mb-4 px-4 py-2 bg-orange-500/10 border border-orange-500/30 rounded-lg text-orange-400 text-sm font-medium">
-              {lang === 'tr'
-                ? `Kayıt sonrası ${plan === 'pro' ? 'Pro (₺/ay)' : 'Premium (₺/ay)'} aboneliğinizi tamamlayabilirsiniz`
-                : `After signup, you will be redirected to complete your ${plan === 'pro' ? 'Pro ($9.99/mo)' : 'Premium ($19.99/mo)'} subscription`}
+              After signup, you will be redirected to complete your {plan === 'pro' ? 'Pro ($9.99/mo)' : 'Premium ($19.99/mo)'} subscription
             </div>
           )}
 
-          <h1 className="text-3xl font-bold text-white mb-6">{t('signup.title')}</h1>
+          <h1 className="text-3xl font-bold text-white mb-6">Create Account</h1>
 
           <button
             onClick={() => window.location.href="https://tradeflow-ai-backend-production.up.railway.app/auth/google"}
             className="w-full flex items-center justify-center gap-3 bg-[#1A1A1A] hover:bg-[#222] border border-[#333] text-white py-3 rounded-lg transition font-medium mb-4"
           >
             <img src="https://www.google.com/favicon.ico" className="w-5 h-5" alt="G" />
-            {lang === 'tr' ? 'Google ile devam et' : 'Continue with Google'}
+            Continue with Google
           </button>
 
           <div className="flex items-center gap-3 mb-6">
             <div className="flex-1 h-px bg-[#333]"></div>
-            <span className="text-slate-500 text-xs">{lang === 'tr' ? 'veya' : 'or'}</span>
+            <span className="text-slate-500 text-xs">or</span>
             <div className="flex-1 h-px bg-[#333]"></div>
           </div>
 
           <form onSubmit={handleSignup} className="space-y-5">
-            <input required placeholder={t('signup.name')} value={name} onChange={e => setName(e.target.value)}
+            <input required placeholder="Full Name" value={name} onChange={e => setName(e.target.value)}
               className="w-full bg-[#1A1A1A] p-3 rounded text-white border border-[#252525] focus:border-orange-500 focus:outline-none" />
-            <input required type="email" placeholder={t('signup.email')} value={email} onChange={e => setEmail(e.target.value)}
+            <input required type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)}
               className="w-full bg-[#1A1A1A] p-3 rounded text-white border border-[#252525] focus:border-orange-500 focus:outline-none" />
             <div className="space-y-1">
-              <input required type="password" placeholder={t('signup.password')} value={password} onChange={e => setPassword(e.target.value)}
+              <input required type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)}
                 className="w-full bg-[#1A1A1A] p-3 rounded text-white border border-[#252525] focus:border-orange-500 focus:outline-none" />
               {!passwordValid && password.length > 0 && (
-                <p className="text-red-500 text-xs px-1">
-                  {lang === 'tr' ? 'Min 8 karakter, 1 büyük harf, 1 rakam' : 'Min 8 chars, 1 uppercase, 1 number'}
-                </p>
+                <p className="text-red-500 text-xs px-1">Min 8 chars, 1 uppercase, 1 number</p>
               )}
             </div>
             <div className="space-y-1">
-              <input required type="password" placeholder={t('signup.confirm')} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
+              <input required type="password" placeholder="Confirm Password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
                 className="w-full bg-[#1A1A1A] p-3 rounded text-white border border-[#252525] focus:border-orange-500 focus:outline-none" />
               {!passwordsMatch && (
-                <p className="text-red-500 text-xs px-1">
-                  {lang === 'tr' ? 'Şifreler eşleşmiyor' : 'Passwords do not match'}
-                </p>
+                <p className="text-red-500 text-xs px-1">Passwords do not match</p>
               )}
             </div>
             <label className="flex items-center gap-2 text-sm text-slate-400">
               <input type="checkbox" checked={agreed} onChange={e => setAgreed(e.target.checked)} />
-              {lang === 'tr' ? 'Kabul ediyorum:' : 'I accept'}{' '}
-              <Link href="/terms" className="text-orange-500">{lang === 'tr' ? 'Şartlar' : 'Terms'}</Link>
+              I accept{' '}
+              <Link href="/terms" className="text-orange-500">Terms</Link>
               {' & '}
-              <Link href="/privacy" className="text-orange-500">{lang === 'tr' ? 'Gizlilik' : 'Privacy'}</Link>
+              <Link href="/privacy" className="text-orange-500">Privacy</Link>
             </label>
             <button disabled={loading} className="w-full bg-orange-500 hover:bg-orange-600 py-3 rounded text-white flex justify-center gap-2 font-semibold disabled:opacity-50">
-              {loading ? (lang === 'tr' ? 'Oluşturuluyor...' : 'Creating...') : t('signup.button')}
+              {loading ? 'Creating...' : 'Create Account'}
               {!loading && <ArrowRight size={18} />}
             </button>
           </form>
 
           <div className="mt-6 text-center text-slate-400">
-            {t('signup.have_account')}{' '}
-            <Link href="/login" className="text-orange-500">{t('signup.login')}</Link>
+            Already have an account?{' '}
+            <Link href="/login" className="text-orange-500">Sign in</Link>
           </div>
           <div className="mt-6 text-center">
-            <Link href="/" className="text-slate-500">
-              {lang === 'tr' ? '← Ana sayfaya dön' : '← Back to Home'}
-            </Link>
+            <Link href="/" className="text-slate-500">← Back to Home</Link>
           </div>
         </motion.div>
       </div>
