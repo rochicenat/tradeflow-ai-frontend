@@ -391,18 +391,7 @@ export default function AnalyticsDashboard() {
               </div>
             ))}
           </nav>
-          {sidebarOpen && userData?.plan === 'premium' && (
-            <div className="px-3 py-3 border-t border-[#1A1A1A]">
-              <div className="flex justify-between text-xs text-slate-500 mb-1.5">
-                <span>{'Usage'}</span>
-                <span className="text-slate-400">{userData?.plan === "premium" ? `${userData?.analyses_used}/∞` : `${userData?.analyses_used}/${userData?.analyses_limit}`}</span>
-              </div>
-              <div className="h-1 bg-[#1A1A1A] rounded-full overflow-hidden">
-                <div className={`h-full rounded-full transition-all ${usagePercent > 80 ? 'bg-red-500' : 'bg-orange-500'}`} style={{ width: `${usagePercent}%` }} />
-              </div>
-            </div>
-          )}
-          <button onClick={() => setSidebarOpen(!sidebarOpen)}
+<button onClick={() => setSidebarOpen(!sidebarOpen)}
             className="h-10 border-t border-[#1A1A1A] hover:bg-[#141414] transition flex items-center justify-center text-slate-500 hover:text-slate-300">
             <Menu className="w-4 h-4" />
           </button>
