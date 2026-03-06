@@ -95,7 +95,6 @@ export default function AnalyticsDashboard() {
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [analysisType, setAnalysisType] = useState<'swing' | 'scalp' | 'swing_premium' | 'scalp_premium' | null>(null);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
-  const [showMobileNews, setShowMobileNews] = useState(false);
   const [showTradingParams, setShowTradingParams] = useState(false);
   const [pendingPremiumType, setPendingPremiumType] = useState<string | null>(null);
   const [accountSize, setAccountSize] = useState("");
@@ -341,10 +340,7 @@ export default function AnalyticsDashboard() {
         </div>
         <div className="flex items-center gap-1.5 sm:gap-3">
           <LiveClock />
-          <button onClick={() => setShowMobileNews(true)}
-            className="lg:hidden p-1.5 rounded-md bg-[#141414] border border-[#1A1A1A] text-slate-400 hover:text-white transition">
-            <Newspaper className="w-4 h-4" />
-          </button>
+
           <div className={`px-2 py-1 rounded-md border text-xs font-bold uppercase cursor-pointer transition ${
             userData?.plan === 'premium' ? 'bg-purple-500/10 border-purple-500/20 text-purple-400' :
             userData?.plan === 'pro' ? 'bg-orange-500/10 border-orange-500/20 text-orange-400' :
@@ -818,9 +814,7 @@ export default function AnalyticsDashboard() {
               {currentPage === 'history' && <HistoryPage />}
               {currentPage === 'settings' && <SettingsPage userData={userData} />}
             </div>
-            <div className="hidden lg:flex w-80 flex-shrink-0 bg-[#0A0A0A] border-l border-[#1A1A1A] flex-col overflow-hidden" style={{height: "calc(100vh - 56px)", position: "sticky", top: "56px"}}>
-              <NewsPanel />
-            </div>
+
           </div>
         </div>
       </div>
