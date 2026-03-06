@@ -42,7 +42,7 @@ function UpgradeModal({ onClose }: { onClose: () => void }) {
               <li>✓ Swing & Scalp Trading</li>
               <li>✓ Full history access</li>
             </ul>
-            <a href={`https://tradeflowai.lemonsqueezy.com/checkout/buy/47621ebf-7c5e-4b6e-bbc9-d6bee626b2d4?checkout[email]=${userData?.email || ""}`} target="_blank" rel="noopener noreferrer"
+            <a href={`https://tradeflowai.lemonsqueezy.com/checkout/buy/47621ebf-7c5e-4b6e-bbc9-d6bee626b2d4?checkout%5Bemail%5D=${userData?.email || ""}`} target="_blank" rel="noopener noreferrer"
               className="w-full py-2.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-semibold text-center transition text-sm">
               Get Monthly
             </a>
@@ -57,7 +57,7 @@ function UpgradeModal({ onClose }: { onClose: () => void }) {
               <li>✓ Swing & Scalp Trading</li>
               <li>✓ Full history access</li>
             </ul>
-            <a href={`https://tradeflowai.lemonsqueezy.com/checkout/buy/60423ba8-053a-4d04-a924-69b6aaae30e3?checkout[email]=${userData?.email || ""}`} target="_blank" rel="noopener noreferrer"
+            <a href={`https://tradeflowai.lemonsqueezy.com/checkout/buy/60423ba8-053a-4d04-a924-69b6aaae30e3?checkout%5Bemail%5D=${userData?.email || ""}`} target="_blank" rel="noopener noreferrer"
               className="w-full py-2.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-semibold text-center transition text-sm">
               Get Yearly
             </a>
