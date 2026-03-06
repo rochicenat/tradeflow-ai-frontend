@@ -212,16 +212,25 @@ export default function AnalyticsDashboard() {
   const getConfidenceValue = (confidence: string) => confidence.toLowerCase() === 'high' ? 85 : confidence.toLowerCase() === 'medium' ? 65 : 35;
   const getConfidenceColor = (value: number) => value >= 70 ? 'bg-gradient-to-r from-green-500 to-emerald-600' : value >= 40 ? 'bg-gradient-to-r from-yellow-500 to-orange-500' : 'bg-gradient-to-r from-red-500 to-rose-600';
 
-  const menuItems = [
-    { id: 'dashboard', name: 'Dashboard', icon: Home },
-    { id: 'swing', name: 'Swing Trading', icon: TrendingUp },
-    { id: 'scalp', name: 'Scalp Trading', icon: Timer },
-    { id: 'bot', name: 'Trading Bot', icon: Zap },
-    { id: 'market', name: 'Market Analysis', icon: BarChart3 },
-    { id: 'news', name: 'Crypto News', icon: Newspaper },
-    { id: 'history', name: 'History', icon: History },
-    { id: 'settings', name: 'Settings', icon: SettingsIcon },
+  const menuGroups = [
+    { label: 'MAIN', items: [
+      { id: 'dashboard', name: 'Dashboard', icon: Home },
+    ]},
+    { label: 'TRADING', items: [
+      { id: 'swing', name: 'Swing Trading', icon: TrendingUp },
+      { id: 'scalp', name: 'Scalp Trading', icon: Timer },
+      { id: 'bot', name: 'Trading Bot', icon: Zap },
+    ]},
+    { label: 'MARKETS', items: [
+      { id: 'market', name: 'Market Analysis', icon: BarChart3 },
+      { id: 'news', name: 'Crypto News', icon: Newspaper },
+    ]},
+    { label: 'ACCOUNT', items: [
+      { id: 'history', name: 'History', icon: History },
+      { id: 'settings', name: 'Settings', icon: SettingsIcon },
+    ]},
   ];
+  const menuItems = menuGroups.flatMap(g => g.items);
 
   const handleMenuClick = (id: string) => {
     if (id === 'swing') { setAnalysisType('swing'); setCurrentPage('dashboard'); setResult(null); }
@@ -352,24 +361,35 @@ export default function AnalyticsDashboard() {
             </div>
             {sidebarOpen && <span className="text-white font-bold text-sm tracking-wide">TradeFlow <span className="text-orange-500">AI</span></span>}
           </div>
-          <nav className="flex-1 py-3 px-2 space-y-0.5">
-            {menuItems.map((item) => {
-              const Icon = item.icon;
-              const isActive =
-                (item.id === 'swing' && analysisType === 'swing' && currentPage === 'dashboard') ||
-                (item.id === 'scalp' && analysisType === 'scalp' && currentPage === 'dashboard') ||
-                (item.id === currentPage && item.id !== 'swing' && item.id !== 'scalp');
-              return (
-                <button key={item.id} onClick={() => handleMenuClick(item.id)}
-                  className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-md transition-all text-sm ${
-                    isActive ? 'bg-orange-500/15 text-orange-400 border border-orange-500/20' : 'text-slate-500 hover:text-slate-200 hover:bg-[#141414]'
-                  }`}>
-                  <Icon className="w-4 h-4 flex-shrink-0" />
-                  {sidebarOpen && <span className="font-medium">{item.name}</span>}
-                  {sidebarOpen && isActive && <ChevronRight className="w-3 h-3 ml-auto" />}
-                </button>
-              );
-            })}
+          <nav className="flex-1 py-3 px-2 overflow-y-auto">
+            {menuGroups.map((group) => (
+              <div key={group.label} className="mb-3">
+                {sidebarOpen && (
+                  <div className="px-2.5 py-1 mb-1">
+                    <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">{group.label}</span>
+                  </div>
+                )}
+                <div className="space-y-0.5">
+                  {group.items.map((item) => {
+                    const Icon = item.icon;
+                    const isActive =
+                      (item.id === 'swing' && analysisType === 'swing' && currentPage === 'dashboard') ||
+                      (item.id === 'scalp' && analysisType === 'scalp' && currentPage === 'dashboard') ||
+                      (item.id === currentPage && item.id !== 'swing' && item.id !== 'scalp');
+                    return (
+                      <button key={item.id} onClick={() => handleMenuClick(item.id)}
+                        className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-md transition-all text-sm ${
+                          isActive ? 'bg-orange-500/15 text-orange-400 border border-orange-500/20' : 'text-slate-500 hover:text-slate-200 hover:bg-[#141414]'
+                        }`}>
+                        <Icon className="w-4 h-4 flex-shrink-0" />
+                        {sidebarOpen && <span className="font-medium">{item.name}</span>}
+                        {sidebarOpen && isActive && <ChevronRight className="w-3 h-3 ml-auto" />}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </nav>
           {sidebarOpen && userData?.plan === 'premium' && (
             <div className="px-3 py-3 border-t border-[#1A1A1A]">
