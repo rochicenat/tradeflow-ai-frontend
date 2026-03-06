@@ -357,7 +357,7 @@ export default function AnalyticsDashboard() {
             </div>
             <span className="text-slate-300 text-sm font-medium hidden sm:block">{userData?.name || 'User'}</span>
           </div>
-          <button onClick={handleLogout} className="p-1.5 rounded-md hover:bg-red-500/10 text-slate-500 hover:text-red-400 transition" title=Logout>
+          <button onClick={handleLogout} className="p-1.5 rounded-md hover:bg-red-500/10 text-slate-500 hover:text-red-400 transition" title="Logout">
             <LogOut className="w-4 h-4" />
           </button>
         </div>
