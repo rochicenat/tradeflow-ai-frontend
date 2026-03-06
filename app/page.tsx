@@ -53,7 +53,7 @@ function PricingCard() {
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-orange-500 text-white px-4 py-1 rounded-full text-sm font-semibold whitespace-nowrap">Monthly</div>
         <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
         <div className="flex items-baseline gap-2 mb-1">
-          <span className="text-5xl font-black text-white">$20</span>
+          <span className="text-5xl font-black text-white">$19.99</span>
           <span className="text-gray-400">/month</span>
         </div>
         <div className="text-gray-400 mb-6">50 analyses/month</div>
@@ -61,7 +61,7 @@ function PricingCard() {
           {features.map((f, i) => (<li key={i} className="flex items-center gap-2 text-gray-300 text-sm"><span className="text-green-400 font-bold">✓</span> {f}</li>))}
         </ul>
         <a href="/signup?plan=pro" className="block w-full py-3 rounded-xl font-bold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg">
-          Get Pro — $20/mo
+          Get Pro — $19.99/mo
         </a>
       </div>
       {/* Yearly */}
@@ -69,16 +69,16 @@ function PricingCard() {
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-1 rounded-full text-sm font-semibold whitespace-nowrap">Yearly — Save 20%</div>
         <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
         <div className="flex items-baseline gap-2 mb-1">
-          <span className="text-5xl font-black text-white">$16</span>
+          <span className="text-5xl font-black text-white">$9.99</span>
           <span className="text-gray-400">/month</span>
         </div>
-        <div className="text-green-400 text-sm mb-1 font-medium">Billed $192/year — save $48/year</div>
+        <div className="text-green-400 text-sm mb-1 font-medium">Billed $119.88/year — save $120/year</div>
         <div className="text-gray-400 mb-6">50 analyses/month</div>
         <ul className="space-y-3 mb-8">
           {features.map((f, i) => (<li key={i} className="flex items-center gap-2 text-gray-300 text-sm"><span className="text-green-400 font-bold">✓</span> {f}</li>))}
         </ul>
         <a href="/signup?plan=pro-yearly" className="block w-full py-3 rounded-xl font-bold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg">
-          Get Pro — $16/mo
+          Get Pro — $9.99/mo
         </a>
       </div>
     </div>
