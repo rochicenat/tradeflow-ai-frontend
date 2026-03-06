@@ -234,7 +234,7 @@ export default function AnalyticsDashboard() {
   const usagePercent = userData ? Math.round((userData.analyses_used / userData.analyses_limit) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-[#050505] flex flex-col font-sans">
+    <div className="h-screen bg-[#050505] flex flex-col font-sans overflow-hidden">
       <AnimatePresence>{showUpgradeModal && <UpgradeModal onClose={() => setShowUpgradeModal(false)} />}</AnimatePresence>
       {showTradingParams && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -345,7 +345,7 @@ export default function AnalyticsDashboard() {
       </header>
 
       {/* BODY */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden" style={{height: "calc(100vh - 56px)"}}>
         {/* SIDEBAR */}
         <div className="hidden lg:flex flex-col w-56 bg-[#0A0A0A] border-r border-[#1A1A1A] flex-shrink-0">
           <div className="h-14 border-b border-[#1A1A1A] flex items-center px-3 gap-2">
@@ -384,8 +384,8 @@ export default function AnalyticsDashboard() {
 
         {/* MAIN CONTENT */}
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-          <div className="flex flex-1 overflow-hidden">
-            <div className="flex-1 p-3 sm:p-6 overflow-auto pb-20 lg:pb-6">
+          <div className="flex flex-1 overflow-hidden" style={{height: "calc(100vh - 56px)"}}>
+            <div className="flex-1 p-3 sm:p-6 overflow-y-auto pb-20 lg:pb-6">
               {currentPage === 'dashboard' && (
                 <div className="space-y-6 max-w-6xl">
                   {userData?.plan !== 'free' && (
