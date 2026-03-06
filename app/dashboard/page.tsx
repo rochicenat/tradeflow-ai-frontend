@@ -24,46 +24,47 @@ function UpgradeModal({ onClose }: { onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
       <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}
-        className="bg-[#0F0F0F] border border-[#2A2A2A] rounded-2xl p-8 max-w-lg w-full relative">
+        className="bg-[#0F0F0F] border border-[#2A2A2A] rounded-2xl p-8 max-w-md w-full relative">
         <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-white transition"><X className="w-5 h-5" /></button>
         <div className="text-center mb-8">
           <div className="w-16 h-16 rounded-full bg-orange-500/20 border border-orange-500/30 flex items-center justify-center mx-auto mb-4">
             <Crown className="w-8 h-8 text-orange-500" />
           </div>
-          <h2 className="text-2xl font-bold text-white mb-2">{'Upgrade Your Plan'}</h2>
+          <h2 className="text-2xl font-bold text-white mb-2">Upgrade to Pro</h2>
           <p className="text-slate-400">{"You've reached your analysis limit."}</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
           <div className="bg-[#1A1A1A] border border-orange-500/30 rounded-xl p-5 flex flex-col">
-            <div className="flex items-center gap-2 mb-3"><Star className="w-5 h-5 text-orange-400" /><span className="text-white font-bold">Pro</span></div>
-            <div className="text-3xl font-black text-white mb-1">$9.99<span className="text-sm font-normal text-slate-400">/mo</span></div>
+            <div className="flex items-center gap-2 mb-3"><Star className="w-5 h-5 text-orange-400" /><span className="text-white font-bold">Monthly</span></div>
+            <div className="text-3xl font-black text-white mb-1">$19.99<span className="text-sm font-normal text-slate-400">/mo</span></div>
             <ul className="text-slate-400 text-sm space-y-1 mb-5 flex-1">
-              <li>✓ {'50 analyses/month'}</li>
-              <li>✓ {'Swing & Scalp Trading'}</li>
-              <li>✓ {'Full history access'}</li>
+              <li>✓ Unlimited analyses</li>
+              <li>✓ Swing & Scalp Trading</li>
+              <li>✓ Full history access</li>
             </ul>
             <a href="https://tradeflowai.lemonsqueezy.com/checkout/buy/47621ebf-7c5e-4b6e-bbc9-d6bee626b2d4" target="_blank" rel="noopener noreferrer"
               className="w-full py-2.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-semibold text-center transition text-sm">
-              {'Get Pro'}
+              Get Monthly
             </a>
           </div>
-          <div className="bg-[#1A1A1A] border border-purple-500/30 rounded-xl p-5 flex flex-col relative overflow-hidden">
-            <div className="absolute top-2 right-2 bg-purple-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">BEST</div>
-            <div className="flex items-center gap-2 mb-3"><Crown className="w-5 h-5 text-purple-400" /><span className="text-white font-bold">Premium</span></div>
-            <div className="text-3xl font-black text-white mb-1">$19.99<span className="text-sm font-normal text-slate-400">/mo</span></div>
+          <div className="bg-[#1A1A1A] border border-orange-500/50 rounded-xl p-5 flex flex-col relative overflow-hidden">
+            <div className="absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">-50%</div>
+            <div className="flex items-center gap-2 mb-3"><Crown className="w-5 h-5 text-orange-400" /><span className="text-white font-bold">Yearly</span></div>
+            <div className="text-3xl font-black text-white mb-1">$9.99<span className="text-sm font-normal text-slate-400">/mo</span></div>
+            <div className="text-green-400 text-xs mb-3">Billed $119.88/year</div>
             <ul className="text-slate-400 text-sm space-y-1 mb-5 flex-1">
-              <li>✓ {'Unlimited analyses'}</li>
-              <li>✓ {'Priority AI processing'}</li>
-              <li>✓ {'Advanced insights'}</li>
+              <li>✓ Unlimited analyses</li>
+              <li>✓ Swing & Scalp Trading</li>
+              <li>✓ Full history access</li>
             </ul>
-            <a href="https://tradeflowai.lemonsqueezy.com/checkout/buy/47621ebf-7c5e-4b6e-bbc9-d6bee626b2d4" target="_blank" rel="noopener noreferrer"
-              className="w-full py-2.5 rounded-lg bg-purple-500 hover:bg-purple-600 text-white font-semibold text-center transition text-sm">
-              {'Get Premium'}
+            <a href="https://tradeflowai.lemonsqueezy.com/checkout/buy/2ebc9f3f-ed0e-4e0e-8138-eab308fded60" target="_blank" rel="noopener noreferrer"
+              className="w-full py-2.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-semibold text-center transition text-sm">
+              Get Yearly
             </a>
           </div>
         </div>
         <button onClick={onClose} className="w-full py-2 text-slate-500 hover:text-slate-300 text-sm transition">
-          {'Maybe later'}
+          Maybe later
         </button>
       </motion.div>
     </div>
@@ -573,7 +574,7 @@ export default function AnalyticsDashboard() {
                         <Crown className="w-5 h-5 text-orange-400 flex-shrink-0" />
                         <div className="min-w-0">
                           <div className="text-white text-sm font-semibold">Upgrade Plan</div>
-                          <div className="text-slate-400 text-xs">{'Starting at $9.99/mo'}</div>
+                          <div className="text-slate-400 text-xs">Starting at $19.99/mo</div>
                         </div>
                       </div>
                       <button onClick={() => setShowUpgradeModal(true)} className="px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-lg transition flex-shrink-0">
