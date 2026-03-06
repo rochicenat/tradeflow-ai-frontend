@@ -361,7 +361,7 @@ export default function AnalyticsDashboard() {
             </div>
             {sidebarOpen && <span className="text-white font-bold text-sm tracking-wide">TradeFlow <span className="text-orange-500">AI</span></span>}
           </div>
-          <nav className="flex-1 py-3 px-2 overflow-y-auto">
+          <nav className="flex-1 py-3 px-2 overflow-hidden">
             {menuGroups.map((group) => (
               <div key={group.label} className="mb-3">
                 {sidebarOpen && (
