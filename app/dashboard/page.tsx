@@ -354,14 +354,14 @@ export default function AnalyticsDashboard() {
       {/* BODY */}
       <div className="flex flex-1 overflow-hidden">
         {/* SIDEBAR */}
-        <div className={`hidden lg:flex flex-col ${sidebarOpen ? 'w-56' : 'w-14'} bg-[#0A0A0A] border-r border-[#1A1A1A] transition-all duration-300 flex-shrink-0 sticky top-14 h-[calc(100vh-56px)]`}>
+        <div className={`hidden lg:flex flex-col ${sidebarOpen ? 'w-56' : 'w-14'} bg-[#0A0A0A] border-r border-[#1A1A1A] transition-all duration-300 flex-shrink-0`}>
           <div className="h-14 border-b border-[#1A1A1A] flex items-center px-3 gap-2">
             <div className="w-7 h-7 bg-orange-500 rounded-md flex items-center justify-center flex-shrink-0">
               <Activity className="w-4 h-4 text-white" />
             </div>
             {sidebarOpen && <span className="text-white font-bold text-sm tracking-wide">TradeFlow <span className="text-orange-500">AI</span></span>}
           </div>
-          <nav className="flex-1 py-3 px-2 overflow-hidden">
+          <nav className="flex-1 py-3 px-2 space-y-0.5">
             {menuGroups.map((group) => (
               <div key={group.label} className="mb-3">
                 {sidebarOpen && (
