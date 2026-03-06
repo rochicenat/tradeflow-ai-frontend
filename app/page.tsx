@@ -38,7 +38,6 @@ function AnimatedCounter({ end, duration = 2000, suffix = '' }: { end: number; d
 
 
 function PricingCard() {
-  const [billing, setBilling] = useState<'monthly' | 'yearly'>('monthly');
   const features = [
     '50 AI chart analyses/month',
     'Swing & Scalp trading',
@@ -48,35 +47,38 @@ function PricingCard() {
     'Full analysis history',
   ];
   return (
-    <div>
-      <div className="flex items-center justify-center mb-8">
-        <div className="bg-[#0A0A0A] border border-[#252525] rounded-xl p-1 flex items-center gap-1">
-          <button onClick={() => setBilling('monthly')}
-            className={`px-6 py-2 rounded-lg text-sm font-semibold transition ${billing === 'monthly' ? 'bg-orange-500 text-white' : 'text-gray-400 hover:text-white'}`}>
-            Monthly
-          </button>
-          <button onClick={() => setBilling('yearly')}
-            className={`px-6 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2 ${billing === 'yearly' ? 'bg-orange-500 text-white' : 'text-gray-400 hover:text-white'}`}>
-            Yearly
-            <span className="bg-green-500/20 text-green-400 text-xs px-2 py-0.5 rounded-full font-bold">-20%</span>
-          </button>
-        </div>
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* Monthly */}
       <div className="bg-orange-500/10 border-2 border-orange-500/50 rounded-2xl p-8 relative">
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-orange-500 text-white px-4 py-1 rounded-full text-sm font-semibold whitespace-nowrap">Most Popular</div>
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-orange-500 text-white px-4 py-1 rounded-full text-sm font-semibold whitespace-nowrap">Monthly</div>
         <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
         <div className="flex items-baseline gap-2 mb-1">
-          <span className="text-5xl font-black text-white">${billing === 'monthly' ? '9.99' : '7.99'}</span>
+          <span className="text-5xl font-black text-white">$20</span>
           <span className="text-gray-400">/month</span>
         </div>
-        {billing === 'yearly' && <div className="text-green-400 text-sm mb-1 font-medium">Billed $95/year — save $25/year</div>}
         <div className="text-gray-400 mb-6">50 analyses/month</div>
         <ul className="space-y-3 mb-8">
           {features.map((f, i) => (<li key={i} className="flex items-center gap-2 text-gray-300 text-sm"><span className="text-green-400 font-bold">✓</span> {f}</li>))}
         </ul>
-        <a href={billing === 'monthly' ? '/signup?plan=pro' : '/signup?plan=pro-yearly'}
-          className="block w-full py-3 rounded-xl font-bold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg">
-          Get Pro — ${billing === 'monthly' ? '9.99/mo' : '7.99/mo'}
+        <a href="/signup?plan=pro" className="block w-full py-3 rounded-xl font-bold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg">
+          Get Pro — $20/mo
+        </a>
+      </div>
+      {/* Yearly */}
+      <div className="bg-orange-500/10 border-2 border-orange-500/50 rounded-2xl p-8 relative">
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-1 rounded-full text-sm font-semibold whitespace-nowrap">Yearly — Save 20%</div>
+        <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
+        <div className="flex items-baseline gap-2 mb-1">
+          <span className="text-5xl font-black text-white">$16</span>
+          <span className="text-gray-400">/month</span>
+        </div>
+        <div className="text-green-400 text-sm mb-1 font-medium">Billed $192/year — save $48/year</div>
+        <div className="text-gray-400 mb-6">50 analyses/month</div>
+        <ul className="space-y-3 mb-8">
+          {features.map((f, i) => (<li key={i} className="flex items-center gap-2 text-gray-300 text-sm"><span className="text-green-400 font-bold">✓</span> {f}</li>))}
+        </ul>
+        <a href="/signup?plan=pro-yearly" className="block w-full py-3 rounded-xl font-bold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg">
+          Get Pro — $16/mo
         </a>
       </div>
     </div>
@@ -250,7 +252,7 @@ export default function Home() {
       </section>
 
       <section id="pricing" className="py-20 px-4">
-        <div className="max-w-lg mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-sm text-orange-500 font-semibold mb-2 uppercase tracking-wider">Pricing</p>
             <h2 className="text-4xl font-bold text-white mb-4">Simple, Transparent Pricing</h2>
