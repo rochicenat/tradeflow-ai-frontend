@@ -100,6 +100,12 @@ export default function AnalyticsDashboard() {
   const [riskPercent, setRiskPercent] = useState("2");
   const [leverage, setLeverage] = useState("1");
   const [orderType, setOrderType] = useState("market");
+  const [slType, setSlType] = useState("fixed");
+  const [indicators, setIndicators] = useState<string[]>([]);
+  const [session, setSession] = useState("");
+  const [assetType, setAssetType] = useState("");
+  const [rrRatio, setRrRatio] = useState("1:2");
+  const [showParamsModal, setShowParamsModal] = useState(false);
 
   useEffect(() => { fetchUserData(); }, []);
 
@@ -133,6 +139,11 @@ export default function AnalyticsDashboard() {
     if (leverage) formData.append('leverage', leverage);
     formData.append('order_type', orderType);
     formData.append('language', 'en');
+    if (slType) formData.append('sl_type', slType);
+    if (indicators.length) formData.append('indicators', indicators.join(','));
+    if (session) formData.append('session', session);
+    if (assetType) formData.append('asset_type', assetType);
+    if (rrRatio) formData.append('rr_ratio', rrRatio);
     try {
       const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/analyze-image', {
         method: 'POST', headers: { 'Authorization': `Bearer ${token}` }, body: formData
@@ -226,8 +237,8 @@ export default function AnalyticsDashboard() {
   const menuItems = menuGroups.flatMap(g => g.items);
 
   const handleMenuClick = (id: string) => {
-    if (id === 'swing') { setAnalysisType('swing'); setCurrentPage('dashboard'); setResult(null); }
-    else if (id === 'scalp') { setAnalysisType('scalp'); setCurrentPage('dashboard'); setResult(null); }
+    if (id === 'swing') { setAnalysisType('swing'); setCurrentPage('dashboard'); setResult(null); setShowParamsModal(true); }
+    else if (id === 'scalp') { setAnalysisType('scalp'); setCurrentPage('dashboard'); setResult(null); setShowParamsModal(true); }
     else { setCurrentPage(id); }
   };
 
@@ -236,6 +247,137 @@ export default function AnalyticsDashboard() {
   return (
     <div className="h-screen bg-[#050505] flex flex-col font-sans overflow-hidden">
       <AnimatePresence>{showUpgradeModal && <UpgradeModal onClose={() => setShowUpgradeModal(false)} />}</AnimatePresence>
+      {showParamsModal && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-[#111] border border-[#252525] rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-white font-bold text-lg">Trading Parameters</h2>
+                <p className="text-slate-400 text-xs mt-1">{analysisType === 'swing' ? '📈 Swing Trading' : '⚡ Scalp Trading'} — Customize your analysis</p>
+              </div>
+              <button onClick={() => setShowParamsModal(false)} className="text-slate-400 hover:text-white transition text-xl">✕</button>
+            </div>
+            <div className="space-y-5">
+              {/* Account Balance */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">💰 Account Balance ($)</label>
+                <input type="number" value={accountSize} onChange={e => setAccountSize(e.target.value)}
+                  placeholder="e.g. 10000"
+                  className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg px-4 py-3 text-white focus:border-orange-500 focus:outline-none transition" />
+              </div>
+              {/* Risk Per Trade */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">⚠️ Risk Per Trade (%)</label>
+                <div className="grid grid-cols-4 gap-2 mb-2">
+                  {['1', '2', '3', '5'].map(r => (
+                    <button key={r} onClick={() => setRiskPercent(r)}
+                      className={`py-2 rounded-lg text-sm font-semibold transition border ${riskPercent === r ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
+                      {r}%
+                    </button>
+                  ))}
+                </div>
+                <input type="number" value={riskPercent} onChange={e => setRiskPercent(e.target.value)}
+                  placeholder="Custom %" className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg px-4 py-2 text-white focus:border-orange-500 focus:outline-none transition text-sm" />
+              </div>
+              {/* Stop Loss Type */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">🛑 Stop-Loss Type</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[{v:'fixed', l:'Fixed (Pips)'}, {v:'atr', l:'ATR Based'}].map(o => (
+                    <button key={o.v} onClick={() => setSlType(o.v)}
+                      className={`py-2 rounded-lg text-sm font-semibold transition border ${slType === o.v ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
+                      {o.l}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {/* Indicators */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">📊 Favorite Indicators</label>
+                <div className="grid grid-cols-3 gap-2">
+                  {['RSI', 'MACD', 'Bollinger', 'EMA 20', 'EMA 50', 'EMA 200'].map(ind => (
+                    <button key={ind} onClick={() => setIndicators(prev => prev.includes(ind) ? prev.filter(i => i !== ind) : [...prev, ind])}
+                      className={`py-2 rounded-lg text-xs font-semibold transition border ${indicators.includes(ind) ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
+                      {ind}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {/* Session */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">🕐 Trading Session</label>
+                <div className="grid grid-cols-3 gap-2">
+                  {[{v:'london', l:'London'}, {v:'newyork', l:'New York'}, {v:'asian', l:'Asian'}, {v:'london_ny', l:'London+NY'}, {v:'all', l:'All Sessions'}, {v:'', l:'No Preference'}].map(o => (
+                    <button key={o.v} onClick={() => setSession(o.v)}
+                      className={`py-2 rounded-lg text-xs font-semibold transition border ${session === o.v ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
+                      {o.l}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {/* Asset Type */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">📈 Asset Type</label>
+                <div className="grid grid-cols-3 gap-2">
+                  {[{v:'crypto', l:'Crypto'}, {v:'forex', l:'Forex'}, {v:'stocks', l:'Stocks'}, {v:'commodities', l:'Commodities'}, {v:'indices', l:'Indices'}, {v:'', l:'Auto Detect'}].map(o => (
+                    <button key={o.v} onClick={() => setAssetType(o.v)}
+                      className={`py-2 rounded-lg text-xs font-semibold transition border ${assetType === o.v ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
+                      {o.l}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {/* R:R Ratio */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">🎯 Desired R:R Ratio</label>
+                <div className="grid grid-cols-4 gap-2">
+                  {['1:1', '1:2', '1:3', '1:4'].map(r => (
+                    <button key={r} onClick={() => setRrRatio(r)}
+                      className={`py-2 rounded-lg text-sm font-semibold transition border ${rrRatio === r ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
+                      {r}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {/* Order Type */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">📋 Order Type</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[{v:'market', l:'Market Order'}, {v:'limit', l:'Limit Order'}].map(o => (
+                    <button key={o.v} onClick={() => setOrderType(o.v)}
+                      className={`py-2 rounded-lg text-sm font-semibold transition border ${orderType === o.v ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
+                      {o.l}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {/* Leverage */}
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">⚡ Leverage</label>
+                <div className="grid grid-cols-5 gap-2">
+                  {['1', '2', '5', '10', '20'].map(l => (
+                    <button key={l} onClick={() => setLeverage(l)}
+                      className={`py-2 rounded-lg text-sm font-semibold transition border ${leverage === l ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
+                      {l}x
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-3 mt-6">
+              <button onClick={() => setShowParamsModal(false)}
+                className="flex-1 py-3 rounded-lg border border-[#252525] text-slate-400 hover:text-white transition text-sm">
+                Skip
+              </button>
+              <button onClick={() => setShowParamsModal(false)}
+                className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold transition">
+                Start Analysis →
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {showTradingParams && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-[#111] border border-[#252525] rounded-2xl p-6 w-full max-w-md">
