@@ -177,10 +177,10 @@ export default function Home() {
             <h2 className="text-4xl font-bold">Trusted by Traders Worldwide</h2>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <TestimonialCard initials="SM" name="Sarah M." role=Swing Trader rating={5} text=The AI spotted a bull flag I completely missed. Entry was perfect, hit TP in 2 days. This tool is insane. />
-            <TestimonialCard initials="MC" name="Michael C." role=Scalp Trader rating={5} text=I scalp BTC daily and this saves me so much time. The momentum signals are surprisingly accurate. />
-            <TestimonialCard initials="JR" name="Jennifer R." role=Forex Trader rating={5} text=Works great on forex charts too. The support/resistance levels are spot on every time. />
-            <TestimonialCard initials="AT" name="Alex T." role=Crypto Analyst rating={5} text=3 seconds to full analysis. I run 20+ charts a day and Pro plan is absolutely worth it. />
+            <TestimonialCard initials="SM" name="Sarah M." role="Swing Trader" rating={5} text="The AI spotted a bull flag I completely missed. Entry was perfect, hit TP in 2 days. This tool is insane." />
+            <TestimonialCard initials="MC" name="Michael C." role="Scalp Trader" rating={5} text="I scalp BTC daily and this saves me so much time. The momentum signals are surprisingly accurate." />
+            <TestimonialCard initials="JR" name="Jennifer R." role="Forex Trader" rating={5} text="Works great on forex charts too. The support/resistance levels are spot on every time." />
+            <TestimonialCard initials="AT" name="Alex T." role="Crypto Analyst" rating={5} text="3 seconds to full analysis. I run 20+ charts a day and Pro plan is absolutely worth it." />
           </div>
         </div>
       </section>
