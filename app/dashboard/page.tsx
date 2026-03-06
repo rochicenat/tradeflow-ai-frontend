@@ -219,7 +219,6 @@ export default function AnalyticsDashboard() {
     { id: 'scalp', name: 'Scalp Trading', icon: Timer },
     { id: 'bot', name: 'Trading Bot', icon: Zap },
     { id: 'market', name: 'Market Analysis', icon: BarChart3 },
-    { id: 'market', name: 'Market Analysis', icon: BarChart3 },
     { id: 'history', name: 'History', icon: History },
     { id: 'settings', name: 'Settings', icon: SettingsIcon },
   ];
