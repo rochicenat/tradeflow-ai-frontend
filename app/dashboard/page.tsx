@@ -214,13 +214,13 @@ export default function AnalyticsDashboard() {
   const getConfidenceColor = (value: number) => value >= 70 ? 'bg-gradient-to-r from-green-500 to-emerald-600' : value >= 40 ? 'bg-gradient-to-r from-yellow-500 to-orange-500' : 'bg-gradient-to-r from-red-500 to-rose-600';
 
   const menuItems = [
-    { id: 'dashboard', name: t('dash.sidebar.dashboard'), icon: Home },
+    { id: 'dashboard', name: 'Dashboard', icon: Home },
     { id: 'swing', name: 'Swing Trading', icon: TrendingUp },
     { id: 'scalp', name: 'Scalp Trading', icon: Timer },
     { id: 'bot', name: 'Trading Bot', icon: Zap },
     { id: 'market', name: 'Market Analysis', icon: BarChart3 },
-    { id: 'history', name: t('dash.sidebar.history'), icon: History },
-    { id: 'settings', name: t('dash.sidebar.settings'), icon: SettingsIcon },
+    { id: 'history', name: 'History', icon: History },
+    { id: 'settings', name: 'Settings', icon: SettingsIcon },
   ];
 
   const handleMenuClick = (id: string) => {
@@ -330,7 +330,7 @@ export default function AnalyticsDashboard() {
           <span className="text-slate-200 font-medium truncate">
             {currentPage === 'dashboard' && analysisType === 'swing' ? 'Swing Trading' :
              currentPage === 'dashboard' && analysisType === 'scalp' ? 'Scalp Trading' :
-             menuItems.find(i => i.id === currentPage)?.name || t('dash.sidebar.dashboard')}
+             menuItems.find(i => i.id === currentPage)?.name || 'Dashboard'}
           </span>
           {analysisType && currentPage === 'dashboard' && (
             <span className={`text-xs font-medium px-1.5 py-0.5 rounded-full flex-shrink-0 ${analysisType === 'swing' ? 'bg-orange-500/15 text-orange-400' : 'bg-blue-500/15 text-blue-400'}`}>
