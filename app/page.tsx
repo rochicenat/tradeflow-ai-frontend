@@ -192,12 +192,12 @@ export default function Home() {
             <h2 className="text-4xl font-bold">Frequently Asked Questions</h2>
           </div>
           <div className="space-y-4">
-            <FAQItem question=What markets does TradeFlow AI support? answer=TradeFlow AI analyzes charts from all major financial markets including stocks, forex, cryptocurrencies, commodities, and indices. Works with any chart screenshot. />
-            <FAQItem question=What's the difference between Swing and Scalp analysis? answer=Swing trading analysis focuses on multi-day trends (2-10 days), wider stop losses and larger targets. Scalp trading analysis focuses on 1-15 minute charts with tight stop losses and quick entries/exits. />
-            <FAQItem question=How accurate is the AI analysis? answer=Our AI achieves ~98% accuracy in pattern recognition. However, all analysis is educational — market conditions can change and no analysis guarantees profits. />
-            <FAQItem question=What is included in each plan? answer=Pro plan offers 50 analyses per month with full Swing & Scalp access. Premium plan provides unlimited analyses with priority processing. />
-            <FAQItem question=How do I cancel my subscription? answer=You can cancel anytime from your account settings. Your access continues until the end of your current billing period. />
-            <FAQItem question=Do I need trading experience? answer=No prior experience required. Our AI provides clear, structured insights with entry, stop loss and take profit levels that anyone can understand. />
+            <FAQItem question="What markets does TradeFlow AI support?" answer="TradeFlow AI analyzes charts from all major financial markets including stocks, forex, cryptocurrencies, commodities, and indices. Works with any chart screenshot." />
+            <FAQItem question="What's the difference between Swing and Scalp analysis?" answer="Swing trading analysis focuses on multi-day trends (2-10 days), wider stop losses and larger targets. Scalp trading analysis focuses on 1-15 minute charts with tight stop losses and quick entries/exits." />
+            <FAQItem question="How accurate is the AI analysis?" answer="Our AI achieves ~98% accuracy in pattern recognition. However, all analysis is educational — market conditions can change and no analysis guarantees profits." />
+            <FAQItem question="What is included in each plan?" answer="Pro plan offers 50 analyses per month with full Swing & Scalp access. Premium plan provides unlimited analyses with priority processing." />
+            <FAQItem question="How do I cancel my subscription?" answer="You can cancel anytime from your account settings. Your access continues until the end of your current billing period." />
+            <FAQItem question="Do I need trading experience?" answer="No prior experience required. Our AI provides clear, structured insights with entry, stop loss and take profit levels that anyone can understand." />
           </div>
         </div>
       </section>
