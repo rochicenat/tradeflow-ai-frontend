@@ -107,6 +107,7 @@ export default function AnalyticsDashboard() {
   const [assetType, setAssetType] = useState("");
   const [rrRatio, setRrRatio] = useState("1:2");
   const [limitPrice, setLimitPrice] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [showParamsModal, setShowParamsModal] = useState(false);
 
   useEffect(() => { fetchUserData(); }, []);
@@ -120,21 +121,28 @@ export default function AnalyticsDashboard() {
     } catch { router.push('/login'); }
   };
 
-  const onDrop = useCallback(async (acceptedFiles: File[]) => {
+  const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length === 0) return;
+    if (!analysisType) { toast.error('Please select Swing or Scalp Trading first'); return; }
+    const file = acceptedFiles[0];
+    setSelectedFile(file);
+    const reader = new FileReader();
+    reader.onloadend = () => setImagePreview(reader.result as string);
+    reader.readAsDataURL(file);
+    setResult(null);
+  }, [analysisType]);
+
+  const startAnalysis = async () => {
+    if (!selectedFile) { toast.error('Please upload a chart first'); return; }
     if (!analysisType) { toast.error('Please select Swing or Scalp Trading first'); return; }
     if (userData && (userData.plan === 'free' || userData.subscription_status !== 'active' || userData.analyses_used >= userData.analyses_limit)) {
       setShowUpgradeModal(true); return;
     }
-    const file = acceptedFiles[0];
     const token = getToken();
     if (!token) { toast.error('Please login first'); router.push('/login'); return; }
-    const reader = new FileReader();
-    reader.onloadend = () => setImagePreview(reader.result as string);
-    reader.readAsDataURL(file);
     setUploading(true); setLoading(true);
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', selectedFile);
     formData.append('analysis_type', analysisType);
     if (accountSize) formData.append('account_size', accountSize);
     if (riskPercent) formData.append('risk_percent', riskPercent);
@@ -146,7 +154,6 @@ export default function AnalyticsDashboard() {
     if (session) formData.append('session', session);
     if (assetType) formData.append('asset_type', assetType);
     if (rrRatio) formData.append('rr_ratio', rrRatio);
-    if (limitPrice && orderType === 'limit') formData.append('limit_price', limitPrice);
     if (limitPrice && orderType === 'limit') formData.append('limit_price', limitPrice);
     try {
       const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/analyze-image', {
@@ -163,7 +170,7 @@ export default function AnalyticsDashboard() {
     } catch (error: any) {
       if (!error.message?.includes('limit')) toast.error(error.message || 'Failed to analyze chart');
     } finally { setUploading(false); setLoading(false); }
-  }, [router, analysisType, userData]);
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop, accept: { 'image/*': ['.png', '.jpg', '.jpeg', '.webp'] }, maxFiles: 1, disabled: uploading || !analysisType
@@ -792,6 +799,18 @@ export default function AnalyticsDashboard() {
                             </div>
                           </div>
                         </div>
+                      )}
+
+                      {/* Start Analysis Button */}
+                      {selectedFile && !result && (
+                        <button onClick={startAnalysis} disabled={uploading}
+                          className="w-full py-4 rounded-xl font-bold text-lg bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white transition flex items-center justify-center gap-2">
+                          {uploading ? (
+                            <><div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> Analyzing...</>
+                          ) : (
+                            <>🚀 Start Analysis</>
+                          )}
+                        </button>
                       )}
                     </>
                   )}
