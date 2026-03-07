@@ -12,9 +12,9 @@ export const metadata: Metadata = {
   creator: "TradeFlow AI",
   metadataBase: new URL("https://tradeflowai.cloud"),
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
-    apple: "/favicon.svg",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
   alternates: {
     canonical: "https://tradeflowai.cloud",
