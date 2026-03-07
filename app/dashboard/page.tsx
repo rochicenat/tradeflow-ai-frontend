@@ -18,7 +18,7 @@ import { getToken, removeToken } from '@/app/lib/auth';
 
 interface AnalysisResult { analysis: string; trend: string; confidence: string; }
 interface UserData { email: string; name: string; plan: string; analyses_used: number; analyses_limit: number; subscription_status: string; }
-interface ParsedAnalysis { signal: string; confidence: string; entry: string; stopLoss: string; takeProfit: string; keyLevels: string[]; signalReason: string[]; riskAssessment: string[]; breakoutRetest: string[]; indicators: string[]; fibonacci: string[]; psychologyPlan: string[]; }
+interface ParsedAnalysis { signal: string; confidence: string; entry: string; stopLoss: string; takeProfit: string; keyLevels: string[]; signalReason: string[]; riskAssessment: string[]; breakoutRetest: string[]; indicators: string[]; fibonacci: string[]; psychologyPlan: string[]; smc: string[]; }
 
 function UpgradeModal({ onClose }: { onClose: () => void }) {
   return (
@@ -179,7 +179,7 @@ export default function AnalyticsDashboard() {
     if (signal === 'SIDEWAYS') signal = 'NEUTRAL';
     let entry = '', stopLoss = '', takeProfit = '';
     let keyLevels: string[] = [], signalReason: string[] = [], riskAssessment: string[] = [];
-    let breakoutRetest: string[] = [], indicators: string[] = [], fibonacci: string[] = [], psychologyPlan: string[] = [];
+    let breakoutRetest: string[] = [], indicators: string[] = [], fibonacci: string[] = [], psychologyPlan: string[] = [], smc: string[] = [];
     let currentSection = '';
     for (const line of lines) {
       if (line.match(/^(BUY|SELL|HOLD|UPTREND|DOWNTREND|NEUTRAL)$/i)) {
@@ -194,6 +194,7 @@ export default function AnalyticsDashboard() {
       else if (line.includes('**Indicators')) { currentSection = 'indicators'; }
       else if (line.includes('**Fibonacci')) { currentSection = 'fibonacci'; }
       else if (line.includes('**Psychology')) { currentSection = 'psychology'; }
+      else if (line.includes('**Smart Money')) { currentSection = 'smc'; }
       else if (line.startsWith('*') || line.startsWith('•')) {
         const clean = line.replace(/^[*•]\s*/, '').replace(/\*\*/g, '').trim();
         if (clean) {
@@ -204,10 +205,11 @@ export default function AnalyticsDashboard() {
           else if (currentSection === 'indicators') indicators.push(clean);
           else if (currentSection === 'fibonacci') fibonacci.push(clean);
           else if (currentSection === 'psychology') psychologyPlan.push(clean);
+          else if (currentSection === 'smc') smc.push(clean);
         }
       }
     }
-    return { signal, confidence, entry, stopLoss, takeProfit, keyLevels, signalReason, riskAssessment, breakoutRetest, indicators, fibonacci, psychologyPlan };
+    return { signal, confidence, entry, stopLoss, takeProfit, keyLevels, signalReason, riskAssessment, breakoutRetest, indicators, fibonacci, psychologyPlan, smc };
   };
 
   const getSignalIcon = (signal: string) => {
@@ -845,75 +847,60 @@ export default function AnalyticsDashboard() {
                               </div>
                             )}
                           </div>
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                            {parsed.keyLevels.length > 0 && (
-                              <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
-                                <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
-                                  <Target className="w-4 h-4 text-purple-400" />
-                                  <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">{'Key Levels'}</span>
-                                </div>
-                                <div className="space-y-1.5">{parsed.keyLevels.map((level, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-purple-400 mt-0.5">▸</span>{level}</div>)}</div>
-                              </div>
-                            )}
+                          {/* KEY LEVELS - compact tags */}
+                          {parsed.keyLevels.length > 0 && (
+                            <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
+                              <div className="flex items-center gap-2 mb-3"><Target className="w-3.5 h-3.5 text-purple-400" /><span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Key Levels</span></div>
+                              <div className="flex flex-wrap gap-2">{parsed.keyLevels.map((level, i) => <span key={i} className="bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs px-2.5 py-1 rounded-lg">{level}</span>)}</div>
+                            </div>
+                          )}
+                          {/* PATTERN + RISK - 2 col */}
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                             {parsed.signalReason.length > 0 && (
-                              <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
-                                <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
-                                  <Activity className="w-4 h-4 text-orange-400" />
-                                  <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">{'Pattern Analysis'}</span>
-                                </div>
-                                <div className="space-y-1.5">{parsed.signalReason.map((reason, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-orange-400 mt-0.5">▸</span>{reason}</div>)}</div>
+                              <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
+                                <div className="flex items-center gap-2 mb-3"><Activity className="w-3.5 h-3.5 text-orange-400" /><span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Pattern</span></div>
+                                <div className="flex flex-col gap-1.5">{parsed.signalReason.map((r, i) => <div key={i} className="flex items-start gap-1.5"><span className="text-orange-400 text-xs mt-0.5">▸</span><span className="text-slate-400 text-xs">{r}</span></div>)}</div>
                               </div>
                             )}
                             {parsed.riskAssessment.length > 0 && (
-                              <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-6">
-                                <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
-                                  <AlertTriangle className="w-4 h-4 text-yellow-400" />
-                                  <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">{'Risk Assessment'}</span>
-                                </div>
-                                <div className="space-y-1.5">{parsed.riskAssessment.map((risk, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-yellow-400 mt-0.5">▸</span>{risk}</div>)}</div>
+                              <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
+                                <div className="flex items-center gap-2 mb-3"><AlertTriangle className="w-3.5 h-3.5 text-yellow-400" /><span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Risk</span></div>
+                                <div className="flex flex-wrap gap-2">{parsed.riskAssessment.map((r, i) => <span key={i} className="bg-yellow-500/10 border border-yellow-500/20 text-yellow-300 text-xs px-2.5 py-1 rounded-lg">{r}</span>)}</div>
                               </div>
                             )}
                           </div>
+                          {/* SMC - Smart Money Concepts */}
+                          {parsed.smc?.length > 0 && (
+                            <div className="bg-[#0D0D0D] border border-orange-500/20 rounded-xl p-4">
+                              <div className="flex items-center gap-2 mb-3"><Zap className="w-3.5 h-3.5 text-orange-400" /><span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Smart Money Concepts</span></div>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">{parsed.smc.map((item, i) => <div key={i} className="bg-orange-500/5 border border-orange-500/10 rounded-lg px-3 py-2 text-xs text-slate-300">{item}</div>)}</div>
+                            </div>
+                          )}
+                          {/* BREAKOUT + INDICATORS + FIB + PSYCHOLOGY */}
                           {(parsed.breakoutRetest?.length > 0 || parsed.indicators?.length > 0 || parsed.fibonacci?.length > 0 || parsed.psychologyPlan?.length > 0) && (
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                               {parsed.breakoutRetest?.length > 0 && (
-                                <div className="bg-[#0D0D0D] border border-purple-500/20 rounded-xl p-6">
-                                  <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
-                                    <TrendingUp className="w-4 h-4 text-purple-400" />
-                                    <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">{'Breakout & Retest'}</span>
-                                    <span className="ml-auto text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded-full">Premium</span>
-                                  </div>
-                                  <div className="space-y-1.5">{parsed.breakoutRetest.map((item, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-purple-400 mt-0.5">▸</span>{item}</div>)}</div>
+                                <div className="bg-[#0D0D0D] border border-purple-500/20 rounded-xl p-4">
+                                  <div className="flex items-center gap-2 mb-3"><TrendingUp className="w-3.5 h-3.5 text-purple-400" /><span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Breakout & Retest</span></div>
+                                  <div className="flex flex-col gap-1.5">{parsed.breakoutRetest.map((item, i) => <div key={i} className="flex items-start gap-1.5"><span className="text-purple-400 text-xs mt-0.5">▸</span><span className="text-slate-400 text-xs">{item}</span></div>)}</div>
                                 </div>
                               )}
                               {parsed.indicators?.length > 0 && (
-                                <div className="bg-[#0D0D0D] border border-blue-500/20 rounded-xl p-6">
-                                  <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
-                                    <Activity className="w-4 h-4 text-blue-400" />
-                                    <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Indicators (RSI & MA)</span>
-                                    <span className="ml-auto text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded-full">Premium</span>
-                                  </div>
-                                  <div className="space-y-1.5">{parsed.indicators.map((item, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-blue-400 mt-0.5">▸</span>{item}</div>)}</div>
+                                <div className="bg-[#0D0D0D] border border-blue-500/20 rounded-xl p-4">
+                                  <div className="flex items-center gap-2 mb-3"><Activity className="w-3.5 h-3.5 text-blue-400" /><span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Indicators</span></div>
+                                  <div className="flex flex-wrap gap-2">{parsed.indicators.map((item, i) => <span key={i} className="bg-blue-500/10 border border-blue-500/20 text-blue-300 text-xs px-2.5 py-1 rounded-lg">{item}</span>)}</div>
                                 </div>
                               )}
                               {parsed.fibonacci?.length > 0 && (
-                                <div className="bg-[#0D0D0D] border border-yellow-500/20 rounded-xl p-6">
-                                  <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
-                                    <BarChart3 className="w-4 h-4 text-yellow-400" />
-                                    <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Fibonacci</span>
-                                    <span className="ml-auto text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded-full">Premium</span>
-                                  </div>
-                                  <div className="space-y-1.5">{parsed.fibonacci.map((item, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-yellow-400 mt-0.5">▸</span>{item}</div>)}</div>
+                                <div className="bg-[#0D0D0D] border border-yellow-500/20 rounded-xl p-4">
+                                  <div className="flex items-center gap-2 mb-3"><BarChart3 className="w-3.5 h-3.5 text-yellow-400" /><span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Fibonacci</span></div>
+                                  <div className="flex flex-wrap gap-2">{parsed.fibonacci.map((item, i) => <span key={i} className="bg-yellow-500/10 border border-yellow-500/20 text-yellow-300 text-xs px-2.5 py-1 rounded-lg">{item}</span>)}</div>
                                 </div>
                               )}
                               {parsed.psychologyPlan?.length > 0 && (
-                                <div className="bg-[#0D0D0D] border border-green-500/20 rounded-xl p-6">
-                                  <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#1A1A1A]">
-                                    <Shield className="w-4 h-4 text-green-400" />
-                                    <span className="text-slate-300 text-xs font-bold uppercase tracking-wider">{'Psychology & Trade Plan'}</span>
-                                    <span className="ml-auto text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded-full">Premium</span>
-                                  </div>
-                                  <div className="space-y-1.5">{parsed.psychologyPlan.map((item, i) => <div key={i} className="text-slate-400 text-xs flex items-start gap-1.5"><span className="text-green-400 mt-0.5">▸</span>{item}</div>)}</div>
+                                <div className="bg-[#0D0D0D] border border-green-500/20 rounded-xl p-4">
+                                  <div className="flex items-center gap-2 mb-3"><Shield className="w-3.5 h-3.5 text-green-400" /><span className="text-slate-300 text-xs font-bold uppercase tracking-wider">Trade Plan</span></div>
+                                  <div className="flex flex-col gap-1.5">{parsed.psychologyPlan.map((item, i) => <div key={i} className="flex items-start gap-1.5"><span className="text-green-400 text-xs mt-0.5">▸</span><span className="text-slate-400 text-xs">{item}</span></div>)}</div>
                                 </div>
                               )}
                             </div>
