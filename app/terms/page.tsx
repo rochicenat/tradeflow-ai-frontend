@@ -148,8 +148,8 @@ export default function TermsPage() {
             <h2 className="text-3xl font-semibold text-white mb-4">11. Contact</h2>
             <p className="text-slate-300 leading-relaxed">
               For questions about these terms, contact us at:{' '}
-              <a href="mailto:support@tradeflowai.cloud" className="text-orange-500 hover:underline">
-                support@tradeflowai.cloud
+              <a href="mailto:tradeflowai.support@gmail.com" className="text-orange-500 hover:underline">
+                tradeflowai.support@gmail.com
               </a>
             </p>
           </section>

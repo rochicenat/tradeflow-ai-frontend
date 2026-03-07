@@ -95,8 +95,8 @@ export default function AboutPage() {
                   <Mail className="w-6 h-6 text-orange-500" />
                   <div>
                     <strong>Support:</strong>{' '}
-                    <a href="mailto:support@tradeflowai.cloud" className="text-orange-500 hover:underline">
-                      support@tradeflowai.cloud
+                    <a href="mailto:tradeflowai.support@gmail.com" className="text-orange-500 hover:underline">
+                      tradeflowai.support@gmail.com
                     </a>
                   </div>
                 </div>

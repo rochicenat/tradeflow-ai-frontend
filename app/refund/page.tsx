@@ -73,7 +73,7 @@ export default function RefundPage() {
               To request a refund:
             </p>
             <ol className="list-decimal list-inside text-slate-300 space-y-2 ml-4">
-              <li>Email us at <strong>support@tradeflowai.cloud</strong></li>
+              <li>Email us at <strong>tradeflowai.support@gmail.com</strong></li>
               <li>Include your account email and subscription details</li>
               <li>Provide a brief reason for the refund request (optional)</li>
               <li>Our team will review your request within 2-3 business days</li>
@@ -137,8 +137,8 @@ export default function RefundPage() {
               For refund requests or questions about this policy:
             </p>
             <p className="text-slate-300 leading-relaxed mt-2">
-              Email: <a href="mailto:support@tradeflowai.cloud" className="text-orange-500 hover:underline">
-                support@tradeflowai.cloud
+              Email: <a href="mailto:tradeflowai.support@gmail.com" className="text-orange-500 hover:underline">
+                tradeflowai.support@gmail.com
               </a>
             </p>
           </section>
