@@ -107,7 +107,6 @@ export default function AnalyticsDashboard() {
   const [assetType, setAssetType] = useState("");
   const [rrRatio, setRrRatio] = useState("1:2");
   const [limitPrice, setLimitPrice] = useState("");
-  const [limitPrice, setLimitPrice] = useState("");
   const [showParamsModal, setShowParamsModal] = useState(false);
 
   useEffect(() => { fetchUserData(); }, []);
