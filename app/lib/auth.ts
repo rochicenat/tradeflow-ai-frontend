@@ -17,4 +17,5 @@ export function getToken(): string | null {
 export function removeToken(): void {
   localStorage.removeItem(TOKEN_KEY);
   sessionStorage.removeItem(TOKEN_KEY);
+  sessionStorage.removeItem(TOKEN_KEY);
 }
