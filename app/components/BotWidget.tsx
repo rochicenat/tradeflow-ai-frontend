@@ -36,6 +36,19 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
   };
 
   useEffect(() => {
+    if (userEmail) {
+      const token = typeof window !== 'undefined' && (localStorage.getItem('token') || sessionStorage.getItem('token'));
+      fetch('https://tradeflow-ai-backend-production.up.railway.app/bot/settings', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).then(r => r.json()).then(d => {
+        if (d.symbol) setSymbol(d.symbol);
+        if (d.lot_size) setLotSize(d.lot_size);
+        if (d.risk_percent) setRiskPercent(d.risk_percent);
+      }).catch(() => {});
+    }
+  }, [userEmail]);
+
+  useEffect(() => {
     if (activeTab === 'signals' && userEmail) {
       const token = typeof window !== 'undefined' && (localStorage.getItem('token') || sessionStorage.getItem('token'));
       fetch(`https://tradeflow-ai-backend-production.up.railway.app/bot/signals/${userEmail}`, {
@@ -52,9 +65,21 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const saveSettings = () => {
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+  const saveSettings = async () => {
+    const token = typeof window !== 'undefined' && (localStorage.getItem('token') || sessionStorage.getItem('token'));
+    const formData = new FormData();
+    formData.append('symbol', symbol);
+    formData.append('lot_size', lotSize);
+    formData.append('risk_percent', riskPercent);
+    try {
+      await fetch('https://tradeflow-ai-backend-production.up.railway.app/bot/settings', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData
+      });
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch(e) {}
   };
 
   const tabs = [
