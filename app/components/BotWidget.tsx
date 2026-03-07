@@ -11,6 +11,15 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
   const [riskPercent, setRiskPercent] = useState('1');
   const [saved, setSaved] = useState(false);
 
+  useEffect(() => {
+    if (activeTab === 'signals' && userEmail) {
+      const token = typeof window !== 'undefined' && (localStorage.getItem('token') || sessionStorage.getItem('token'));
+      fetch(`https://tradeflow-ai-backend-production.up.railway.app/bot/signals/${userEmail}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).then(r => r.json()).then(d => setSignals(Array.isArray(d) ? d.reverse() : [])).catch(() => {});
+    }
+  }, [activeTab, userEmail]);
+
   const webhookUrl = `https://tradeflow-ai-backend-production.up.railway.app/bot/signal/${userEmail || 'your-email'}`;
 
   const copyWebhook = () => {
