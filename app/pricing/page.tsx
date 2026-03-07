@@ -25,7 +25,7 @@ export default function PricingPage() {
   const yearlyTotal = (yearlyPrice * 12).toFixed(0);
 
   const features = [
-    '50 AI chart analyses/month',
+    'Unlimited AI chart analyses',
     'Swing & Scalp trading',
     'Entry, SL & TP levels',
     'Key levels & pattern recognition',
@@ -107,7 +107,7 @@ export default function PricingPage() {
             </div>
           )}
 
-          <div className="text-slate-400 text-sm mb-8">50 analyses/month</div>
+          <div className="text-slate-400 text-sm mb-8">Unlimited analyses</div>
 
           <ul className="space-y-3 mb-8">
             {features.map((f, i) => (

@@ -39,7 +39,7 @@ function AnimatedCounter({ end, duration = 2000, suffix = '' }: { end: number; d
 
 function PricingCard() {
   const features = [
-    '50 AI chart analyses/month',
+    'Unlimited AI chart analyses',
     'Swing & Scalp trading',
     'Entry, SL & TP levels',
     'Key levels & pattern recognition',
@@ -56,7 +56,7 @@ function PricingCard() {
           <span className="text-5xl font-black text-white">$19.99</span>
           <span className="text-gray-400">/month</span>
         </div>
-        <div className="text-gray-400 mb-6">50 analyses/month</div>
+        <div className="text-gray-400 mb-6">Unlimited analyses</div>
         <ul className="space-y-3 mb-8">
           {features.map((f, i) => (<li key={i} className="flex items-center gap-2 text-gray-300 text-sm"><span className="text-green-400 font-bold">✓</span> {f}</li>))}
         </ul>
@@ -73,7 +73,7 @@ function PricingCard() {
           <span className="text-gray-400">/month</span>
         </div>
         <div className="text-green-400 text-sm mb-1 font-medium">Billed $119.88/year — save $120/year</div>
-        <div className="text-gray-400 mb-6">50 analyses/month</div>
+        <div className="text-gray-400 mb-6">Unlimited analyses</div>
         <ul className="space-y-3 mb-8">
           {features.map((f, i) => (<li key={i} className="flex items-center gap-2 text-gray-300 text-sm"><span className="text-green-400 font-bold">✓</span> {f}</li>))}
         </ul>
