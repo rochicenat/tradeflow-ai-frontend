@@ -62,7 +62,7 @@ function PricingCard() {
         <ul className="space-y-3 mb-8">
           {features.map((f, i) => (<li key={i} className="flex items-center gap-2 text-gray-300 text-sm"><span className="text-green-400 font-bold">✓</span> {f}</li>))}
         </ul>
-        <button onClick={() => { const t = typeof window !== 'undefined' && (localStorage.getItem('token') || sessionStorage.getItem('token')); if (!t) { window.location.href = '/login?redirect=pricing'; return; } window.open('https://tradeflowai.lemonsqueezy.com/checkout/buy/47621ebf-7c5e-4b6e-bbc9-d6bee626b2d4', '_blank'); }} className="block w-full py-3 rounded-xl font-bold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg">
+        <button onClick={() => { const t = typeof window !== 'undefined' && (localStorage.getItem('token') || sessionStorage.getItem('token')); if (!t) { window.location.href = '/login?redirect=pricing'; return; } window.location.href = 'https://tradeflowai.lemonsqueezy.com/checkout/buy/47621ebf-7c5e-4b6e-bbc9-d6bee626b2d4'; }} className="block w-full py-3 rounded-xl font-bold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg">
           Get Pro — $19.99/mo
         </button>
       </div>
@@ -79,7 +79,7 @@ function PricingCard() {
         <ul className="space-y-3 mb-8">
           {features.map((f, i) => (<li key={i} className="flex items-center gap-2 text-gray-300 text-sm"><span className="text-green-400 font-bold">✓</span> {f}</li>))}
         </ul>
-        <button onClick={() => { const t = typeof window !== 'undefined' && (localStorage.getItem('token') || sessionStorage.getItem('token')); if (!t) { window.location.href = '/login?redirect=pricing'; return; } window.open('https://tradeflowai.lemonsqueezy.com/checkout/buy/60423ba8-053a-4d04-a924-69b6aaae30e3', '_blank'); }} className="block w-full py-3 rounded-xl font-bold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg">
+        <button onClick={() => { const t = typeof window !== 'undefined' && (localStorage.getItem('token') || sessionStorage.getItem('token')); if (!t) { window.location.href = '/login?redirect=pricing'; return; } window.location.href = 'https://tradeflowai.lemonsqueezy.com/checkout/buy/60423ba8-053a-4d04-a924-69b6aaae30e3'; }} className="block w-full py-3 rounded-xl font-bold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg">
           Get Pro — $9.99/mo
         </button>
       </div>
