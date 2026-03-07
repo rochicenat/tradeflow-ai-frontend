@@ -727,15 +727,6 @@ export default function AnalyticsDashboard() {
                                   className="w-full bg-[#111] border border-[#252525] rounded-lg px-3 py-2 text-white text-sm focus:border-orange-500 focus:outline-none transition" />
                               </div>
                             )}
-                            {/* Limit Price */}
-                            {orderType === 'limit' && (
-                              <div className="col-span-2">
-                                <label className="block text-xs text-slate-500 mb-1">💲 Limit Order Price</label>
-                                <input type="number" value={limitPrice} onChange={e => setLimitPrice(e.target.value)}
-                                  placeholder="e.g. 42500.00"
-                                  className="w-full bg-[#111] border border-[#252525] rounded-lg px-3 py-2 text-white text-sm focus:border-orange-500 focus:outline-none transition" />
-                              </div>
-                            )}
                             {/* SL Type */}
                             <div>
                               <label className="block text-xs text-slate-500 mb-1">🛑 Stop-Loss Type</label>
