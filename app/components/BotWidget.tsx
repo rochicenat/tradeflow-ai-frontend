@@ -93,9 +93,9 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
                     <p className="text-white text-xs font-semibold">{s.title}</p>
                     <p className="text-slate-500 text-xs mt-0.5">{s.desc}</p>
                     {s.action && (
-                      <button className="mt-2 flex items-center gap-1 text-orange-500 text-xs font-semibold hover:text-orange-400 transition">
+                      <a href="/TradeFlowAI.mq5" download className="mt-2 flex items-center gap-1 text-orange-500 text-xs font-semibold hover:text-orange-400 transition">
                         Download EA <ChevronRight className="w-3 h-3" />
-                      </button>
+                      </a>
                     )}
                   </div>
                 </div>
