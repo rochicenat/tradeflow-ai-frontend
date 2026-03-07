@@ -10,6 +10,30 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
   const [lotSize, setLotSize] = useState('0.01');
   const [riskPercent, setRiskPercent] = useState('1');
   const [saved, setSaved] = useState(false);
+  const [manualAction, setManualAction] = useState<'BUY'|'SELL'>('BUY');
+  const [manualSymbol, setManualSymbol] = useState('XAUUSD');
+  const [manualEntry, setManualEntry] = useState('');
+  const [manualSL, setManualSL] = useState('');
+  const [manualTP, setManualTP] = useState('');
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+
+  const sendManualSignal = async () => {
+    if (!manualEntry || !manualSL || !manualTP) return;
+    setSending(true);
+    const token = typeof window !== 'undefined' && (localStorage.getItem('token') || sessionStorage.getItem('token'));
+    try {
+      await fetch(`https://tradeflow-ai-backend-production.up.railway.app/bot/signal/${userEmail}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ action: manualAction, symbol: manualSymbol, entry: parseFloat(manualEntry), sl: parseFloat(manualSL), tp: parseFloat(manualTP), lot: parseFloat(lotSize) })
+      });
+      setSent(true);
+      setTimeout(() => setSent(false), 2000);
+      setManualEntry(''); setManualSL(''); setManualTP('');
+    } catch(e) {}
+    setSending(false);
+  };
 
   useEffect(() => {
     if (activeTab === 'signals' && userEmail) {
@@ -123,6 +147,35 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
       {/* Signals Tab */}
       {activeTab === 'signals' && (
         <div className="space-y-3">
+          {/* Manual Signal */}
+          <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4 space-y-3">
+            <p className="text-xs text-slate-500 uppercase tracking-wider font-medium">Manual Signal</p>
+            <div className="flex gap-2">
+              {(['BUY','SELL'] as const).map(a => (
+                <button key={a} onClick={() => setManualAction(a)}
+                  className={`flex-1 py-2 rounded-lg text-xs font-bold transition border ${manualAction === a ? (a === 'BUY' ? 'bg-green-500 border-green-500 text-white' : 'bg-red-500 border-red-500 text-white') : 'bg-[#111] border-[#252525] text-slate-400'}`}>
+                  {a}
+                </button>
+              ))}
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {['XAUUSD','EURUSD','BTCUSD','GBPUSD','USDJPY','NASDAQ'].map(s => (
+                <button key={s} onClick={() => setManualSymbol(s)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition border ${manualSymbol === s ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#111] border-[#252525] text-slate-400'}`}>
+                  {s}
+                </button>
+              ))}
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              <div><label className="text-xs text-slate-500 mb-1 block">Entry</label><input type="number" value={manualEntry} onChange={e => setManualEntry(e.target.value)} placeholder="0.00" className="w-full bg-[#111] border border-[#252525] rounded-lg px-3 py-2 text-white text-xs focus:border-orange-500 focus:outline-none" /></div>
+              <div><label className="text-xs text-slate-500 mb-1 block">Stop Loss</label><input type="number" value={manualSL} onChange={e => setManualSL(e.target.value)} placeholder="0.00" className="w-full bg-[#111] border border-[#252525] rounded-lg px-3 py-2 text-white text-xs focus:border-red-500 focus:outline-none" /></div>
+              <div><label className="text-xs text-slate-500 mb-1 block">Take Profit</label><input type="number" value={manualTP} onChange={e => setManualTP(e.target.value)} placeholder="0.00" className="w-full bg-[#111] border border-[#252525] rounded-lg px-3 py-2 text-white text-xs focus:border-green-500 focus:outline-none" /></div>
+            </div>
+            <button onClick={sendManualSignal} disabled={sending}
+              className={`w-full py-2.5 rounded-xl text-xs font-bold transition ${sent ? 'bg-green-500 text-white' : 'bg-orange-500 hover:bg-orange-600 text-white'} disabled:opacity-50`}>
+              {sent ? '✓ Signal Sent!' : sending ? 'Sending...' : 'Send Signal to MT5'}
+            </button>
+          </div>
           <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
             <p className="text-xs text-slate-500 uppercase tracking-wider font-medium mb-3">Active Signals</p>
             {signals.length === 0 ? (
