@@ -125,11 +125,14 @@ export default function PricingPage() {
               ✓ Current Plan
             </div>
           ) : (
-            <a href={billing === 'monthly' ? monthlyUrl : yearlyUrl}
-              target="_blank" rel="noopener noreferrer"
+            <button
+              onClick={() => {
+                if (!isLoggedIn) { window.location.href = '/login?redirect=pricing'; return; }
+                window.open(billing === 'monthly' ? monthlyUrl : yearlyUrl, '_blank');
+              }}
               className="block w-full py-3 rounded-lg font-semibold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg">
               Get Pro — ${billing === 'monthly' ? `${monthlyPrice}/mo` : `${yearlyPrice}/mo`}
-            </a>
+            </button>
           )}
         </motion.div>
 
