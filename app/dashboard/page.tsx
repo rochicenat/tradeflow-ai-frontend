@@ -601,17 +601,17 @@ export default function AnalyticsDashboard() {
                       {/* How It Works */}
                       <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-4">
                         <p className="text-xs text-slate-500 uppercase tracking-wider font-medium mb-3">How It Works</p>
-                        <div className="grid grid-cols-3 gap-2">
+                        <div className="grid grid-cols-3 gap-3">
                           {[
-                            { num: '01', icon: '📤', title: 'Upload Chart', desc: 'Screenshot from TradingView, MT4 or any platform' },
-                            { num: '02', icon: '🧠', title: 'AI Analyzes', desc: 'Identifies patterns, key levels and SMC zones' },
-                            { num: '03', icon: '📊', title: 'Get Insights', desc: 'Entry, SL, TP, Fibonacci and risk assessment' },
+                            { num: '01', icon: '📤', title: 'Upload Chart', desc: 'Screenshot from TradingView, MT4 or any platform', color: 'from-orange-500/20 to-orange-500/5', border: 'border-orange-500/20' },
+                            { num: '02', icon: '🧠', title: 'AI Analyzes', desc: 'Identifies SMC zones, patterns and key levels', color: 'from-blue-500/20 to-blue-500/5', border: 'border-blue-500/20' },
+                            { num: '03', icon: '📊', title: 'Get Insights', desc: 'Entry, SL, TP, Fibonacci and risk plan', color: 'from-green-500/20 to-green-500/5', border: 'border-green-500/20' },
                           ].map(s => (
-                            <div key={s.num} className="bg-[#111] border border-[#1A1A1A] rounded-xl p-3 relative overflow-hidden">
-                              <span className="absolute top-2 right-3 text-2xl font-black text-orange-500/10">{s.num}</span>
-                              <div className="text-lg mb-2">{s.icon}</div>
-                              <p className="text-white text-xs font-semibold mb-1">{s.title}</p>
-                              <p className="text-slate-500 text-xs leading-relaxed">{s.desc}</p>
+                            <div key={s.num} className={`bg-gradient-to-b ${s.color} border ${s.border} rounded-xl p-4 relative overflow-hidden`}>
+                              <span className="absolute top-2 right-3 text-3xl font-black text-white/5">{s.num}</span>
+                              <div className="text-xl mb-3">{s.icon}</div>
+                              <p className="text-white text-xs font-bold mb-1">{s.title}</p>
+                              <p className="text-slate-400 text-xs leading-relaxed">{s.desc}</p>
                             </div>
                           ))}
                         </div>
