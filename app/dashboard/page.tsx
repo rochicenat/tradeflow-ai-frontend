@@ -804,11 +804,11 @@ export default function AnalyticsDashboard() {
                       {/* Start Analysis Button */}
                       {selectedFile && !result && (
                         <button onClick={startAnalysis} disabled={uploading}
-                          className="w-full py-4 rounded-xl font-bold text-lg bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white transition flex items-center justify-center gap-2">
+                          className="w-full py-3 rounded-xl font-semibold text-sm bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white transition flex items-center justify-center gap-2">
                           {uploading ? (
                             <><div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> Analyzing...</>
                           ) : (
-                            <>🚀 Start Analysis</>
+                            <>Start Analysis</>
                           )}
                         </button>
                       )}
