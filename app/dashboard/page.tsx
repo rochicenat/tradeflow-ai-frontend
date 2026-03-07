@@ -506,9 +506,6 @@ export default function AnalyticsDashboard() {
         {/* SIDEBAR */}
         <div className="hidden lg:flex flex-col w-56 bg-[#0A0A0A] border-r border-[#1A1A1A] flex-shrink-0">
           <div className="h-14 border-b border-[#1A1A1A] flex items-center px-3 gap-2">
-            <div className="w-7 h-7 bg-orange-500 rounded-md flex items-center justify-center flex-shrink-0">
-              <Activity className="w-4 h-4 text-white" />
-            </div>
             <span className="text-white font-bold text-sm tracking-wide">TradeFlow <span className="text-orange-500">AI</span></span>
           </div>
           <nav className="flex-1 py-3 px-2 space-y-0.5">
