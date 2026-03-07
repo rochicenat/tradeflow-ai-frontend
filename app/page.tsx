@@ -95,7 +95,7 @@ export default function Home() {
       <nav className="border-b border-gray-800 backdrop-blur-lg bg-black/50 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Logo />
+            <img src="/logo.png" alt="TradeFlow AI" className="w-9 h-9 rounded-md object-cover" />
             <div className="hidden md:flex items-center gap-6">
               <a href="#pricing" className="text-gray-300 hover:text-orange-500 transition-colors text-sm">Pricing</a>
               <a href="#how-it-works" className="text-gray-300 hover:text-orange-500 transition-colors text-sm">How It Works</a>
