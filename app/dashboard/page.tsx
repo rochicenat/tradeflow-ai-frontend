@@ -106,6 +106,8 @@ export default function AnalyticsDashboard() {
   const [session, setSession] = useState("");
   const [assetType, setAssetType] = useState("");
   const [rrRatio, setRrRatio] = useState("1:2");
+  const [limitPrice, setLimitPrice] = useState("");
+  const [limitPrice, setLimitPrice] = useState("");
   const [showParamsModal, setShowParamsModal] = useState(false);
 
   useEffect(() => { fetchUserData(); }, []);
@@ -145,6 +147,8 @@ export default function AnalyticsDashboard() {
     if (session) formData.append('session', session);
     if (assetType) formData.append('asset_type', assetType);
     if (rrRatio) formData.append('rr_ratio', rrRatio);
+    if (limitPrice && orderType === 'limit') formData.append('limit_price', limitPrice);
+    if (limitPrice && orderType === 'limit') formData.append('limit_price', limitPrice);
     try {
       const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/analyze-image', {
         method: 'POST', headers: { 'Authorization': `Bearer ${token}` }, body: formData
@@ -683,7 +687,7 @@ export default function AnalyticsDashboard() {
                             <div>
                               <label className="block text-xs text-slate-500 mb-1">⚠️ Risk Per Trade (%)</label>
                               <div className="flex gap-1">
-                                {['1','2','3','5'].map(r => (
+                                {['1','2','5','10','20'].map(r => (
                                   <button key={r} onClick={() => setRiskPercent(r)}
                                     className={`flex-1 py-2 rounded-lg text-xs font-semibold transition border ${riskPercent === r ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#111] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
                                     {r}%
@@ -695,7 +699,7 @@ export default function AnalyticsDashboard() {
                             <div>
                               <label className="block text-xs text-slate-500 mb-1">⚡ Leverage</label>
                               <div className="flex gap-1">
-                                {['1','5','10','20','50'].map(l => (
+                                {['1','10','25','50','100'].map(l => (
                                   <button key={l} onClick={() => setLeverage(l)}
                                     className={`flex-1 py-2 rounded-lg text-xs font-semibold transition border ${leverage === l ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#111] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
                                     {l}x
@@ -715,6 +719,24 @@ export default function AnalyticsDashboard() {
                                 ))}
                               </div>
                             </div>
+                            {/* Limit Price */}
+                            {orderType === 'limit' && (
+                              <div className="col-span-2">
+                                <label className="block text-xs text-slate-500 mb-1">💲 Limit Order Price</label>
+                                <input type="number" value={limitPrice} onChange={e => setLimitPrice(e.target.value)}
+                                  placeholder="e.g. 42500.00"
+                                  className="w-full bg-[#111] border border-[#252525] rounded-lg px-3 py-2 text-white text-sm focus:border-orange-500 focus:outline-none transition" />
+                              </div>
+                            )}
+                            {/* Limit Price */}
+                            {orderType === 'limit' && (
+                              <div className="col-span-2">
+                                <label className="block text-xs text-slate-500 mb-1">💲 Limit Order Price</label>
+                                <input type="number" value={limitPrice} onChange={e => setLimitPrice(e.target.value)}
+                                  placeholder="e.g. 42500.00"
+                                  className="w-full bg-[#111] border border-[#252525] rounded-lg px-3 py-2 text-white text-sm focus:border-orange-500 focus:outline-none transition" />
+                              </div>
+                            )}
                             {/* SL Type */}
                             <div>
                               <label className="block text-xs text-slate-500 mb-1">🛑 Stop-Loss Type</label>
