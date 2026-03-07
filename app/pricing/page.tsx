@@ -28,8 +28,10 @@ export default function PricingPage() {
     'Unlimited AI chart analyses',
     'Swing & Scalp trading',
     'Entry, SL & TP levels',
-    'Key levels & pattern recognition',
-    'Risk assessment',
+    'Smart Money Concepts (SMC)',
+    'Fibonacci & Breakout analysis',
+    'Risk assessment & Trade plan',
+    'Custom trading parameters',
     'Full analysis history',
   ];
 
