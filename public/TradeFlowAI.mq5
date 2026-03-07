@@ -25,7 +25,6 @@ string lastSignalId = "";
 //+------------------------------------------------------------------+
 int OnInit()
 {
-   trade.SetMagicNumber(MagicNumber);
    trade.SetExpertMagicNumber(MagicNumber);
    
    Print("TradeFlow AI EA Started");
