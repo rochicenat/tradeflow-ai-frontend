@@ -108,6 +108,7 @@ export default function AnalyticsDashboard() {
   const [rrRatio, setRrRatio] = useState("1:2");
   const [limitPrice, setLimitPrice] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [timeframe, setTimeframe] = useState("");
   const [showParamsModal, setShowParamsModal] = useState(false);
 
   useEffect(() => { fetchUserData(); }, []);
@@ -155,6 +156,7 @@ export default function AnalyticsDashboard() {
     if (assetType) formData.append('asset_type', assetType);
     if (rrRatio) formData.append('rr_ratio', rrRatio);
     if (limitPrice && orderType === 'limit') formData.append('limit_price', limitPrice);
+    if (timeframe) formData.append('timeframe', timeframe);
     try {
       const response = await fetch('https://tradeflow-ai-backend-production.up.railway.app/analyze-image', {
         method: 'POST', headers: { 'Authorization': `Bearer ${token}` }, body: formData
@@ -683,6 +685,21 @@ export default function AnalyticsDashboard() {
                       {!result && (
                         <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-5 space-y-4">
                           <h3 className="text-white font-semibold text-sm">⚙️ Trading Parameters</h3>
+                          {/* Timeframe */}
+                          <div>
+                            <label className="block text-xs text-slate-500 mb-1">⏱️ Timeframe</label>
+                            <div className="flex flex-wrap gap-2">
+                              {(analysisType === 'scalp'
+                                ? ['1M','3M','5M','15M','30M']
+                                : ['1H','4H','Daily','Weekly']
+                              ).map(tf => (
+                                <button key={tf} onClick={() => setTimeframe(tf)}
+                                  className={`px-4 py-2 rounded-lg text-xs font-semibold transition border ${timeframe === tf ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#111] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
+                                  {tf}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
                           <div className="grid grid-cols-2 gap-4">
                             {/* Account Balance */}
                             <div>
