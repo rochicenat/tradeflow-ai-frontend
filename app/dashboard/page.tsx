@@ -180,6 +180,32 @@ export default function AnalyticsDashboard() {
 
   const handleLogout = () => { removeToken(); toast.success('Logged out'); router.push('/login'); };
 
+  const SendToBotButton = ({ email, signal }: { email?: string, signal: any }) => {
+    const [sending, setSending] = useState(false);
+    const [sent, setSent] = useState(false);
+    const send = async () => {
+      if (!email) return;
+      setSending(true);
+      const token = typeof window !== 'undefined' && (localStorage.getItem('token') || sessionStorage.getItem('token'));
+      try {
+        await fetch(`https://tradeflow-ai-backend-production.up.railway.app/bot/signal/${email}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify(signal)
+        });
+        setSent(true);
+        setTimeout(() => setSent(false), 3000);
+      } catch(e) {}
+      setSending(false);
+    };
+    return (
+      <button onClick={send} disabled={sending}
+        className={`w-full py-3 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 ${sent ? 'bg-green-500 text-white' : 'bg-[#111] border border-orange-500/30 text-orange-400 hover:bg-orange-500/10'} disabled:opacity-50`}>
+        {sent ? '✓ Signal Sent to Bot!' : sending ? 'Sending...' : '⚡ Send to Trading Bot'}
+      </button>
+    );
+  };
+
   const parseNewFormat = (analysis: string, trend: string, confidence: string): ParsedAnalysis => {
     const lines = analysis.split('\n').map(l => l.trim()).filter(l => l);
     let signal = trend.toUpperCase();
@@ -955,6 +981,20 @@ export default function AnalyticsDashboard() {
                                 </div>
                               )}
                             </div>
+                          )}
+                          {/* Send to Bot Button */}
+                          {parsed.entry && parsed.stopLoss && parsed.takeProfit && (
+                            <SendToBotButton
+                              email={userData?.email}
+                              signal={{
+                                action: parsed.signal === 'UPTREND' ? 'BUY' : 'SELL',
+                                symbol: assetType?.toUpperCase() || 'XAUUSD',
+                                entry: parseFloat(parsed.entry),
+                                sl: parseFloat(parsed.stopLoss),
+                                tp: parseFloat(parsed.takeProfit),
+                                lot: 0.01
+                              }}
+                            />
                           )}
                           <div className="bg-yellow-500/5 border border-yellow-500/20 rounded-xl p-4 flex items-start gap-3">
                             <AlertTriangle className="w-4 h-4 text-yellow-500 flex-shrink-0 mt-0.5" />
