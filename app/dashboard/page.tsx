@@ -238,8 +238,8 @@ export default function AnalyticsDashboard() {
   const menuItems = menuGroups.flatMap(g => g.items);
 
   const handleMenuClick = (id: string) => {
-    if (id === 'swing') { setAnalysisType('swing'); setCurrentPage('dashboard'); setResult(null); setShowParamsModal(true); }
-    else if (id === 'scalp') { setAnalysisType('scalp'); setCurrentPage('dashboard'); setResult(null); setShowParamsModal(true); }
+    if (id === 'swing') { setAnalysisType('swing'); setCurrentPage('dashboard'); setResult(null); }
+    else if (id === 'scalp') { setAnalysisType('scalp'); setCurrentPage('dashboard'); setResult(null); }
     else { setCurrentPage(id); }
   };
 
