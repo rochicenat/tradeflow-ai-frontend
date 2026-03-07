@@ -597,7 +597,28 @@ export default function AnalyticsDashboard() {
                     </div>
                   )}
                   {!analysisType && (
-                    <div className="space-y-3">
+                    <div className="space-y-4">
+                      {/* How It Works */}
+                      <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-5">
+                        <p className="text-xs text-slate-500 uppercase tracking-wider font-medium mb-4">How It Works</p>
+                        <div className="grid grid-cols-3 gap-3">
+                          <div className="flex flex-col items-center text-center gap-2">
+                            <div className="w-8 h-8 rounded-full bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-500 font-bold text-sm">1</div>
+                            <p className="text-white text-xs font-semibold">Upload Chart</p>
+                            <p className="text-slate-500 text-xs">Take a screenshot of any trading chart</p>
+                          </div>
+                          <div className="flex flex-col items-center text-center gap-2">
+                            <div className="w-8 h-8 rounded-full bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-500 font-bold text-sm">2</div>
+                            <p className="text-white text-xs font-semibold">Set Parameters</p>
+                            <p className="text-slate-500 text-xs">Configure your risk, leverage and preferences</p>
+                          </div>
+                          <div className="flex flex-col items-center text-center gap-2">
+                            <div className="w-8 h-8 rounded-full bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-500 font-bold text-sm">3</div>
+                            <p className="text-white text-xs font-semibold">Get Analysis</p>
+                            <p className="text-slate-500 text-xs">AI returns entry, SL, TP and SMC levels</p>
+                          </div>
+                        </div>
+                      </div>
                       <p className="text-xs text-slate-500 uppercase tracking-wider font-medium">{'Pro Analysis'}</p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} onClick={() => setAnalysisType('swing')}
