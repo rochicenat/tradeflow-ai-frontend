@@ -1,7 +1,7 @@
 'use client';
 import { getToken } from '@/app/lib/auth';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Check, Activity } from 'lucide-react';
 
@@ -10,6 +10,8 @@ export default function PricingPage() {
   const [userPlan, setUserPlan] = useState<string>('free');
   const [userEmail, setUserEmail] = useState<string>('');
   const [billing, setBilling] = useState<'monthly' | 'yearly'>('monthly');
+  const [loading, setLoading] = useState(true);
+  const emailRef = useRef<string>('');
 
   useEffect(() => {
     const token = getToken();
@@ -17,7 +19,18 @@ export default function PricingPage() {
       setIsLoggedIn(true);
       fetch('https://tradeflow-ai-backend-production.up.railway.app/me', {
         headers: { 'Authorization': `Bearer ${token}` }
-      }).then(r => r.json()).then(d => { setUserPlan(d.plan || 'free'); setUserEmail(d.email || ''); }).catch(() => {});
+      })
+        .then(r => r.json())
+        .then(d => {
+          const email = d.email || '';
+          setUserPlan(d.plan || 'free');
+          setUserEmail(email);
+          emailRef.current = email;
+        })
+        .catch(() => {})
+        .finally(() => setLoading(false));
+    } else {
+      setLoading(false);
     }
   }, []);
 
@@ -37,12 +50,21 @@ export default function PricingPage() {
   ];
 
   const buildCheckoutUrl = (baseUrl: string) => {
-    if (!userEmail) return baseUrl;
-    return `${baseUrl}?checkout%5Bemail%5D=${encodeURIComponent(userEmail)}`;
+    const email = emailRef.current || userEmail;
+    if (!email) return baseUrl;
+    return `${baseUrl}?checkout%5Bemail%5D=${encodeURIComponent(email)}`;
   };
 
-  const monthlyUrl = buildCheckoutUrl('https://tradeflowai.lemonsqueezy.com/checkout/buy/47621ebf-7c5e-4b6e-bbc9-d6bee626b2d4');
-  const yearlyUrl = buildCheckoutUrl('https://tradeflowai.lemonsqueezy.com/checkout/buy/60423ba8-053a-4d04-a924-69b6aaae30e3');
+  const handleCheckout = () => {
+    if (!isLoggedIn) {
+      window.location.href = '/login?redirect=pricing';
+      return;
+    }
+    const baseUrl = billing === 'monthly'
+      ? 'https://tradeflowai.lemonsqueezy.com/checkout/buy/47621ebf-7c5e-4b6e-bbc9-d6bee626b2d4'
+      : 'https://tradeflowai.lemonsqueezy.com/checkout/buy/60423ba8-053a-4d04-a924-69b6aaae30e3';
+    window.location.href = buildCheckoutUrl(baseUrl);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black">
@@ -73,7 +95,6 @@ export default function PricingPage() {
           <p className="text-xl text-slate-400">One plan. Everything you need.</p>
         </div>
 
-        {/* Billing Toggle */}
         <div className="flex items-center justify-center mb-10">
           <div className="bg-slate-900 border border-slate-800 rounded-xl p-1 flex items-center gap-1">
             <button
@@ -90,7 +111,6 @@ export default function PricingPage() {
           </div>
         </div>
 
-        {/* Plan Card */}
         <motion.div
           key={billing}
           initial={{ opacity: 0, y: 10 }}
@@ -132,12 +152,10 @@ export default function PricingPage() {
             </div>
           ) : (
             <button
-              onClick={() => {
-                if (!isLoggedIn) { window.location.href = '/login?redirect=pricing'; return; }
-                window.location.href = billing === 'monthly' ? monthlyUrl : yearlyUrl;
-              }}
-              className="block w-full py-3 rounded-lg font-semibold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg">
-              Get Pro — ${billing === 'monthly' ? `${monthlyPrice}/mo` : `${yearlyPrice}/mo`}
+              onClick={handleCheckout}
+              disabled={loading}
+              className="block w-full py-3 rounded-lg font-semibold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg disabled:opacity-50">
+              {loading ? 'Loading...' : `Get Pro — $${billing === 'monthly' ? `${monthlyPrice}/mo` : `${yearlyPrice}/mo`}`}
             </button>
           )}
         </motion.div>
