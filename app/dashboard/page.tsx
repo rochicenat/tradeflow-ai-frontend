@@ -20,7 +20,7 @@ interface AnalysisResult { analysis: string; trend: string; confidence: string; 
 interface UserData { email: string; name: string; plan: string; analyses_used: number; analyses_limit: number; subscription_status: string; }
 interface ParsedAnalysis { signal: string; confidence: string; entry: string; stopLoss: string; takeProfit: string; keyLevels: string[]; signalReason: string[]; riskAssessment: string[]; breakoutRetest: string[]; indicators: string[]; fibonacci: string[]; psychologyPlan: string[]; smc: string[]; }
 
-function UpgradeModal({ onClose }: { onClose: () => void }) {
+function UpgradeModal({ onClose, userEmail }: { onClose: () => void; userEmail?: string }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
       <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}
@@ -42,7 +42,7 @@ function UpgradeModal({ onClose }: { onClose: () => void }) {
               <li>✓ Swing & Scalp Trading</li>
               <li>✓ Full history access</li>
             </ul>
-            <a href="https://tradeflowai.lemonsqueezy.com/checkout/buy/47621ebf-7c5e-4b6e-bbc9-d6bee626b2d4" target="_blank" rel="noopener noreferrer"
+            <a href={`https://tradeflowai.lemonsqueezy.com/checkout/buy/47621ebf-7c5e-4b6e-bbc9-d6bee626b2d4${userEmail ? "?checkout%5Bemail%5D=" + encodeURIComponent(userEmail) : ""}`} target="_blank" rel="noopener noreferrer"
               className="w-full py-2.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-semibold text-center transition text-sm">
               Get Monthly
             </a>
@@ -57,7 +57,7 @@ function UpgradeModal({ onClose }: { onClose: () => void }) {
               <li>✓ Swing & Scalp Trading</li>
               <li>✓ Full history access</li>
             </ul>
-            <a href="https://tradeflowai.lemonsqueezy.com/checkout/buy/60423ba8-053a-4d04-a924-69b6aaae30e3" target="_blank" rel="noopener noreferrer"
+            <a href={`https://tradeflowai.lemonsqueezy.com/checkout/buy/60423ba8-053a-4d04-a924-69b6aaae30e3${userEmail ? "?checkout%5Bemail%5D=" + encodeURIComponent(userEmail) : ""}`} target="_blank" rel="noopener noreferrer"
               className="w-full py-2.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-semibold text-center transition text-sm">
               Get Yearly
             </a>
@@ -287,7 +287,7 @@ export default function AnalyticsDashboard() {
 
   return (
     <div className="h-screen bg-[#050505] flex flex-col font-sans overflow-hidden">
-      <AnimatePresence>{showUpgradeModal && <UpgradeModal onClose={() => setShowUpgradeModal(false)} />}</AnimatePresence>
+      <AnimatePresence>{showUpgradeModal && <UpgradeModal onClose={() => setShowUpgradeModal(false)} userEmail={userData?.email} />}</AnimatePresence>
       {showParamsModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-[#111] border border-[#252525] rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
