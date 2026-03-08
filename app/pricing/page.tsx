@@ -36,8 +36,13 @@ export default function PricingPage() {
     'Full analysis history',
   ];
 
-  const monthlyUrl = `https://tradeflowai.lemonsqueezy.com/checkout/buy/47621ebf-7c5e-4b6e-bbc9-d6bee626b2d4${userEmail ? '?checkout[email]=' + encodeURIComponent(userEmail) : ''}`;
-  const yearlyUrl = `https://tradeflowai.lemonsqueezy.com/checkout/buy/60423ba8-053a-4d04-a924-69b6aaae30e3${userEmail ? '?checkout[email]=' + encodeURIComponent(userEmail) : ''}`;
+  const buildCheckoutUrl = (baseUrl: string) => {
+    if (!userEmail) return baseUrl;
+    return `${baseUrl}?checkout%5Bemail%5D=${encodeURIComponent(userEmail)}`;
+  };
+
+  const monthlyUrl = buildCheckoutUrl('https://tradeflowai.lemonsqueezy.com/checkout/buy/47621ebf-7c5e-4b6e-bbc9-d6bee626b2d4');
+  const yearlyUrl = buildCheckoutUrl('https://tradeflowai.lemonsqueezy.com/checkout/buy/60423ba8-053a-4d04-a924-69b6aaae30e3');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black">
@@ -106,7 +111,7 @@ export default function PricingPage() {
 
           {billing === 'yearly' && (
             <div className="text-green-400 text-sm mb-1 font-medium">
-              Billed ${yearlyTotal}/year — save ${(( monthlyPrice - yearlyPrice) * 12).toFixed(0)}/year
+              Billed ${yearlyTotal}/year — save ${((monthlyPrice - yearlyPrice) * 12).toFixed(0)}/year
             </div>
           )}
 
