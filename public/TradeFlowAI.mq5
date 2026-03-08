@@ -99,17 +99,32 @@ void ParseAndExecute(string json)
    if(lot <= 0) lot = LotSize;
    if(symbol == "") symbol = Symbol();
    
-   Print("New Signal: ", action, " ", symbol, " Entry:", entry, " SL:", sl, " TP:", tp);
+   int digits = (int)SymbolInfoInteger(symbol, SYMBOL_DIGITS);
+   double point = SymbolInfoDouble(symbol, SYMBOL_POINT);
+   long stopLevelPts = SymbolInfoInteger(symbol, SYMBOL_TRADE_STOPS_LEVEL);
+   double minStop = stopLevelPts * point * 2;
+   
+   double ask = SymbolInfoDouble(symbol, SYMBOL_ASK);
+   double bid = SymbolInfoDouble(symbol, SYMBOL_BID);
+   
+   sl = NormalizeDouble(sl, digits);
+   tp = NormalizeDouble(tp, digits);
+   
+   Print("New Signal: ", action, " ", symbol, " Entry:", entry, " SL:", sl, " TP:", tp, " MinStop:", minStop);
    
    lastSignalId = signal_id;
    
    if(action == "BUY")
    {
+      if(sl > 0 && ask - sl < minStop) sl = NormalizeDouble(ask - minStop, digits);
+      if(tp > 0 && tp - ask < minStop) tp = NormalizeDouble(ask + minStop, digits);
       trade.Buy(lot, symbol, 0, sl, tp, "TradeFlowAI");
       Print("BUY order placed: ", symbol, " Lot:", lot, " SL:", sl, " TP:", tp);
    }
    else if(action == "SELL")
    {
+      if(sl > 0 && sl - bid < minStop) sl = NormalizeDouble(bid + minStop, digits);
+      if(tp > 0 && bid - tp < minStop) tp = NormalizeDouble(bid - minStop, digits);
       trade.Sell(lot, symbol, 0, sl, tp, "TradeFlowAI");
       Print("SELL order placed: ", symbol, " Lot:", lot, " SL:", sl, " TP:", tp);
    }
