@@ -278,7 +278,7 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
               </div>
               <button onClick={() => setAutoLot(!autoLot)}
                 className={`w-10 h-5 rounded-full transition-colors relative ${autoLot ? 'bg-orange-500' : 'bg-[#252525]'}`}>
-                <span className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform ${autoLot ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                <span style={{transform: autoLot ? 'translateX(20px)' : 'translateX(2px)', transition: 'transform 0.2s'}} className="absolute top-0.5 w-4 h-4 bg-white rounded-full" />
               </button>
             </div>
 
