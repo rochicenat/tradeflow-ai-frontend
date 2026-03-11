@@ -622,7 +622,6 @@ export default function AnalyticsDashboard() {
 
         {/* MAIN CONTENT */}
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-          <div className="flex flex-1 overflow-hidden" style={{height: "calc(100vh - 56px)"}}>
             <div className="flex-1 p-3 sm:p-6 overflow-y-auto pb-20 lg:pb-6">
               {currentPage === 'dashboard' && (
                 <div className="space-y-6 max-w-6xl">
@@ -1116,8 +1115,6 @@ export default function AnalyticsDashboard() {
               {currentPage === 'history' && <HistoryPage />}
               {currentPage === 'settings' && <SettingsPage userData={userData} />}
             </div>
-
-          </div>
         </div>
       </div>
 
