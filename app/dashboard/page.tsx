@@ -289,129 +289,187 @@ export default function AnalyticsDashboard() {
     <div className="h-screen bg-[#050505] flex flex-col font-sans overflow-hidden">
       <AnimatePresence>{showUpgradeModal && <UpgradeModal onClose={() => setShowUpgradeModal(false)} userEmail={userData?.email} />}</AnimatePresence>
       {showParamsModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#111] border border-[#252525] rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h2 className="text-white font-bold text-lg">Trading Parameters</h2>
-                <p className="text-slate-400 text-xs mt-1">{analysisType === 'swing' ? '📈 Swing Trading' : '⚡ Scalp Trading'} — Customize your analysis</p>
+        <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
+          <div className="bg-[#0D0D0D] border border-[#1E1E1E] rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl shadow-black">
+            {/* Header */}
+            <div className="sticky top-0 bg-[#0D0D0D] border-b border-[#1E1E1E] px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-base">⚙️</div>
+                <div>
+                  <h2 className="text-white font-bold text-base leading-none">Trading Parameters</h2>
+                  <p className="text-slate-500 text-xs mt-0.5">{analysisType === 'swing' ? 'Swing Trading' : 'Scalp Trading'} — Customize analysis</p>
+                </div>
               </div>
-              <button onClick={() => setShowParamsModal(false)} className="text-slate-400 hover:text-white transition text-xl">✕</button>
+              <button onClick={() => setShowParamsModal(false)} className="w-7 h-7 rounded-lg bg-[#1A1A1A] hover:bg-[#252525] text-slate-400 hover:text-white transition flex items-center justify-center text-sm">✕</button>
             </div>
-            <div className="space-y-5">
+
+            <div className="p-6 space-y-6">
               {/* Account Balance */}
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">💰 Account Balance ($)</label>
+                <label className="flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                  <span className="w-1 h-3 bg-orange-500 rounded-full inline-block"></span>
+                  Account Balance ($)
+                </label>
                 <input type="number" value={accountSize} onChange={e => setAccountSize(e.target.value)}
                   placeholder="e.g. 10000"
-                  className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg px-4 py-3 text-white focus:border-orange-500 focus:outline-none transition" />
+                  className="w-full bg-[#111] border border-[#1E1E1E] rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition text-sm" />
               </div>
+
               {/* Risk Per Trade */}
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">⚠️ Risk Per Trade (%)</label>
-                <div className="grid grid-cols-4 gap-2 mb-2">
+                <label className="flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                  <span className="w-1 h-3 bg-orange-500 rounded-full inline-block"></span>
+                  Risk Per Trade (%)
+                </label>
+                <div className="flex gap-2 mb-2">
                   {['1', '2', '3', '5'].map(r => (
                     <button key={r} onClick={() => setRiskPercent(r)}
-                      className={`py-2 rounded-lg text-sm font-semibold transition border ${riskPercent === r ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
+                      className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-all ${riskPercent === r
+                        ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20 scale-105'
+                        : 'bg-[#111] border border-[#1E1E1E] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
                       {r}%
                     </button>
                   ))}
                 </div>
                 <input type="number" value={riskPercent} onChange={e => setRiskPercent(e.target.value)}
-                  placeholder="Custom %" className="w-full bg-[#0A0A0A] border border-[#252525] rounded-lg px-4 py-2 text-white focus:border-orange-500 focus:outline-none transition text-sm" />
+                  placeholder="Custom %" className="w-full bg-[#111] border border-[#1E1E1E] rounded-xl px-4 py-2.5 text-white placeholder-slate-600 focus:border-orange-500/50 focus:outline-none transition text-sm" />
               </div>
-              {/* Stop Loss Type */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">🛑 Stop-Loss Type</label>
-                <div className="grid grid-cols-2 gap-2">
-                  {[{v:'fixed', l:'Fixed (Pips)'}, {v:'atr', l:'ATR Based'}].map(o => (
-                    <button key={o.v} onClick={() => setSlType(o.v)}
-                      className={`py-2 rounded-lg text-sm font-semibold transition border ${slType === o.v ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
-                      {o.l}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              {/* Indicators */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">📊 Favorite Indicators</label>
-                <div className="grid grid-cols-3 gap-2">
-                  {['RSI', 'MACD', 'Bollinger', 'EMA 20', 'EMA 50', 'EMA 200'].map(ind => (
-                    <button key={ind} onClick={() => setIndicators(prev => prev.includes(ind) ? prev.filter(i => i !== ind) : [...prev, ind])}
-                      className={`py-2 rounded-lg text-xs font-semibold transition border ${indicators.includes(ind) ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
-                      {ind}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              {/* Session */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">🕐 Trading Session</label>
-                <div className="grid grid-cols-3 gap-2">
-                  {[{v:'london', l:'London'}, {v:'newyork', l:'New York'}, {v:'asian', l:'Asian'}, {v:'london_ny', l:'London+NY'}, {v:'all', l:'All Sessions'}, {v:'', l:'No Preference'}].map(o => (
-                    <button key={o.v} onClick={() => setSession(o.v)}
-                      className={`py-2 rounded-lg text-xs font-semibold transition border ${session === o.v ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
-                      {o.l}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              {/* Asset Type */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">📈 Asset Type</label>
-                <div className="grid grid-cols-3 gap-2">
-                  {[{v:'crypto', l:'Crypto'}, {v:'forex', l:'Forex'}, {v:'stocks', l:'Stocks'}, {v:'commodities', l:'Commodities'}, {v:'indices', l:'Indices'}, {v:'', l:'Auto Detect'}].map(o => (
-                    <button key={o.v} onClick={() => setAssetType(o.v)}
-                      className={`py-2 rounded-lg text-xs font-semibold transition border ${assetType === o.v ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
-                      {o.l}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              {/* R:R Ratio */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">🎯 Desired R:R Ratio</label>
-                <div className="grid grid-cols-4 gap-2">
-                  {['1:1', '1:2', '1:3', '1:4'].map(r => (
-                    <button key={r} onClick={() => setRrRatio(r)}
-                      className={`py-2 rounded-lg text-sm font-semibold transition border ${rrRatio === r ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
-                      {r}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              {/* Order Type */}
-              <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">📋 Order Type</label>
-                <div className="grid grid-cols-2 gap-2">
-                  {[{v:'market', l:'Market Order'}, {v:'limit', l:'Limit Order'}].map(o => (
-                    <button key={o.v} onClick={() => setOrderType(o.v)}
-                      className={`py-2 rounded-lg text-sm font-semibold transition border ${orderType === o.v ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
-                      {o.l}
-                    </button>
-                  ))}
-                </div>
-              </div>
+
               {/* Leverage */}
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">⚡ Leverage</label>
-                <div className="grid grid-cols-5 gap-2">
+                <label className="flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                  <span className="w-1 h-3 bg-orange-500 rounded-full inline-block"></span>
+                  Leverage
+                </label>
+                <div className="flex gap-2">
                   {['1', '2', '5', '10', '20'].map(l => (
                     <button key={l} onClick={() => setLeverage(l)}
-                      className={`py-2 rounded-lg text-sm font-semibold transition border ${leverage === l ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#0A0A0A] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
+                      className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-all ${leverage === l
+                        ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20 scale-105'
+                        : 'bg-[#111] border border-[#1E1E1E] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
                       {l}x
                     </button>
                   ))}
                 </div>
               </div>
+
+              {/* R:R + Order Type row */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                    <span className="w-1 h-3 bg-orange-500 rounded-full inline-block"></span>
+                    R:R Ratio
+                  </label>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    {['1:1', '1:2', '1:3', '1:4'].map(r => (
+                      <button key={r} onClick={() => setRrRatio(r)}
+                        className={`py-2.5 rounded-xl text-xs font-bold transition-all ${rrRatio === r
+                          ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20'
+                          : 'bg-[#111] border border-[#1E1E1E] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
+                        {r}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label className="flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                    <span className="w-1 h-3 bg-orange-500 rounded-full inline-block"></span>
+                    Order Type
+                  </label>
+                  <div className="flex flex-col gap-1.5">
+                    {[{v:'market', l:'Market'}, {v:'limit', l:'Limit'}].map(o => (
+                      <button key={o.v} onClick={() => setOrderType(o.v)}
+                        className={`py-2.5 rounded-xl text-xs font-bold transition-all ${orderType === o.v
+                          ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20'
+                          : 'bg-[#111] border border-[#1E1E1E] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
+                        {o.l}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Stop Loss Type */}
+              <div>
+                <label className="flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                  <span className="w-1 h-3 bg-orange-500 rounded-full inline-block"></span>
+                  Stop-Loss Type
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[{v:'fixed', l:'Fixed (Pips)'}, {v:'atr', l:'ATR Based'}].map(o => (
+                    <button key={o.v} onClick={() => setSlType(o.v)}
+                      className={`py-2.5 rounded-xl text-sm font-bold transition-all ${slType === o.v
+                        ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20'
+                        : 'bg-[#111] border border-[#1E1E1E] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
+                      {o.l}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Indicators */}
+              <div>
+                <label className="flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                  <span className="w-1 h-3 bg-orange-500 rounded-full inline-block"></span>
+                  Favorite Indicators
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {['RSI', 'MACD', 'Bollinger', 'EMA 20', 'EMA 50', 'EMA 200'].map(ind => (
+                    <button key={ind} onClick={() => setIndicators(prev => prev.includes(ind) ? prev.filter(i => i !== ind) : [...prev, ind])}
+                      className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${indicators.includes(ind)
+                        ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
+                        : 'bg-[#111] border border-[#1E1E1E] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
+                      {ind}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Asset Type */}
+              <div>
+                <label className="flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                  <span className="w-1 h-3 bg-orange-500 rounded-full inline-block"></span>
+                  Asset Type
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {[{v:'crypto', l:'₿ Crypto'}, {v:'forex', l:'💱 Forex'}, {v:'stocks', l:'📈 Stocks'}, {v:'commodities', l:'🛢 Commodities'}, {v:'indices', l:'📊 Indices'}, {v:'', l:'✨ Auto'}].map(o => (
+                    <button key={o.v} onClick={() => setAssetType(o.v)}
+                      className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${assetType === o.v
+                        ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
+                        : 'bg-[#111] border border-[#1E1E1E] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
+                      {o.l}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Session */}
+              <div>
+                <label className="flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                  <span className="w-1 h-3 bg-orange-500 rounded-full inline-block"></span>
+                  Trading Session
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {[{v:'london', l:'🇬🇧 London'}, {v:'newyork', l:'🇺🇸 New York'}, {v:'asian', l:'🌏 Asian'}, {v:'london_ny', l:'🌍 London+NY'}, {v:'all', l:'🌐 All'}, {v:'', l:'— Any'}].map(o => (
+                    <button key={o.v} onClick={() => setSession(o.v)}
+                      className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${session === o.v
+                        ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
+                        : 'bg-[#111] border border-[#1E1E1E] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
+                      {o.l}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
-            <div className="flex gap-3 mt-6">
+
+            {/* Footer */}
+            <div className="sticky bottom-0 bg-[#0D0D0D] border-t border-[#1E1E1E] px-6 py-4 flex gap-3 rounded-b-2xl">
               <button onClick={() => setShowParamsModal(false)}
-                className="flex-1 py-3 rounded-lg border border-[#252525] text-slate-400 hover:text-white transition text-sm">
+                className="flex-1 py-3 rounded-xl border border-[#1E1E1E] text-slate-500 hover:text-white hover:border-[#333] transition text-sm font-medium">
                 Skip
               </button>
               <button onClick={() => setShowParamsModal(false)}
-                className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold transition">
+                className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl font-bold transition-all shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 text-sm">
                 Start Analysis →
               </button>
             </div>
