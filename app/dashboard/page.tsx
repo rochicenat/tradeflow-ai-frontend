@@ -105,6 +105,7 @@ export default function AnalyticsDashboard() {
   const [indicators, setIndicators] = useState<string[]>([]);
   const [session, setSession] = useState("");
   const [assetType, setAssetType] = useState("");
+  const [slPips, setSlPips] = useState("20");
   const [rrRatio, setRrRatio] = useState("1:2");
   const [limitPrice, setLimitPrice] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -154,6 +155,7 @@ export default function AnalyticsDashboard() {
     if (indicators.length) formData.append('indicators', indicators.join(','));
     if (session) formData.append('session', session);
     if (assetType) formData.append('asset_type', assetType);
+    formData.append('sl_pips', slPips);
     if (rrRatio) formData.append('rr_ratio', rrRatio);
     if (limitPrice && orderType === 'limit') formData.append('limit_price', limitPrice);
     if (timeframe) formData.append('timeframe', timeframe);
@@ -446,6 +448,23 @@ export default function AnalyticsDashboard() {
                   {[{v:'crypto', l:'₿ Crypto'}, {v:'forex', l:'💱 Forex'}, {v:'stocks', l:'📈 Stocks'}, {v:'commodities', l:'🛢 Commodities'}, {v:'indices', l:'📊 Indices'}, {v:'', l:'✨ Auto'}].map(o => (
                     <button key={o.v} onClick={() => setAssetType(o.v)}
                       className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${assetType === o.v
+                        ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
+                        : 'bg-[#111] border border-[#1E1E1E] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
+                      {o.l}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {/* SL Distance */}
+              <div>
+                <label className="flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                  <span className="w-1 h-3 bg-orange-500 rounded-full inline-block"></span>
+                  Min SL Distance
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {[{v:'10',l:'10 pip'},{v:'20',l:'20 pip'},{v:'30',l:'30 pip'},{v:'50',l:'50 pip'},{v:'100',l:'100 pip'}].map(o => (
+                    <button key={o.v} onClick={() => setSlPips(o.v)}
+                      className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${slPips === o.v
                         ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
                         : 'bg-[#111] border border-[#1E1E1E] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
                       {o.l}

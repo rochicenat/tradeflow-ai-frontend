@@ -43,6 +43,7 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
   const [lotSize, setLotSize] = useState('0.01');
   const [riskPercent, setRiskPercent] = useState('1');
   const [accountBalance, setAccountBalance] = useState('10000');
+  const [slPips, setSlPips] = useState('20');
   const [saved, setSaved] = useState(false);
   const [manualAction, setManualAction] = useState<'BUY'|'SELL'>('BUY');
   const [manualSymbol, setManualSymbol] = useState('XAUUSD');
@@ -97,7 +98,9 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
           if (d.lot_size) setLotSize(d.lot_size);
           if (d.risk_percent) setRiskPercent(d.risk_percent);
         if (d.account_balance) setAccountBalance(d.account_balance);
+        if (d.sl_pips) setSlPips(d.sl_pips);
         if (d.account_balance) setAccountBalance(d.account_balance);
+        if (d.sl_pips) setSlPips(d.sl_pips);
         }).catch(() => {});
     }
   }, [userEmail]);
@@ -128,7 +131,9 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
     formData.append('lot_size', lotSize);
     formData.append('risk_percent', riskPercent);
     formData.append('account_balance', accountBalance);
+    formData.append('sl_pips', slPips);
     formData.append('account_balance', accountBalance);
+    formData.append('sl_pips', slPips);
     try {
       await fetch(`${API}/bot/settings`, { method: 'POST', headers: { 'Authorization': `Bearer ${getToken()}` }, body: formData });
       setSaved(true); setTimeout(() => setSaved(false), 2000);
@@ -380,6 +385,17 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
                 ))}
               </div>
               <p className="text-xs text-slate-600 mt-1">Risk amount: ${(parseFloat(accountBalance || '10000') * parseFloat(riskPercent) / 100).toFixed(0)} per trade</p>
+            </div>
+            <div>
+              <label className="block text-xs text-slate-500 mb-1">Default SL Distance (pips)</label>
+              <div className="flex gap-2">
+                {['10','20','30','50','100'].map(p => (
+                  <button key={p} onClick={() => setSlPips(p)}
+                    className={`flex-1 py-2 rounded-lg text-xs font-semibold transition border ${slPips === p ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#111] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
+                    {p}
+                  </button>
+                ))}
+              </div>
             </div>
             <button onClick={saveSettings}
               className={`w-full py-2.5 rounded-xl text-sm font-semibold transition ${saved ? 'bg-green-500 text-white' : 'bg-orange-500 hover:bg-orange-600 text-white'}`}>
