@@ -47,6 +47,7 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
   const [saved, setSaved] = useState(false);
   const [manualAction, setManualAction] = useState<'BUY'|'SELL'>('BUY');
   const [manualSymbol, setManualSymbol] = useState('XAUUSD');
+  // manualSymbol settings'ten güncellenecek
   const [manualEntry, setManualEntry] = useState('');
   const [manualSL, setManualSL] = useState('');
   const [manualTP, setManualTP] = useState('');
@@ -99,8 +100,10 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
           if (d.risk_percent) setRiskPercent(d.risk_percent);
         if (d.account_balance) setAccountBalance(d.account_balance);
         if (d.sl_pips) setSlPips(d.sl_pips);
+        if (d.symbol) setManualSymbol(d.symbol);
         if (d.account_balance) setAccountBalance(d.account_balance);
         if (d.sl_pips) setSlPips(d.sl_pips);
+        if (d.symbol) setManualSymbol(d.symbol);
         }).catch(() => {});
     }
   }, [userEmail]);
