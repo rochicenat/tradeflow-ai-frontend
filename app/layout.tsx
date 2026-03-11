@@ -42,6 +42,33 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true },
   },
 };
+
+function PromoBanner() {
+  return (
+    <div style={{
+      background: "linear-gradient(90deg, #1a0533 0%, #3b0764 40%, #1a0533 100%)",
+      borderBottom: "1px solid rgba(168,85,247,0.3)",
+      padding: "10px 16px",
+      textAlign: "center",
+      fontSize: "14px",
+      color: "#e9d5ff",
+      letterSpacing: "0.01em",
+    }}>
+      🎉 Get <strong style={{ color: "#fff" }}>30% off</strong> your first month — use code{" "}
+      <span style={{
+        background: "rgba(168,85,247,0.25)",
+        border: "1px solid rgba(168,85,247,0.5)",
+        borderRadius: "6px",
+        padding: "2px 8px",
+        fontWeight: "700",
+        color: "#f0abfc",
+        letterSpacing: "0.05em",
+      }}>WELCOME30</span>
+      {" "}at checkout.
+    </div>
+  );
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -54,6 +81,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <Providers>
+          <PromoBanner />
           {children}
           <Toaster position="top-right" />
         </Providers>
