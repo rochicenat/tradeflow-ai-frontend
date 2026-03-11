@@ -782,135 +782,173 @@ export default function AnalyticsDashboard() {
 
                       {/* Trading Parameters inline */}
                       {!result && (
-                        <div className="bg-[#0D0D0D] border border-[#1A1A1A] rounded-xl p-5 space-y-4">
-                          <h3 className="text-white font-semibold text-sm">⚙️ Trading Parameters</h3>
-                          {/* Timeframe */}
-                          <div>
-                            <label className="block text-xs text-slate-500 mb-1">⏱️ Timeframe</label>
-                            <div className="flex flex-wrap gap-2">
-                              {(analysisType === 'scalp'
-                                ? ['1M','3M','5M','15M','30M']
-                                : ['1H','4H','Daily','Weekly']
-                              ).map(tf => (
-                                <button key={tf} onClick={() => setTimeframe(tf)}
-                                  className={`px-4 py-2 rounded-lg text-xs font-semibold transition border ${timeframe === tf ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#111] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
-                                  {tf}
-                                </button>
-                              ))}
-                            </div>
+                        <div className="bg-[#0A0A0A] border border-[#1A1A1A] rounded-2xl overflow-hidden">
+                          {/* Header */}
+                          <div className="px-5 py-3.5 border-b border-[#1A1A1A] flex items-center gap-2.5">
+                            <div className="w-6 h-6 rounded-md bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-xs">⚙️</div>
+                            <h3 className="text-white font-semibold text-sm tracking-tight">Trading Parameters</h3>
+                            <span className="ml-auto text-xs text-slate-600 font-medium">{analysisType === 'swing' ? 'Swing' : 'Scalp'}</span>
                           </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            {/* Account Balance */}
+                          <div className="p-5 space-y-5">
+                            {/* Timeframe */}
                             <div>
-                              <label className="block text-xs text-slate-500 mb-1">💰 Account Balance ($)</label>
-                              <input type="number" value={accountSize} onChange={e => setAccountSize(e.target.value)}
-                                placeholder="e.g. 10000"
-                                className="w-full bg-[#111] border border-[#252525] rounded-lg px-3 py-2 text-white text-sm focus:border-orange-500 focus:outline-none transition" />
-                            </div>
-                            {/* Risk Per Trade */}
-                            <div>
-                              <label className="block text-xs text-slate-500 mb-1">⚠️ Risk Per Trade (%)</label>
-                              <div className="flex gap-1">
-                                {['1','2','5','10','20'].map(r => (
-                                  <button key={r} onClick={() => setRiskPercent(r)}
-                                    className={`flex-1 py-2 rounded-lg text-xs font-semibold transition border ${riskPercent === r ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#111] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
-                                    {r}%
+                              <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5">
+                                <span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Timeframe
+                              </label>
+                              <div className="flex flex-wrap gap-1.5">
+                                {(analysisType === 'scalp' ? ['1M','3M','5M','15M','30M'] : ['1H','4H','Daily','Weekly']).map(tf => (
+                                  <button key={tf} onClick={() => setTimeframe(tf)}
+                                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${timeframe === tf
+                                      ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/25 scale-105'
+                                      : 'bg-[#111] border border-[#222] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
+                                    {tf}
                                   </button>
                                 ))}
                               </div>
                             </div>
-                            {/* Leverage */}
-                            <div>
-                              <label className="block text-xs text-slate-500 mb-1">⚡ Leverage</label>
-                              <div className="flex gap-1">
-                                {['1','10','25','50','100'].map(l => (
-                                  <button key={l} onClick={() => setLeverage(l)}
-                                    className={`flex-1 py-2 rounded-lg text-xs font-semibold transition border ${leverage === l ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#111] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
-                                    {l}x
-                                  </button>
-                                ))}
-                              </div>
-                            </div>
-                            {/* R:R Ratio */}
-                            <div>
-                              <label className="block text-xs text-slate-500 mb-1">🎯 R:R Ratio</label>
-                              <div className="flex gap-1">
-                                {['1:1','1:2','1:3','1:4'].map(r => (
-                                  <button key={r} onClick={() => setRrRatio(r)}
-                                    className={`flex-1 py-2 rounded-lg text-xs font-semibold transition border ${rrRatio === r ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#111] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
-                                    {r}
-                                  </button>
-                                ))}
-                              </div>
-                            </div>
-                            {/* Limit Price */}
-                            {orderType === 'limit' && (
+
+                            <div className="grid grid-cols-2 gap-4">
+                              {/* Account Balance */}
                               <div className="col-span-2">
-                                <label className="block text-xs text-slate-500 mb-1">💲 Limit Order Price</label>
-                                <input type="number" value={limitPrice} onChange={e => setLimitPrice(e.target.value)}
-                                  placeholder="e.g. 42500.00"
-                                  className="w-full bg-[#111] border border-[#252525] rounded-lg px-3 py-2 text-white text-sm focus:border-orange-500 focus:outline-none transition" />
+                                <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5">
+                                  <span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Account Balance ($)
+                                </label>
+                                <input type="number" value={accountSize} onChange={e => setAccountSize(e.target.value)}
+                                  placeholder="e.g. 10000"
+                                  className="w-full bg-[#111] border border-[#222] rounded-xl px-4 py-2.5 text-white text-sm placeholder-slate-700 focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/10 focus:outline-none transition" />
                               </div>
-                            )}
-                            {/* SL Type */}
+                              {/* Risk */}
+                              <div>
+                                <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5">
+                                  <span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Risk (%)
+                                </label>
+                                <div className="flex gap-1">
+                                  {['1','2','5','10','20'].map(r => (
+                                    <button key={r} onClick={() => setRiskPercent(r)}
+                                      className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${riskPercent === r
+                                        ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
+                                        : 'bg-[#111] border border-[#222] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
+                                      {r}%
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                              {/* Leverage */}
+                              <div>
+                                <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5">
+                                  <span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Leverage
+                                </label>
+                                <div className="flex gap-1">
+                                  {['1','10','25','50','100'].map(l => (
+                                    <button key={l} onClick={() => setLeverage(l)}
+                                      className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${leverage === l
+                                        ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
+                                        : 'bg-[#111] border border-[#222] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
+                                      {l}x
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                              {/* R:R */}
+                              <div>
+                                <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5">
+                                  <span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>R:R Ratio
+                                </label>
+                                <div className="flex gap-1">
+                                  {['1:1','1:2','1:3','1:4'].map(r => (
+                                    <button key={r} onClick={() => setRrRatio(r)}
+                                      className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${rrRatio === r
+                                        ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
+                                        : 'bg-[#111] border border-[#222] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
+                                      {r}
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                              {/* SL + Order */}
+                              <div>
+                                <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5">
+                                  <span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>SL / Order
+                                </label>
+                                <div className="flex gap-1">
+                                  {[{v:'fixed',l:'Fixed'},{v:'atr',l:'ATR'}].map(o => (
+                                    <button key={o.v} onClick={() => setSlType(o.v)}
+                                      className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${slType === o.v
+                                        ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
+                                        : 'bg-[#111] border border-[#222] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
+                                      {o.l}
+                                    </button>
+                                  ))}
+                                  {[{v:'market',l:'Mkt'},{v:'limit',l:'Lmt'}].map(o => (
+                                    <button key={o.v} onClick={() => setOrderType(o.v)}
+                                      className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${orderType === o.v
+                                        ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
+                                        : 'bg-[#111] border border-[#222] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
+                                      {o.l}
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                              {orderType === 'limit' && (
+                                <div className="col-span-2">
+                                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5">
+                                    <span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Limit Price
+                                  </label>
+                                  <input type="number" value={limitPrice} onChange={e => setLimitPrice(e.target.value)}
+                                    placeholder="e.g. 42500.00"
+                                    className="w-full bg-[#111] border border-[#222] rounded-xl px-4 py-2.5 text-white text-sm placeholder-slate-700 focus:border-orange-500/50 focus:outline-none transition" />
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Indicators */}
                             <div>
-                              <label className="block text-xs text-slate-500 mb-1">🛑 Stop-Loss Type</label>
-                              <div className="flex gap-1">
-                                {[{v:'fixed',l:'Fixed'},{v:'atr',l:'ATR'}].map(o => (
-                                  <button key={o.v} onClick={() => setSlType(o.v)}
-                                    className={`flex-1 py-2 rounded-lg text-xs font-semibold transition border ${slType === o.v ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#111] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
-                                    {o.l}
+                              <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5">
+                                <span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Indicators
+                              </label>
+                              <div className="flex flex-wrap gap-1.5">
+                                {['RSI','MACD','Bollinger','EMA 20','EMA 50','EMA 200'].map(ind => (
+                                  <button key={ind} onClick={() => setIndicators(prev => prev.includes(ind) ? prev.filter(i => i !== ind) : [...prev, ind])}
+                                    className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${indicators.includes(ind)
+                                      ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
+                                      : 'bg-[#111] border border-[#222] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
+                                    {ind}
                                   </button>
                                 ))}
                               </div>
                             </div>
-                            {/* Order Type */}
-                            <div>
-                              <label className="block text-xs text-slate-500 mb-1">📋 Order Type</label>
-                              <div className="flex gap-1">
-                                {[{v:'market',l:'Market'},{v:'limit',l:'Limit'}].map(o => (
-                                  <button key={o.v} onClick={() => setOrderType(o.v)}
-                                    className={`flex-1 py-2 rounded-lg text-xs font-semibold transition border ${orderType === o.v ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#111] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
-                                    {o.l}
-                                  </button>
-                                ))}
+
+                            {/* Asset + Session */}
+                            <div className="grid grid-cols-2 gap-4">
+                              <div>
+                                <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5">
+                                  <span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Asset
+                                </label>
+                                <div className="flex flex-wrap gap-1.5">
+                                  {[{v:'crypto',l:'Crypto'},{v:'forex',l:'Forex'},{v:'stocks',l:'Stocks'},{v:'',l:'Auto'}].map(o => (
+                                    <button key={o.v} onClick={() => setAssetType(o.v)}
+                                      className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${assetType === o.v
+                                        ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
+                                        : 'bg-[#111] border border-[#222] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
+                                      {o.l}
+                                    </button>
+                                  ))}
+                                </div>
                               </div>
-                            </div>
-                          </div>
-                          {/* Indicators */}
-                          <div>
-                            <label className="block text-xs text-slate-500 mb-1">📊 Favorite Indicators</label>
-                            <div className="flex flex-wrap gap-1">
-                              {['RSI','MACD','Bollinger','EMA 20','EMA 50','EMA 200'].map(ind => (
-                                <button key={ind} onClick={() => setIndicators(prev => prev.includes(ind) ? prev.filter(i => i !== ind) : [...prev, ind])}
-                                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition border ${indicators.includes(ind) ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#111] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
-                                  {ind}
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-                          {/* Asset + Session */}
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <label className="block text-xs text-slate-500 mb-1">📈 Asset Type</label>
-                              <div className="flex flex-wrap gap-1">
-                                {[{v:'crypto',l:'Crypto'},{v:'forex',l:'Forex'},{v:'stocks',l:'Stocks'},{v:'',l:'Auto'}].map(o => (
-                                  <button key={o.v} onClick={() => setAssetType(o.v)}
-                                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition border ${assetType === o.v ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#111] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
-                                    {o.l}
-                                  </button>
-                                ))}
-                              </div>
-                            </div>
-                            <div>
-                              <label className="block text-xs text-slate-500 mb-1">🕐 Session</label>
-                              <div className="flex flex-wrap gap-1">
-                                {[{v:'london',l:'London'},{v:'newyork',l:'NY'},{v:'asian',l:'Asian'},{v:'',l:'All'}].map(o => (
-                                  <button key={o.v} onClick={() => setSession(o.v)}
-                                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition border ${session === o.v ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#111] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
-                                    {o.l}
-                                  </button>
-                                ))}
+                              <div>
+                                <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5">
+                                  <span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Session
+                                </label>
+                                <div className="flex flex-wrap gap-1.5">
+                                  {[{v:'london',l:'🇬🇧 LDN'},{v:'newyork',l:'🇺🇸 NY'},{v:'asian',l:'🌏 Asia'},{v:'',l:'🌐 All'}].map(o => (
+                                    <button key={o.v} onClick={() => setSession(o.v)}
+                                      className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${session === o.v
+                                        ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20'
+                                        : 'bg-[#111] border border-[#222] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
+                                      {o.l}
+                                    </button>
+                                  ))}
+                                </div>
                               </div>
                             </div>
                           </div>
