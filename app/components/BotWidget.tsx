@@ -96,6 +96,8 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
           if (d.symbol) setSymbol(d.symbol);
           if (d.lot_size) setLotSize(d.lot_size);
           if (d.risk_percent) setRiskPercent(d.risk_percent);
+        if (d.account_balance) setAccountBalance(d.account_balance);
+        if (d.account_balance) setAccountBalance(d.account_balance);
         }).catch(() => {});
     }
   }, [userEmail]);
@@ -125,6 +127,8 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
     formData.append('symbol', symbol);
     formData.append('lot_size', lotSize);
     formData.append('risk_percent', riskPercent);
+    formData.append('account_balance', accountBalance);
+    formData.append('account_balance', accountBalance);
     try {
       await fetch(`${API}/bot/settings`, { method: 'POST', headers: { 'Authorization': `Bearer ${getToken()}` }, body: formData });
       setSaved(true); setTimeout(() => setSaved(false), 2000);
