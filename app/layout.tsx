@@ -46,23 +46,23 @@ export const metadata: Metadata = {
 function PromoBanner() {
   return (
     <div style={{
-      background: "linear-gradient(90deg, #1a0533 0%, #3b0764 40%, #1a0533 100%)",
-      borderBottom: "1px solid rgba(168,85,247,0.3)",
+      background: "linear-gradient(90deg, #0a0a0a 0%, #1a0a00 40%, #0a0a0a 100%)",
+      borderBottom: "1px solid rgba(249,115,22,0.3)",
       padding: "10px 16px",
       textAlign: "center",
       fontSize: "14px",
-      color: "#e9d5ff",
+      color: "#cbd5e1",
       letterSpacing: "0.01em",
     }}>
       🎉 Get <strong style={{ color: "#fff" }}>30% off</strong> your first month — use code{" "}
       <span style={{
-        background: "rgba(168,85,247,0.25)",
-        border: "1px solid rgba(168,85,247,0.5)",
+        background: "rgba(249,115,22,0.15)",
+        border: "1px solid rgba(249,115,22,0.5)",
         borderRadius: "6px",
-        padding: "2px 8px",
+        padding: "2px 10px",
         fontWeight: "700",
-        color: "#f0abfc",
-        letterSpacing: "0.05em",
+        color: "#f97316",
+        letterSpacing: "0.08em",
       }}>WELCOME30</span>
       {" "}at checkout.
     </div>
