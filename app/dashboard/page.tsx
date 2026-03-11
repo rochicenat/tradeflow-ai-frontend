@@ -183,6 +183,7 @@ export default function AnalyticsDashboard() {
   const SendToBotButton = ({ email, signal }: { email?: string, signal: any }) => {
     const [sending, setSending] = useState(false);
     const [sent, setSent] = useState(false);
+    const [botSymbol, setBotSymbol] = useState(signal.symbol || 'EURUSD');
     const send = async () => {
       if (!email) return;
       setSending(true);
@@ -191,7 +192,7 @@ export default function AnalyticsDashboard() {
         await fetch(`https://tradeflow-ai-backend-production.up.railway.app/bot/signal/${email}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-          body: JSON.stringify(signal)
+          body: JSON.stringify({...signal, symbol: botSymbol})
         });
         setSent(true);
         setTimeout(() => setSent(false), 3000);
@@ -199,10 +200,20 @@ export default function AnalyticsDashboard() {
       setSending(false);
     };
     return (
-      <button onClick={send} disabled={sending}
-        className={`w-full py-3 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 ${sent ? 'bg-green-500 text-white' : 'bg-[#111] border border-orange-500/30 text-orange-400 hover:bg-orange-500/10'} disabled:opacity-50`}>
-        {sent ? '✓ Signal Sent to Bot!' : sending ? 'Sending...' : '⚡ Send to Trading Bot'}
-      </button>
+      <div className="space-y-2">
+        <div className="flex flex-wrap gap-2">
+          {['EURUSD','XAUUSD','GBPUSD','USDJPY','BTCUSD','NASDAQ'].map(s => (
+            <button key={s} onClick={() => setBotSymbol(s)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition border ${botSymbol === s ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#111] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
+              {s}
+            </button>
+          ))}
+        </div>
+        <button onClick={send} disabled={sending}
+          className={`w-full py-3 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 ${sent ? 'bg-green-500 text-white' : 'bg-[#111] border border-orange-500/30 text-orange-400 hover:bg-orange-500/10'} disabled:opacity-50`}>
+          {sent ? `✓ ${botSymbol} Sent to Bot!` : sending ? 'Sending...' : `⚡ Send ${botSymbol} to Trading Bot`}
+        </button>
+      </div>
     );
   };
 
