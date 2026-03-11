@@ -286,7 +286,7 @@ export default function AnalyticsDashboard() {
   const usagePercent = userData ? Math.round((userData.analyses_used / userData.analyses_limit) * 100) : 0;
 
   return (
-    <div className="h-screen bg-[#050505] flex flex-col font-sans overflow-hidden">
+    <div className="h-screen bg-[#050505] flex flex-col font-sans overflow-hidden" style={{position:"fixed",width:"100%",top:0,left:0}}>
       <AnimatePresence>{showUpgradeModal && <UpgradeModal onClose={() => setShowUpgradeModal(false)} userEmail={userData?.email} />}</AnimatePresence>
       {showParamsModal && (
         <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
