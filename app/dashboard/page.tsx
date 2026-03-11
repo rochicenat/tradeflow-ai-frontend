@@ -1084,7 +1084,7 @@ export default function AnalyticsDashboard() {
                               email={userData?.email}
                               signal={{
                                 action: parsed.signal === 'UPTREND' ? 'BUY' : 'SELL',
-                                symbol: assetType?.toUpperCase() || 'XAUUSD',
+                                symbol: assetType?.toUpperCase() || parsed.symbol?.toUpperCase() || 'XAUUSD',
                                 entry: parseFloat(parsed.entry),
                                 sl: parseFloat(parsed.stopLoss),
                                 tp: parseFloat(parsed.takeProfit),
