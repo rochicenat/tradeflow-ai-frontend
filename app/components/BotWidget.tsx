@@ -95,7 +95,7 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
     if (userEmail) {
       fetch(`${API}/bot/settings`, { headers: { 'Authorization': `Bearer ${getToken()}` } })
         .then(r => r.json()).then(d => {
-          if (d.symbol) setSymbol(d.symbol);
+          if (d.symbol) { setSymbol(d.symbol); setManualSymbol(d.symbol); }
           if (d.lot_size) setLotSize(d.lot_size);
           if (d.risk_percent) setRiskPercent(d.risk_percent);
         if (d.account_balance) setAccountBalance(d.account_balance);
@@ -359,7 +359,7 @@ export default function BotWidget({ userEmail }: { userEmail?: string }) {
               <label className="block text-xs text-slate-500 mb-1">Default Symbol</label>
               <div className="flex flex-wrap gap-2">
                 {['XAUUSD','EURUSD','BTCUSD','GBPUSD','USDJPY','NASDAQ'].map(s => (
-                  <button key={s} onClick={() => setSymbol(s)}
+                  <button key={s} onClick={() => { setSymbol(s); setManualSymbol(s); }}
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition border ${symbol === s ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#111] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
                     {s}
                   </button>
