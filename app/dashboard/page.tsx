@@ -233,8 +233,8 @@ export default function AnalyticsDashboard() {
       if (line.match(/^(BUY|SELL|HOLD|UPTREND|DOWNTREND|NEUTRAL)$/i)) {
         if (line === 'BUY') signal = 'UPTREND'; else if (line === 'SELL') signal = 'DOWNTREND'; else if (line === 'HOLD') signal = 'NEUTRAL'; else signal = line.toUpperCase();
       } else if (line.startsWith('Entry:') || line.startsWith('Reference:')) { entry = line.replace('Entry:', '').replace('Reference:', '').trim(); }
-      else if (line.startsWith('SL:') || line.startsWith('Lower:')) { stopLoss = line.replace('SL:', '').replace('Lower:', '').trim(); }
-      else if (line.startsWith('TP:') || line.startsWith('Upper:')) { takeProfit = line.replace('TP:', '').replace('Upper:', '').trim(); }
+      else if (line.startsWith('SL:') || line.startsWith('Lower:')) { const raw = line.replace('SL:', '').replace('Lower:', '').trim(); stopLoss = raw.replace(/,/g, '').match(/[\d.]+/)?.[0] || ''; }
+      else if (line.startsWith('TP:') || line.startsWith('Upper:')) { const raw = line.replace('TP:', '').replace('Upper:', '').trim(); takeProfit = raw.replace(/,/g, '').match(/[\d.]+/)?.[0] || ''; }
       else if (line.includes('**Key Levels:**')) { currentSection = 'levels'; }
       else if (line.includes('**Pattern Analysis:**') || line.includes('**Signal Reason:**')) { currentSection = 'reason'; }
       else if (line.includes('**Risk')) { currentSection = 'risk'; }
