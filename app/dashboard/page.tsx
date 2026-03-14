@@ -1,5 +1,4 @@
 'use client';
-import BotWidget from '../components/BotWidget';
 import { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useRouter } from 'next/navigation';
@@ -182,43 +181,6 @@ export default function AnalyticsDashboard() {
 
   const handleLogout = () => { removeToken(); toast.success('Logged out'); router.push('/login'); };
 
-  const SendToBotButton = ({ email, signal }: { email?: string, signal: any }) => {
-    const [sending, setSending] = useState(false);
-    const [sent, setSent] = useState(false);
-    const [botSymbol, setBotSymbol] = useState(signal.symbol || 'EURUSD');
-    const send = async () => {
-      if (!email) return;
-      setSending(true);
-      const token = typeof window !== 'undefined' && (localStorage.getItem('token') || sessionStorage.getItem('token'));
-      try {
-        await fetch(`https://tradeflow-ai-backend-production.up.railway.app/bot/signal/${email}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-          body: JSON.stringify({...signal, symbol: botSymbol})
-        });
-        setSent(true);
-        setTimeout(() => setSent(false), 3000);
-      } catch(e) {}
-      setSending(false);
-    };
-    return (
-      <div className="space-y-2">
-        <div className="flex flex-wrap gap-2">
-          {['EURUSD','XAUUSD','GBPUSD','USDJPY','BTCUSD','NASDAQ'].map(s => (
-            <button key={s} onClick={() => setBotSymbol(s)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition border ${botSymbol === s ? 'bg-orange-500 border-orange-500 text-white' : 'bg-[#111] border-[#252525] text-slate-400 hover:border-orange-500/50'}`}>
-              {s}
-            </button>
-          ))}
-        </div>
-        <button onClick={send} disabled={sending}
-          className={`w-full py-3 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 ${sent ? 'bg-green-500 text-white' : 'bg-[#111] border border-orange-500/30 text-orange-400 hover:bg-orange-500/10'} disabled:opacity-50`}>
-          {sent ? `✓ ${botSymbol} Sent to Bot!` : sending ? 'Sending...' : `⚡ Send ${botSymbol} to Trading Bot`}
-        </button>
-      </div>
-    );
-  };
-
   const parseNewFormat = (analysis: string, trend: string, confidence: string): ParsedAnalysis => {
     const lines = analysis.split('\n').map(l => l.trim()).filter(l => l);
     let signal = trend.toUpperCase();
@@ -277,7 +239,6 @@ export default function AnalyticsDashboard() {
     { label: 'TRADING', items: [
       { id: 'swing', name: 'Swing Trading', icon: TrendingUp },
       { id: 'scalp', name: 'Scalp Trading', icon: Timer },
-      { id: 'bot', name: 'Trading Bot', icon: Zap },
     ]},
     { label: 'MARKETS', items: [
       { id: 'market', name: 'Market Analysis', icon: BarChart3 },
@@ -1108,20 +1069,6 @@ export default function AnalyticsDashboard() {
                               )}
                             </div>
                           )}
-                          {/* Send to Bot Button */}
-                          {parsed.entry && parsed.stopLoss && parsed.takeProfit && (
-                            <SendToBotButton
-                              email={userData?.email}
-                              signal={{
-                                action: parsed.signal === 'UPTREND' ? 'BUY' : 'SELL',
-                                symbol: assetType?.toUpperCase() || parsed.symbol?.toUpperCase() || 'XAUUSD',
-                                entry: parseFloat(parsed.entry),
-                                sl: parseFloat(parsed.stopLoss),
-                                tp: parseFloat(parsed.takeProfit),
-                                lot: 0.01
-                              }}
-                            />
-                          )}
                           <div className="bg-yellow-500/5 border border-yellow-500/20 rounded-xl p-4 flex items-start gap-3">
                             <AlertTriangle className="w-4 h-4 text-yellow-500 flex-shrink-0 mt-0.5" />
                             <p className="text-slate-400 text-xs">
@@ -1140,7 +1087,6 @@ export default function AnalyticsDashboard() {
                   )}
                 </div>
               )}
-              {currentPage === 'bot' && <div className="p-6 w-full h-full"><BotWidget userEmail={userData?.email} /></div>}
               {currentPage === 'market' && <MarketAnalysisPage />}
               {currentPage === 'news' && <div className="w-full h-full flex flex-col"><NewsPanel /></div>}
               {currentPage === 'history' && <HistoryPage />}
