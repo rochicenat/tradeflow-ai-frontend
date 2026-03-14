@@ -533,29 +533,6 @@ export default function AnalyticsDashboard() {
 
 
 
-      {/* WELCOME30 Banner */}
-      <div style={{
-        background: 'rgba(249,115,22,0.08)',
-        borderBottom: '1px solid rgba(249,115,22,0.3)',
-        padding: '10px 16px',
-        textAlign: 'center',
-        fontSize: '14px',
-        color: '#cbd5e1',
-        letterSpacing: '0.01em',
-        flexShrink: 0,
-      }}>
-        🎉 Get <strong style={{ color: '#fff' }}>30% off</strong> your first month — use code{' '}
-        <span style={{
-          background: 'rgba(249,115,22,0.15)',
-          border: '1px solid rgba(249,115,22,0.5)',
-          borderRadius: '6px',
-          padding: '2px 10px',
-          fontWeight: '700',
-          color: '#f97316',
-          letterSpacing: '0.08em',
-        }}>WELCOME30</span>
-        {' '}at checkout.
-      </div>
       {/* HEADER */}
       <header className="h-14 border-b border-[#1A1A1A] bg-[#0A0A0A] flex items-center px-3 sm:px-6 gap-2 flex-shrink-0 sticky top-0 z-40">
         <div className="flex items-center gap-2 lg:hidden mr-1">
