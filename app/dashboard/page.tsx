@@ -173,7 +173,7 @@ export default function AnalyticsDashboard() {
     formData.append('order_type', orderType);
     formData.append('language', 'en');
     if (slType) formData.append('sl_type', slType);
-    if (indicators.length) formData.append('indicators', indicators.join(','));
+    formData.append('indicators', 'RSI,MACD,Bollinger,EMA 20,EMA 50,EMA 200');
     if (session) formData.append('session', session);
     if (assetType) formData.append('asset_type', assetType);
     formData.append('sl_pips', slPips);
@@ -961,14 +961,7 @@ export default function AnalyticsDashboard() {
                                     </div>
                                   )}
                                 </div>
-                                <div>
-                                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5"><span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Indicators</label>
-                                  <div className="flex flex-wrap gap-1.5">
-                                    {['RSI','MACD','Bollinger','EMA 20','EMA 50','EMA 200'].map(ind => (
-                                      <button key={ind} onClick={() => setIndicators(prev => prev.includes(ind) ? prev.filter(i => i !== ind) : [...prev, ind])} className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${indicators.includes(ind) ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20' : 'bg-[#111] border border-[#222] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>{ind}</button>
-                                    ))}
-                                  </div>
-                                </div>
+
 
                               </div>
                             )}
