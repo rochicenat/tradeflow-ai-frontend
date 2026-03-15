@@ -649,8 +649,6 @@ export default function AnalyticsDashboard() {
                           <div>
                             <div className="text-white text-sm font-semibold">{step.title}</div>
                             <div className="text-slate-500 text-xs mt-0.5">{step.desc}</div>
-                            </div>
-                            )}
                           </div>
                         </div>
                       ))}
