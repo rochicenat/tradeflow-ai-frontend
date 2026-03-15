@@ -110,15 +110,6 @@ export default function AnalyticsDashboard() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [timeframe, setTimeframe] = useState("");
   const [showParamsModal, setShowParamsModal] = useState(false);
-  const [proMode, setProMode] = useState(false);
-  const [riskProfile, setRiskProfile] = useState<'safe' | 'balanced' | 'aggressive'>('balanced');
-  const [symbol, setSymbol] = useState("");
-
-  const RISK_PROFILES = {
-    safe:       { leverage: "1",  riskPercent: "1",  rrRatio: "1:2" },
-    balanced:   { leverage: "5",  riskPercent: "2",  rrRatio: "1:3" },
-    aggressive: { leverage: "10", riskPercent: "5",  rrRatio: "1:4" },
-  };
 
   useEffect(() => { fetchUserData(); }, []);
 
@@ -148,20 +139,12 @@ export default function AnalyticsDashboard() {
     if (userData && (userData.plan === 'free' || userData.subscription_status !== 'active' || userData.analyses_used >= userData.analyses_limit)) {
       setShowUpgradeModal(true); return;
     }
-    // Apply risk profile values if basic mode
-    if (!proMode) {
-      const profile = RISK_PROFILES[riskProfile];
-      setLeverage(profile.leverage);
-      setRiskPercent(profile.riskPercent);
-      setRrRatio(profile.rrRatio);
-    }
     const token = getToken();
     if (!token) { toast.error('Please login first'); router.push('/login'); return; }
     setUploading(true); setLoading(true);
     const formData = new FormData();
     formData.append('file', selectedFile);
     formData.append('analysis_type', analysisType);
-    if (symbol) formData.append('symbol', symbol);
     if (accountSize) formData.append('account_size', accountSize);
     if (riskPercent) formData.append('risk_percent', riskPercent);
     if (leverage) formData.append('leverage', leverage);
@@ -573,16 +556,6 @@ export default function AnalyticsDashboard() {
         </div>
         <div className="flex items-center gap-1.5 sm:gap-3">
           <LiveClock />
-          <div className="flex items-center gap-1.5 bg-[#141414] border border-[#1A1A1A] rounded-lg p-1">
-            <button onClick={() => setProMode(false)}
-              className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${!proMode ? 'bg-orange-500 text-white' : 'text-slate-500 hover:text-slate-300'}`}>
-              Basic
-            </button>
-            <button onClick={() => setProMode(true)}
-              className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${proMode ? 'bg-orange-500 text-white' : 'text-slate-500 hover:text-slate-300'}`}>
-              Pro
-            </button>
-          </div>
 
           <div className={`px-2 py-1 rounded-md border text-xs font-bold uppercase cursor-pointer transition ${
             userData?.plan === 'premium' ? 'bg-purple-500/10 border-purple-500/20 text-purple-400' :
@@ -808,65 +781,6 @@ export default function AnalyticsDashboard() {
                             <span className="ml-auto text-xs text-slate-600 font-medium">{analysisType === 'swing' ? 'Swing' : 'Scalp'}</span>
                           </div>
                           <div className="p-5 space-y-5">
-                            {/* BASIC MODE */}
-                            {!proMode && (
-                              <div className="space-y-4">
-                                <div>
-                                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5">
-                                    <span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Symbol / Asset
-                                  </label>
-                                  <input type="text" value={symbol} onChange={e => setSymbol(e.target.value.toUpperCase())}
-                                    placeholder="e.g. BTCUSDT, AAPL, EURUSD"
-                                    className="w-full bg-[#111] border border-[#222] rounded-xl px-4 py-2.5 text-white text-sm placeholder-slate-700 focus:border-orange-500/50 focus:outline-none transition font-mono" />
-                                </div>
-                                <div>
-                                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5">
-                                    <span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Timeframe
-                                  </label>
-                                  <div className="flex flex-wrap gap-1.5">
-                                    {(analysisType === 'scalp' ? ['1M','5M','15M','30M'] : ['1H','4H','Daily','Weekly']).map(tf => (
-                                      <button key={tf} onClick={() => setTimeframe(tf)}
-                                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${timeframe === tf ? 'bg-orange-500 text-white' : 'bg-[#111] border border-[#222] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>
-                                        {tf}
-                                      </button>
-                                    ))}
-                                  </div>
-                                </div>
-                                <div>
-                                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5">
-                                    <span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Account Balance ($)
-                                  </label>
-                                  <input type="number" value={accountSize} onChange={e => setAccountSize(e.target.value)}
-                                    placeholder="e.g. 10000"
-                                    className="w-full bg-[#111] border border-[#222] rounded-xl px-4 py-2.5 text-white text-sm placeholder-slate-700 focus:border-orange-500/50 focus:outline-none transition" />
-                                </div>
-                                <div>
-                                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5">
-                                    <span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Risk Profile
-                                  </label>
-                                  <div className="grid grid-cols-3 gap-2">
-                                    {([
-                                      { id: 'safe' as const, label: 'Safe', desc: '1% · 1x lev' },
-                                      { id: 'balanced' as const, label: 'Balanced', desc: '2% · 5x lev' },
-                                      { id: 'aggressive' as const, label: 'Aggressive', desc: '5% · 10x lev' },
-                                    ]).map(p => (
-                                      <button key={p.id} onClick={() => setRiskProfile(p.id)}
-                                        className={`py-2.5 px-2 rounded-xl text-center transition-all border ${riskProfile === p.id
-                                          ? p.id === 'safe' ? 'bg-green-500/15 border-green-500/50 text-green-400'
-                                          : p.id === 'aggressive' ? 'bg-red-500/15 border-red-500/50 text-red-400'
-                                          : 'bg-orange-500/15 border-orange-500/50 text-orange-400'
-                                          : 'bg-[#111] border-[#222] text-slate-500 hover:border-orange-500/30'}`}>
-                                        <div className="text-xs font-bold">{p.label}</div>
-                                        <div className="text-[10px] opacity-70 mt-0.5">{p.desc}</div>
-                                      </button>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-
-                            {/* PRO MODE */}
-                            {proMode && (<>
                             {/* Timeframe */}
                             <div>
                               <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5">
@@ -1029,7 +943,6 @@ export default function AnalyticsDashboard() {
                               </div>
                             </div>
                           </div>
-                        </>)}
                         </div>
                       )}
 
