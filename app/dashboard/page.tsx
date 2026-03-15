@@ -114,6 +114,7 @@ export default function AnalyticsDashboard() {
   const [riskProfile, setRiskProfile] = useState<'safe' | 'balanced' | 'aggressive'>('balanced');
   const [symbol, setSymbol] = useState('');
   const [showSymbolDropdown, setShowSymbolDropdown] = useState(false);
+  const [symbolSearch, setSymbolSearch] = useState('');
   const RISK_PROFILES = {
     safe:       { leverage: '1',  riskPercent: '1',  rrRatio: '1:2' },
     balanced:   { leverage: '5',  riskPercent: '2',  rrRatio: '1:3' },
@@ -803,23 +804,41 @@ export default function AnalyticsDashboard() {
                               <div className="space-y-4">
                                 <div className="relative">
                                   <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5"><span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Symbol / Asset</label>
-                                  <button onClick={() => setShowSymbolDropdown(!showSymbolDropdown)} className="w-full bg-[#111] border border-[#222] rounded-xl px-4 py-2.5 text-left transition hover:border-orange-500/50 flex items-center justify-between">
-                                    <span className={`text-sm font-mono font-bold ${symbol ? 'text-orange-400' : 'text-slate-600'}`}>{symbol || 'Select symbol...'}</span>
-                                    <span className="text-slate-500 text-xs">{showSymbolDropdown ? '▲' : '▼'}</span>
-                                  </button>
+                                  <div className="relative">
+                                    <input
+                                      type="text"
+                                      value={showSymbolDropdown ? symbolSearch : symbol}
+                                      onChange={e => { setSymbolSearch(e.target.value.toUpperCase()); setSymbol(e.target.value.toUpperCase()); setShowSymbolDropdown(true); }}
+                                      onFocus={() => { setShowSymbolDropdown(true); setSymbolSearch(''); }}
+                                      placeholder="Search or select symbol..."
+                                      className="w-full bg-[#111] border border-[#222] rounded-xl px-4 py-2.5 text-orange-400 text-sm font-mono font-bold placeholder-slate-700 focus:border-orange-500/50 focus:outline-none transition"
+                                    />
+                                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs cursor-pointer" onClick={() => setShowSymbolDropdown(!showSymbolDropdown)}>{showSymbolDropdown ? '▲' : '▼'}</span>
+                                  </div>
                                   {showSymbolDropdown && (
                                     <div className="absolute top-full left-0 right-0 mt-1 bg-[#0D0D0D] border border-[#222] rounded-xl z-50 shadow-2xl">
-                                      <div className="p-3 space-y-3 max-h-64 overflow-y-auto">
-                                        {[{cat:'🪙 Crypto',symbols:['BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','XRPUSDT','DOGEUSDT']},{cat:'💱 Forex',symbols:['EURUSD','GBPUSD','USDJPY','XAUUSD','AUDUSD','USDCAD']},{cat:'📈 Stocks',symbols:['AAPL','TSLA','NVDA','MSFT','AMZN','GOOGL']},{cat:'📊 Index',symbols:['QQQ','SPY','DIA']}].map(group => (
-                                          <div key={group.cat}>
-                                            <div className="text-[10px] text-slate-600 font-bold uppercase tracking-wider mb-1.5 px-1">{group.cat}</div>
-                                            <div className="flex flex-wrap gap-1.5">
-                                              {group.symbols.map(s => (
-                                                <button key={s} onClick={() => { setSymbol(s); setShowSymbolDropdown(false); }} className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${symbol === s ? 'bg-orange-500 text-white' : 'bg-[#1A1A1A] text-slate-400 hover:text-white hover:bg-orange-500/10'}`}>{s}</button>
-                                              ))}
+                                      <div className="p-3 space-y-3 max-h-72 overflow-y-auto">
+                                        {(() => {
+                                          const ALL_GROUPS = [
+                                            {cat:'🪙 CRYPTO', symbols:['BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','XRPUSDT','DOGEUSDT','ADAUSDT','DOTUSDT','MATICUSDT','PEPEUSDT','SHIBUSDT','AVAXUSDT']},
+                                            {cat:'💱 FOREX', symbols:['EURUSD','GBPUSD','USDJPY','XAUUSD','AUDUSD','USDCAD','USDCHF','NZDUSD','GBPJPY','EURJPY','XAGUSD','USDTRY']},
+                                            {cat:'📈 STOCKS', symbols:['AAPL','TSLA','NVDA','MSFT','AMZN','GOOGL','META','NFLX','AMD','INTC','BABA','COIN']},
+                                            {cat:'📊 INDEX', symbols:['QQQ','SPY','DIA','IWM','VIX']},
+                                          ];
+                                          const filtered = symbolSearch
+                                            ? ALL_GROUPS.map(g => ({...g, symbols: g.symbols.filter(s => s.includes(symbolSearch))})).filter(g => g.symbols.length > 0)
+                                            : ALL_GROUPS;
+                                          return filtered.map(group => (
+                                            <div key={group.cat}>
+                                              <div className="text-[10px] text-slate-600 font-bold uppercase tracking-wider mb-1.5 px-1">{group.cat}</div>
+                                              <div className="flex flex-wrap gap-1.5">
+                                                {group.symbols.map(s => (
+                                                  <button key={s} onClick={() => { setSymbol(s); setSymbolSearch(''); setShowSymbolDropdown(false); }} className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${symbol === s ? 'bg-orange-500 text-white' : 'bg-[#1A1A1A] text-slate-400 hover:text-white hover:bg-orange-500/10'}`}>{s}</button>
+                                                ))}
+                                              </div>
                                             </div>
-                                          </div>
-                                        ))}
+                                          ));
+                                        })()}
                                       </div>
                                     </div>
                                   )}
