@@ -58,12 +58,19 @@ function PricingCard() {
           <span className="text-5xl font-black text-white">$19.99</span>
           <span className="text-gray-400">/month</span>
         </div>
-        <div className="text-gray-400 mb-6">Unlimited analyses</div>
+        <div className="text-gray-400 mb-3">Unlimited analyses</div>
+        <div className="bg-green-500/10 border border-green-500/30 rounded-xl px-4 py-3 mb-6 flex items-center gap-3">
+          <span className="text-xl">🎁</span>
+          <div>
+            <div className="text-green-400 font-bold text-sm">7-Day Free Trial</div>
+            <div className="text-slate-400 text-xs">Cancel anytime. Charged after trial.</div>
+          </div>
+        </div>
         <ul className="space-y-3 mb-8">
           {features.map((f, i) => (<li key={i} className="flex items-center gap-2 text-gray-300 text-sm"><span className="text-green-400 font-bold">✓</span> {f}</li>))}
         </ul>
         <button onClick={() => { const t = typeof window !== 'undefined' && (localStorage.getItem('token') || sessionStorage.getItem('token')); if (!t) { window.location.href = '/login?redirect=pricing'; return; } window.location.href = 'https://tradeflowai.lemonsqueezy.com/checkout/buy/47621ebf-7c5e-4b6e-bbc9-d6bee626b2d4'; }} className="block w-full py-3 rounded-xl font-bold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg">
-          Get Pro — $19.99/mo
+          Start 7-Day Free Trial — then $19.99/mo
         </button>
       </div>
       {/* Yearly */}
@@ -75,12 +82,19 @@ function PricingCard() {
           <span className="text-gray-400">/month</span>
         </div>
         <div className="text-green-400 text-sm mb-1 font-medium">Billed $119.88/year — save $120/year</div>
-        <div className="text-gray-400 mb-6">Unlimited analyses</div>
+        <div className="text-gray-400 mb-3">Unlimited analyses</div>
+        <div className="bg-green-500/10 border border-green-500/30 rounded-xl px-4 py-3 mb-6 flex items-center gap-3">
+          <span className="text-xl">🎁</span>
+          <div>
+            <div className="text-green-400 font-bold text-sm">7-Day Free Trial</div>
+            <div className="text-slate-400 text-xs">Cancel anytime. Charged after trial.</div>
+          </div>
+        </div>
         <ul className="space-y-3 mb-8">
           {features.map((f, i) => (<li key={i} className="flex items-center gap-2 text-gray-300 text-sm"><span className="text-green-400 font-bold">✓</span> {f}</li>))}
         </ul>
         <button onClick={() => { const t = typeof window !== 'undefined' && (localStorage.getItem('token') || sessionStorage.getItem('token')); if (!t) { window.location.href = '/login?redirect=pricing'; return; } window.location.href = 'https://tradeflowai.lemonsqueezy.com/checkout/buy/60423ba8-053a-4d04-a924-69b6aaae30e3'; }} className="block w-full py-3 rounded-xl font-bold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg">
-          Get Pro — $9.99/mo
+          Start 7-Day Free Trial — then $9.99/mo
         </button>
       </div>
     </div>

@@ -31,6 +31,9 @@ function UpgradeModal({ onClose, userEmail }: { onClose: () => void; userEmail?:
           </div>
           <h2 className="text-2xl font-bold text-white mb-2">Upgrade to Pro</h2>
           <p className="text-slate-400">{"You've reached your analysis limit."}</p>
+          <div className="mt-3 bg-green-500/10 border border-green-500/30 rounded-xl px-4 py-2 inline-block">
+            <span className="text-green-400 font-bold text-sm">🎁 7-Day Free Trial — No charge until day 8</span>
+          </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
           <div className="bg-[#1A1A1A] border border-orange-500/30 rounded-xl p-5 flex flex-col">
@@ -43,7 +46,7 @@ function UpgradeModal({ onClose, userEmail }: { onClose: () => void; userEmail?:
             </ul>
             <a href={`https://tradeflowai.lemonsqueezy.com/checkout/buy/47621ebf-7c5e-4b6e-bbc9-d6bee626b2d4${userEmail ? "?checkout%5Bemail%5D=" + encodeURIComponent(userEmail) : ""}`} target="_blank" rel="noopener noreferrer"
               className="w-full py-2.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-semibold text-center transition text-sm">
-              Get Monthly
+              Start 7-Day Free Trial
             </a>
           </div>
           <div className="bg-[#1A1A1A] border border-orange-500/50 rounded-xl p-5 flex flex-col relative overflow-hidden">
@@ -58,7 +61,7 @@ function UpgradeModal({ onClose, userEmail }: { onClose: () => void; userEmail?:
             </ul>
             <a href={`https://tradeflowai.lemonsqueezy.com/checkout/buy/60423ba8-053a-4d04-a924-69b6aaae30e3${userEmail ? "?checkout%5Bemail%5D=" + encodeURIComponent(userEmail) : ""}`} target="_blank" rel="noopener noreferrer"
               className="w-full py-2.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-semibold text-center transition text-sm">
-              Get Yearly
+              Start Free Trial
             </a>
           </div>
         </div>

@@ -119,6 +119,9 @@ export default function PricingPage() {
           <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-orange-500 text-white px-4 py-1 rounded-full text-sm font-semibold whitespace-nowrap">
             Most Popular
           </div>
+          <div className="absolute -top-4 right-6 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap">
+            🎁 7 Days Free
+          </div>
 
           <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
 
@@ -135,7 +138,14 @@ export default function PricingPage() {
             </div>
           )}
 
-          <div className="text-slate-400 text-sm mb-8">Unlimited analyses</div>
+          <div className="text-slate-400 text-sm mb-2">Unlimited analyses</div>
+          <div className="bg-green-500/10 border border-green-500/30 rounded-xl px-4 py-3 mb-8 flex items-center gap-3">
+            <span className="text-2xl">🎁</span>
+            <div>
+              <div className="text-green-400 font-bold text-sm">7-Day Free Trial</div>
+              <div className="text-slate-400 text-xs">Cancel anytime. Card required, charged after trial.</div>
+            </div>
+          </div>
 
           <ul className="space-y-3 mb-8">
             {features.map((f, i) => (
@@ -155,7 +165,7 @@ export default function PricingPage() {
               onClick={handleCheckout}
               disabled={loading}
               className="block w-full py-3 rounded-lg font-semibold text-center bg-orange-500 text-white hover:bg-orange-600 transition text-lg disabled:opacity-50">
-              {loading ? 'Loading...' : `Get Pro — $${billing === 'monthly' ? `${monthlyPrice}/mo` : `${yearlyPrice}/mo`}`}
+              {loading ? 'Loading...' : `Start 7-Day Free Trial — then $${billing === 'monthly' ? `${monthlyPrice}/mo` : `${yearlyPrice}/mo`}`}
             </button>
           )}
         </motion.div>
