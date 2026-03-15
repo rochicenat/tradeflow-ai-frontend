@@ -325,6 +325,7 @@ export default function Home() {
           <div className="border-t border-gray-800 pt-8">
             <p className="text-xs text-gray-500 text-center max-w-4xl mx-auto">TradeFlow AI provides AI-powered analysis tools for educational purposes only. Not financial advice. Trading involves significant risk of loss.</p>
             <div className="mt-4 text-center text-gray-400 text-sm">© 2026 TradeFlow AI. All rights reserved.</div>
+            <div className="mt-4 flex justify-center"><a href="https://www.producthunt.com/posts/tradeflow-ai" target="_blank" rel="noopener noreferrer"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=tradeflow-ai&theme=dark" alt="TradeFlow AI - Featured on Product Hunt" width="200" height="43" /></a></div>
           </div>
         </div>
       </footer>
