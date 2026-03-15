@@ -815,9 +815,36 @@ export default function AnalyticsDashboard() {
                                   <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5">
                                     <span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Symbol / Asset
                                   </label>
-                                  <input type="text" value={symbol} onChange={e => setSymbol(e.target.value.toUpperCase())}
-                                    placeholder="e.g. BTCUSDT, AAPL, EURUSD"
-                                    className="w-full bg-[#111] border border-[#222] rounded-xl px-4 py-2.5 text-white text-sm placeholder-slate-700 focus:border-orange-500/50 focus:outline-none transition font-mono" />
+                                  <div className="space-y-2">
+                                    <div className="flex flex-wrap gap-1.5">
+                                      {[
+                                        { cat: "🪙 Crypto", symbols: ["BTCUSDT","ETHUSDT","SOLUSDT","BNBUSDT","XRPUSDT","DOGEUSDT"] },
+                                        { cat: "💱 Forex", symbols: ["EURUSD","GBPUSD","USDJPY","XAUUSD","AUDUSD","USDCAD"] },
+                                        { cat: "📈 Stocks", symbols: ["AAPL","TSLA","NVDA","MSFT","AMZN","GOOGL"] },
+                                        { cat: "📊 Index", symbols: ["QQQ","SPY","DIA"] },
+                                      ].map(group => (
+                                        <div key={group.cat} className="w-full">
+                                          <div className="text-[10px] text-slate-600 font-bold uppercase tracking-wider mb-1.5">{group.cat}</div>
+                                          <div className="flex flex-wrap gap-1.5">
+                                            {group.symbols.map(s => (
+                                              <button key={s} onClick={() => setSymbol(s)}
+                                                className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${symbol === s
+                                                  ? "bg-orange-500 text-white shadow-md shadow-orange-500/20"
+                                                  : "bg-[#111] border border-[#222] text-slate-400 hover:text-white hover:border-orange-500/30"}`}>
+                                                {s}
+                                              </button>
+                                            ))}
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                    {symbol && (
+                                      <div className="flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-lg px-3 py-2">
+                                        <span className="text-orange-400 text-xs font-bold font-mono">{symbol}</span>
+                                        <button onClick={() => setSymbol("")} className="ml-auto text-slate-500 hover:text-white text-xs">✕</button>
+                                      </div>
+                                    )}
+                                  </div>
                                 </div>
                                 <div>
                                   <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5">
