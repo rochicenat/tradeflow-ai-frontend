@@ -151,6 +151,11 @@ export default function AnalyticsDashboard() {
     }
     const token = getToken();
     if (!token) { toast.error('Please login first'); router.push('/login'); return; }
+    // Auto-detect session from user time
+    const hour = new Date().getUTCHours();
+    const autoSession = hour >= 7 && hour < 16 ? 'london' : hour >= 12 && hour < 21 ? 'newyork' : hour >= 0 && hour < 9 ? 'asian' : 'all';
+    setSession(autoSession);
+
     if (!proMode) {
       const profile = RISK_PROFILES[riskProfile];
       setLeverage(profile.leverage);
@@ -964,22 +969,12 @@ export default function AnalyticsDashboard() {
                                     ))}
                                   </div>
                                 </div>
-                                <div className="grid grid-cols-2 gap-4">
-                                  <div>
-                                    <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5"><span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Asset</label>
-                                    <div className="flex flex-wrap gap-1.5">
-                                      {[{v:'crypto',l:'Crypto'},{v:'forex',l:'Forex'},{v:'stocks',l:'Stocks'},{v:'',l:'Auto'}].map(o => (
-                                        <button key={o.v} onClick={() => setAssetType(o.v)} className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${assetType === o.v ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20' : 'bg-[#111] border border-[#222] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>{o.l}</button>
-                                      ))}
-                                    </div>
-                                  </div>
-                                  <div>
-                                    <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5"><span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Session</label>
-                                    <div className="flex flex-wrap gap-1.5">
-                                      {[{v:'london',l:'🇬🇧 LDN'},{v:'newyork',l:'🇺🇸 NY'},{v:'asian',l:'🌏 Asia'},{v:'',l:'🌐 All'}].map(o => (
-                                        <button key={o.v} onClick={() => setSession(o.v)} className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${session === o.v ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20' : 'bg-[#111] border border-[#222] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>{o.l}</button>
-                                      ))}
-                                    </div>
+                                <div>
+                                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5"><span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Asset</label>
+                                  <div className="flex flex-wrap gap-1.5">
+                                    {[{v:'crypto',l:'Crypto'},{v:'forex',l:'Forex'},{v:'stocks',l:'Stocks'},{v:'',l:'Auto'}].map(o => (
+                                      <button key={o.v} onClick={() => setAssetType(o.v)} className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${assetType === o.v ? 'bg-orange-500 text-white shadow-md shadow-orange-500/20' : 'bg-[#111] border border-[#222] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>{o.l}</button>
+                                    ))}
                                   </div>
                                 </div>
                               </div>
