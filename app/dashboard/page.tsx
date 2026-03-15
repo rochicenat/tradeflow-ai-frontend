@@ -1030,7 +1030,6 @@ export default function AnalyticsDashboard() {
                             </div>
                           </div>
                         </>)}
-                        </div>
                       )}
 
                       {/* Start Analysis Button */}
