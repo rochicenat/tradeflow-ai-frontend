@@ -649,6 +649,8 @@ export default function AnalyticsDashboard() {
                           <div>
                             <div className="text-white text-sm font-semibold">{step.title}</div>
                             <div className="text-slate-500 text-xs mt-0.5">{step.desc}</div>
+                            </div>
+                            )}
                           </div>
                         </div>
                       ))}
@@ -778,9 +780,68 @@ export default function AnalyticsDashboard() {
                           <div className="px-5 py-3.5 border-b border-[#1A1A1A] flex items-center gap-2.5">
                             <div className="w-6 h-6 rounded-md bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-xs">⚙️</div>
                             <h3 className="text-white font-semibold text-sm tracking-tight">Trading Parameters</h3>
-                            <span className="ml-auto text-xs text-slate-600 font-medium">{analysisType === 'swing' ? 'Swing' : 'Scalp'}</span>
+                            <div className="ml-auto flex items-center gap-1 bg-[#1A1A1A] border border-[#252525] rounded-lg p-0.5">
+                              <button onClick={() => setProMode(false)} className={`px-2.5 py-1 rounded-md text-xs font-bold transition-all ${!proMode ? 'bg-orange-500 text-white' : 'text-slate-500 hover:text-slate-300'}`}>Basic</button>
+                              <button onClick={() => setProMode(true)} className={`px-2.5 py-1 rounded-md text-xs font-bold transition-all ${proMode ? 'bg-orange-500 text-white' : 'text-slate-500 hover:text-slate-300'}`}>Pro</button>
+                            </div>
                           </div>
                           <div className="p-5 space-y-5">
+                            {!proMode ? (
+                              <div className="space-y-4">
+                                <div className="relative">
+                                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5"><span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Symbol / Asset</label>
+                                  <button onClick={() => setShowSymbolDropdown(!showSymbolDropdown)} className="w-full bg-[#111] border border-[#222] rounded-xl px-4 py-2.5 text-left transition hover:border-orange-500/50 flex items-center justify-between">
+                                    <span className={`text-sm font-mono font-bold ${symbol ? 'text-orange-400' : 'text-slate-600'}`}>{symbol || 'Select symbol...'}</span>
+                                    <span className="text-slate-500 text-xs">{showSymbolDropdown ? '▲' : '▼'}</span>
+                                  </button>
+                                  {showSymbolDropdown && (
+                                    <div className="absolute top-full left-0 right-0 mt-1 bg-[#0D0D0D] border border-[#222] rounded-xl z-50 shadow-2xl">
+                                      <div className="p-3 space-y-3 max-h-64 overflow-y-auto">
+                                        {[
+                                          { cat: '🪙 Crypto', symbols: ['BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','XRPUSDT','DOGEUSDT'] },
+                                          { cat: '💱 Forex', symbols: ['EURUSD','GBPUSD','USDJPY','XAUUSD','AUDUSD','USDCAD'] },
+                                          { cat: '📈 Stocks', symbols: ['AAPL','TSLA','NVDA','MSFT','AMZN','GOOGL'] },
+                                          { cat: '📊 Index', symbols: ['QQQ','SPY','DIA'] },
+                                        ].map(group => (
+                                          <div key={group.cat}>
+                                            <div className="text-[10px] text-slate-600 font-bold uppercase tracking-wider mb-1.5 px-1">{group.cat}</div>
+                                            <div className="flex flex-wrap gap-1.5">
+                                              {group.symbols.map(s => (
+                                                <button key={s} onClick={() => { setSymbol(s); setShowSymbolDropdown(false); }} className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${symbol === s ? 'bg-orange-500 text-white' : 'bg-[#1A1A1A] text-slate-400 hover:text-white hover:bg-orange-500/10'}`}>{s}</button>
+                                              ))}
+                                            </div>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                                <div>
+                                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5"><span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Timeframe</label>
+                                  <div className="flex flex-wrap gap-1.5">
+                                    {(analysisType === 'scalp' ? ['1M','5M','15M','30M'] : ['1H','4H','Daily','Weekly']).map(tf => (
+                                      <button key={tf} onClick={() => setTimeframe(tf)} className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${timeframe === tf ? 'bg-orange-500 text-white' : 'bg-[#111] border border-[#222] text-slate-500 hover:text-white hover:border-orange-500/30'}`}>{tf}</button>
+                                    ))}
+                                  </div>
+                                </div>
+                                <div>
+                                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5"><span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Account Balance ($)</label>
+                                  <input type="number" value={accountSize} onChange={e => setAccountSize(e.target.value)} placeholder="e.g. 10000" className="w-full bg-[#111] border border-[#222] rounded-xl px-4 py-2.5 text-white text-sm placeholder-slate-700 focus:border-orange-500/50 focus:outline-none transition" />
+                                </div>
+                                <div>
+                                  <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5"><span className="w-0.5 h-3 bg-orange-500 rounded-full"></span>Risk Profile</label>
+                                  <div className="grid grid-cols-3 gap-2">
+                                    {([{ id: 'safe' as const, label: 'Safe', desc: '1% · 1x' },{ id: 'balanced' as const, label: 'Balanced', desc: '2% · 5x' },{ id: 'aggressive' as const, label: 'Aggressive', desc: '5% · 10x' }]).map(p => (
+                                      <button key={p.id} onClick={() => setRiskProfile(p.id)} className={`py-2.5 px-2 rounded-xl text-center transition-all border ${riskProfile === p.id ? p.id === 'safe' ? 'bg-green-500/15 border-green-500/50 text-green-400' : p.id === 'aggressive' ? 'bg-red-500/15 border-red-500/50 text-red-400' : 'bg-orange-500/15 border-orange-500/50 text-orange-400' : 'bg-[#111] border-[#222] text-slate-500 hover:border-orange-500/30'}`}>
+                                        <div className="text-xs font-bold">{p.label}</div>
+                                        <div className="text-[10px] opacity-70 mt-0.5">{p.desc}</div>
+                                      </button>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            ) : (
+                            <div className="space-y-5">
                             {/* Timeframe */}
                             <div>
                               <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2.5">
@@ -942,6 +1003,8 @@ export default function AnalyticsDashboard() {
                                 </div>
                               </div>
                             </div>
+                            </div>
+                            )}
                           </div>
                         </div>
                       )}
